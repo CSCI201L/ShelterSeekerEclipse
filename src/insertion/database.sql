@@ -40,7 +40,7 @@ CREATE TABLE shelterInfo (
     phoneNumber INT(15) NOT NULL,
     biography TEXT,
     numRatingGiven INT(11),
-    nearGrocery BIT NOT NULL DEFAULT 0,
+    nearGrocery BIT NOT NULL DEFAULT 0,	
     nearPharmacy BIT NOT NULL DEFAULT 0,
     nearLaundromat BIT NOT NULL DEFAULT 0,
     currentRating DOUBLE (3,2) DEFAULT 5, 
@@ -51,4 +51,7 @@ CREATE TABLE shelterInfo (
     availability INT(11),
     FOREIGN KEY (id) REFERENCES users(userId)
 );
+
+
+
 
