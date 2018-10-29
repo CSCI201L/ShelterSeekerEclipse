@@ -7,7 +7,7 @@ public class Shelter {
 	public int zipcode;
 	
 	public int capacity = 0;
-	public String phoneNumber = "";
+	public int phoneNumber = 0;
 	public String bio = "";
 	public double currentRating = 0;
 	public int numRatingGiven = 0;
@@ -26,14 +26,14 @@ public class Shelter {
 	public int numStays = 0;
 	
 	
-	public Shelter (String name, String phoneNumber, int zipcode) {
+	public Shelter (String name, int phoneNumber, int zipcode) {
 		this.shelterName = name;
-		this.phoneNumber = phoneNumber;
+		this.phoneNumber = 0;
 		this.zipcode = zipcode;
 	}
 	public Shelter () {
 		shelterName = "";
-		phoneNumber = "";
+		phoneNumber = 0;
 		zipcode = 0;
 	}
 }

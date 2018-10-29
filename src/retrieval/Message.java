@@ -6,7 +6,7 @@ public class Message {
 	public int recipient;
 	public int sender = 0;
 	public Byte read = 0;
-	public String timeSent = "Not Available";
+	public int timeSent = 0;
 	public Message (String subject, String body, int recipient) {
 		this.subject = subject;
 		this.body = body;
