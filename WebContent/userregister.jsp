@@ -14,14 +14,15 @@
 	<div id="middle"> 
 	
 		<div id="Sign-Up">
-		<!-- sign up section -->
-		<form name="signup" onsubmit="return !!(validateEmail() & validateUsername() & validatePassword() & validateZip());"><!-- method="POST" action ="Servlet" -->
-			Sign-Up <br/>
+		<!-- sign up section onsubmit="return !!(validateEmail() & validateUsername() & validatePassword() & validateZip());" -->
+		
+		<form name="signup"  action="bSignUp" method="GET" ><!-- method="POST" action ="Servlet" -->
+			Sign-U <br/>
 			<input id="email" type="text" name ="email" placeholder ="Email" > <span id="email-error"></span>
 			<br/>
 			<input id="un" type="text" name ="username" placeholder ="Username" > <span id="un-error"></span>
 			<br/>
-			<input id="pwd" type="text" name ="username" placeholder ="Password" > <span id="pw-error"></span>
+			<input id="pwd" type="text" name ="password" placeholder ="Password" > <span id="pw-error"></span>
 			<br/>
 			<input id="zip" type="text" name ="zipcode" placeholder ="Zipcode" > <span id="zip-error"></span>
 			<br/>
@@ -36,8 +37,8 @@
 			<input type="radio" name="pets" value="no"> No<br>
 			Are you looking for shelters that are located five miles from a pharmacy?
 			<br/>
-			<input type="radio" name="pets" value="yes"> Yes<br>
-			<input type="radio" name="pets" value="no"> No<br>
+			<input type="radio" name="pharma" value="yes"> Yes<br>
+			<input type="radio" name="pharma" value="no"> No<br>
 			<input type="submit" value= "Sign-Up">
 		</form>
 	  	</div>

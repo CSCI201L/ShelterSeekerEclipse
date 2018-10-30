@@ -16,11 +16,11 @@
 	
 		<div id="Sign-In">
 		<!-- sign in section -->
-		<form><!-- method="POST" action ="Servlet" -->
+		<form action="vSignIn" method="GET"><!-- method="POST" action ="Servlet" -->
 			Sign-In <br/>
-			<input id="un" type="text" name ="username" placeholder ="Username" required>
+			<input id="un" type="text" name ="email" placeholder ="email" required>
 			<br/>
-			<input id="pwd" type="text" name ="username" placeholder ="Password" required>
+			<input id="pwd" type="text" name ="password" placeholder ="password" required>
 			<br/>
 			<label><input type="checkbox"> Remember me</label>
 			<input type="submit" value= "Sign-In">

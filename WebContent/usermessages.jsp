@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="retrieval.DBHelper, retrieval.Message, java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +28,13 @@
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
+<% 
+	//REPLACE THIS WITH HTTPSESSION GLOBAL INSTANCE OF DB
+	DBHelper db = new DBHelper ("test@usc.edu","pass1");
+	System.out.println(db.didConnect() + "is status");
+	ArrayList<Message> ms= db.getMessages();
+	System.out.println(ms.size() + "total messages");
+%>
 	<div id="top">
 	<ul>
 		<li><a href="search.jsp">Search</a></li>
@@ -37,11 +45,24 @@
 	<div id="middle">
 	List
 	<ul>
-		<li>Message Opened</li><br>
-		<li>Send time</li><br>
-		<li>Username of Sender</li><br> 
-		<li>Subject of Message</li><br>
-		<li>First Line of Message</li><br>
+		<%for(int i = 0; i < ms.size(); i++){
+			int sender = ms.get(i).sender;
+			String mSubject = ms.get(i).subject;
+			String mContent = ms.get(i).body;
+			int sendtime = ms.get(i).timeSent;
+			boolean r = false;
+			if (ms.get(i).read == 1){
+				r = true;
+			}
+			%>
+		<div onClick = "seeFullMessage('<%= mSubject %>','<%= sender %>','<%= mContent %>')">
+		<li>Message Opened <%=r %></li><br>
+		<li>Send time <%=sendtime %></li><br>
+		<li>Username of Sender <%=sender %></li><br> 
+		<li>Subject of Message <%=mSubject %></li><br>
+		<li>First Line of Message <%=mContent %></li><br>
+		</div>
+		<%} %>
 	</ul>
 	<form><!--  method="post" action="Servlet"-->
 		<input id="search" type="text" name ="search" placeholder ="User Messages" >

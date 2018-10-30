@@ -21,7 +21,7 @@
 			<br/>
 			<input id="un" type="text" name ="username" placeholder ="Username" > <span id="un-error"></span>
 			<br/>
-			<input id="pwd" type="text" name ="username" placeholder ="Password" > <span id="pw-error"></span>
+			<input id="pwd" type="text" name ="password" placeholder ="Password" > <span id="pw-error"></span>
 			<br/>
 			<input id="zip" type="text" name ="zipcode" placeholder ="Zipcode" > <span id="zip-error"></span>
 			<br/>
