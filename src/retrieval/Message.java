@@ -2,6 +2,7 @@ package retrieval;
 
 public class Message {
 	public String subject;
+	public int id;
 	public String body;
 	public int recipient;
 	public int sender = 0;

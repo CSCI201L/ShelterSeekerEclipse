@@ -449,6 +449,7 @@ public class DBHelper {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Message m = new Message();
+				m.id = rs.getInt("id");
 				m.sender = rs.getInt("senderID");
 				m.recipient = this.userId;
 				m.subject = rs.getString("mSubject");
@@ -479,7 +480,86 @@ public class DBHelper {
 		}
 		return res;
 	}
-	
+	public boolean readMessage (int id) {
+		Message m = messageById(id);
+		if(m.subject.equals("")) {
+			//message exists
+			return false;
+		}
+		Connection conn2 = null;
+		PreparedStatement ps2 = null;
+		try {
+			Class.forName(CLASS_NAME);
+			conn2 = DriverManager.getConnection(CONNECTION_URL); 
+			
+			String query = "UPDATE messages SET read=1 WHERE id=?";
+			ps2 = conn2.prepareStatement(query);
+			ps2.setInt(1, id);
+			ps2.executeUpdate();
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+			
+				if (ps2 != null) {
+					ps2.close();
+				}
+				if (conn2!= null) {
+					conn2.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle closing streams: " + sqle.getMessage());
+			}
+		}
+		return true;
+	}
+	public Message messageById (int id) {
+		Message m = new Message ();
+		Connection conn2 = null;
+		PreparedStatement ps2 = null;
+		ResultSet rs2 = null;
+		try {
+			Class.forName(CLASS_NAME);
+			conn2 = DriverManager.getConnection(CONNECTION_URL); 
+			
+			String query = "SELECT * FROM messages WHERE id=?";
+			ps2 = conn2.prepareStatement(query);
+			ps2.setInt(1, id);
+			rs2 = ps2.executeQuery();
+			while (rs2.next()) {
+				m.id = id;
+				m.sender = rs2.getInt("senderID");
+				m.recipient = rs2.getInt("recipientID");
+				m.subject = rs2.getString("mSubject");
+				m.body = rs2.getString("mContent");
+				m.read = rs2.getByte("mRead");
+				m.timeSent = rs2.getInt("timeSent");
+			}
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if (rs2 != null) {
+					rs2.close();
+				}
+				if (ps2 != null) {
+					ps2.close();
+				}
+				if (conn2!= null) {
+					conn2.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle closing streams: " + sqle.getMessage());
+			}
+		}
+		return m;
+	}
 	//updating Settings
 	public void updateUserSettings(UserInfo user) {
 		Connection conn2 = null;
