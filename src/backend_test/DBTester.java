@@ -24,7 +24,7 @@ public class DBTester {
 		u1.bio = "Hi this is a bio";
 		u1.email = "test@usc.edu";
 		u1.zipcode = 98075;
-		u1.phoneNumber = 9854079;
+		u1.phoneNumber = "sdfas";
 		u1.kids = 2;
 		u1.pets = 2;
 		u1.password = "pass1";
