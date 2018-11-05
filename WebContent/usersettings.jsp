@@ -6,30 +6,61 @@
 	<title>Shelter Seekers User Settings</title>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
-<body onload="defaultContactInfo();">
+<%
+	//DBHelper db= new DBHelper("guest","guest");
+	//String email=db.user.email;
+	String emailerror=(String)request.getAttribute("email_err");
+	if(emailerror==null){
+		emailerror="";	
+	}
+	String currpassworderror=(String)request.getAttribute("currpass_err");
+	if(currpassworderror==null){
+		currpassworderror="";
+	}
+	String newpassworderror=(String)request.getAttribute("newpass_err");
+	if(newpassworderror==null){
+		newpassworderror="";
+	}
+	String ziperror=(String)request.getAttribute("zip_err");
+	if(ziperror==null){
+		ziperror="";
+	}
+	String phoneerror=(String)request.getAttribute("phone_err");
+	if(phoneerror==null){
+		phoneerror="";
+	}
+%>
+<body> <!-- onload="defaultContactInfo();"> -->
 	<div id="security">
 	<h1>Security Preferences</h1><br>
-	<form onsubmit="return validate();"><!-- method="POST" action="Servlet" -->
-		Current Email: currentemail@.com<br>
-		Change your email: <input id="new_email" type="text" name="new email" placeholder="New Email"><span id="email-error"></span><br> 
+	<form action="bUpdateUser" method="GET"><!-- <!-- onsubmit="return validate(); --"> -->
+		Current Email: currentemail@email.com<br>
+		Change your email: <input id="new_email" type="text" name="new_email" placeholder="New Email">
+		<%= emailerror %>
+		<br> 
 		<h4>Reset your password here</h4>
-		Enter your current password: <input id="curr_pass" type="text" name="current_password" placeholder="Current password"><span id="curr_pass-error"></span><br> 
-		Enter your new password: <input id="new_pass" type="text" name="new_password" placeholder="New password"><span id="new_pass-error"></span><br>
-		<input type="submit" value= "Submit">
-	</form>
-	</div>
-	<div id="personal">
+		Enter your current password: <input id="curr_pass" type="text" name="current_password" placeholder="Current password">
+		<%= currpassworderror %>
+		<br> 
+		Enter your new password: <input id="new_pass" type="text" name="new_password" placeholder="New password">
+		<%= newpassworderror %>
+		<br>
 	<h1>Personal Preferences</h1><br>
-	<form ><!-- method="POST" action="Servlet" -->
-		Looking for shelters that allows children?<br>
-		<input type="radio" name="children" value="yes"> Yes<br>
-		<input type="radio" name="children" value="no"> No<br>
-		Looking for shelters that allows pets? <br>
-		<input type="radio" name="pets" value="yes" > Yes<br>
-		<input type="radio" name="pets" value="no"> No<br>
-		Looking for shelters that are 5 miles from a pharmacy? <br>
-		<input type="radio" name="pharmacy" value="yes"> Yes<br>
-		<input type="radio" name="pharmacy" value="no"> No<br>
+		Are you looking for shelters that allows children?<br>
+		<input type="radio" name="children" value="1" required> Yes<br>
+		<input type="radio" name="children" value="0"> No<br>
+		Are you looking for shelters that allows pets? <br>
+		<input type="radio" name="pets" value="1" required> Yes<br>
+		<input type="radio" name="pets" value="0"> No<br>
+		<br>
+		Current Zipcode: 12345<br>
+		Update Zipcode: <input id="new_zipcode" type="text" name="new_zipcode" placeholder="Update Zip Code">
+		<%= ziperror %>
+		<br>
+		Current Phone Number: (123)456-7890<br>
+		Update Phone Number: <input id="new_phone" type="tel" name="new_phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+		<%= phoneerror %>
+		<br>
 		<input type="submit" value= "Submit">
 	</form>
 	</div>
