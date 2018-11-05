@@ -237,7 +237,7 @@ public class DBHelper {
 					Class.forName(CLASS_NAME);
 					conn3 = DriverManager.getConnection(CONNECTION_URL); 
 					
-					String query = "INSERT INTO userInfo(id,zipcode,kids,pets,phoneNumber) VALUES (?,?,?,?,?)";
+					String query = "INSERT INTO userInfo(username,zipcode,kids,pets,phoneNumber) VALUES (?,?,?,?,?)";
 					ps3 = conn3.prepareStatement(query);		
 					ps3.setString(1, u.username);
 					ps3.setInt(2, u.zipcode);
@@ -360,7 +360,7 @@ public class DBHelper {
 	
 	public boolean sendMessage (Message m) {
 		//add m to messages table
-		if(!userExists(m.recipient)) {
+		if(!unameExists(m.recipient)) {
 			return false;
 		} else {
 			//send message here
@@ -368,7 +368,7 @@ public class DBHelper {
 				Class.forName(CLASS_NAME);
 				conn = DriverManager.getConnection(CONNECTION_URL); 
 				
-				String query = "INSERT INTO messages(senderID,recipientID,timeSent,mSubject,mContent,mRead) VALUES (?,?,?,?,?,?)";
+				String query = "INSERT INTO messages(senderName,recipientName,timeSent,mSubject,mContent,mRead) VALUES (?,?,?,?,?,?)";
 				Byte b = 0;
 				ps = conn.prepareStatement(query);
 				ps.setString(1, user.username);
@@ -415,7 +415,7 @@ public class DBHelper {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Message m = new Message();
-				m.id = rs.getInt("id");
+				m.id = rs.getInt("messageID");
 				m.sender = rs.getString("senderName");
 				m.recipient = user.username;
 				m.subject = rs.getString("mSubject");
@@ -535,12 +535,11 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
 			
-			String query = "UPDATE users SET username=?, pass=?, email=? WHERE username=?";
+			String query = "UPDATE users SET pass=?, email=? WHERE username=?";
 			ps2 = conn2.prepareStatement(query);		
-			ps2.setString(1, user.username);
-			ps2.setString(3, user.email);
-			ps2.setString(2, user.password);
-			ps2.setString(4, user.username);
+			ps2.setString(2, user.email);
+			ps2.setString(1, user.password);
+			ps2.setString(3, user.username);
 			ps2.executeUpdate();
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();

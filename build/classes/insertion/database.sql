@@ -1,4 +1,3 @@
-
 DROP DATABASE IF EXISTS shelterSeeker;
 CREATE DATABASE shelterSeeker;
 USE shelterSeeker;
@@ -10,7 +9,7 @@ CREATE TABLE users (
     isShelter BIT NOT NULL DEFAULT 0
     );
 CREATE TABLE userInfo (
-	id INT(11) PRIMARY KEY AUTO_INCREMENT,
+	id INT(11) PRIMARY KEY AUTO_INCREMENT,		
     username VARCHAR (255) NOT NULL UNIQUE,
     zipcode INT(5),
     kids INT(3),
@@ -28,13 +27,13 @@ CREATE TABLE messages (
     mSubject VARCHAR (255) NOT NULL,
     mContent TEXT NOT NULL,
 	mRead BIT NOT NULL DEFAULT 0,
-    FOREIGN KEY (senderID) REFERENCES users(username),
-    FOREIGN KEY (recipientID) REFERENCES users(username)
+    FOREIGN KEY (senderName) REFERENCES users(username),
+    FOREIGN KEY (recipientName) REFERENCES users(username)
     
 );
 
 CREATE TABLE shelterInfo (
-	id INT (11) PRIMARY KEY,
+	id INT (11) PRIMARY KEY auto_increment,
     own VARCHAR (255) UNIQUE NOT NULL,
     zipcode INT(5) NOT NULL,
     kids INT(3),
