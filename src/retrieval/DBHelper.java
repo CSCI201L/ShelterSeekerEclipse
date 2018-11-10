@@ -318,6 +318,58 @@ public class DBHelper {
 		}
 	}
 	
+	/**
+	 * Track clicks for each user
+	 * @param u
+	 * @param s
+	 */
+	public void trackAdd (UserInfo u, Shelter s) {
+		//should sign up organization user with isShelter = true by adding to userinfo table
+		//should add entry to Shelter table. Both Should contain the same values
+
+		Connection conn2 = null;
+		PreparedStatement ps2 = null;
+		ResultSet rs2 = null;
+		try {
+			Class.forName(CLASS_NAME);
+			conn2 = DriverManager.getConnection(CONNECTION_URL); 
+			
+			String query = "INSERT INTO Adds(shelterID, time zipcode,kids,pets,phoneNumber,biography,nearGrocery,nearPharmacy,nearLaundromat) VALUES (?,UTC_DATE(),?,?,?,?,?,?,?,?)";
+			ps2 = conn2.prepareStatement(query);		
+			ps2.setInt(1, s.id);
+			ps2.setInt(2, s.zipcode);
+			ps2.setInt(3, s.kids);
+			ps2.setInt(4, s.pets);
+			ps2.setInt(5, s.phoneNumber);
+			ps2.setString(6, s.bio);
+			ps2.setByte(7, s.nearGrocery);
+			ps2.setByte(8, s.nearPharmacy);
+			ps2.setByte(9, s.nearLaundromat);
+			ps2.executeUpdate();
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if (rs2 != null) {
+					rs2.close();
+				}
+				if (ps2 != null) {
+					ps2.close();
+				}
+				if (conn2!= null) {
+					conn2.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle closing streams: " + sqle.getMessage());
+			}
+		}
+	}
+	
+	
+	
 	//TO BE USED ON SEARCH SHELTER PAGE --
 	public ArrayList<Shelter> getShelters(){
 		ArrayList<Shelter> res = new ArrayList<>();
