@@ -36,27 +36,29 @@
 	</ul>
 	</div>
 	<div id="middle">
-	<form ><!-- action=""> -->
-      <input type="text" placeholder="Search Shelters near Location" name="search">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
-		<label for="filter">Kids allowed?</label>
-        <select >
-            <option value="0" selected>Yes</option>
-            <option value="1">No </option>
-        </select>      
+	<form action="javascript:onSearch();"><!-- action=""> -->
+     	<input type="text" placeholder="Search Shelters near Location" name="search">
+     	<h4>Kids allowed? </h4>
+     	<input type="radio" id="criteriaKidsYes" name="criteriaKids" value="Yes"/>
+     	<label for="criteriaKidsYes">Yes</label>
+     	<input type="radio" id="criteriaKidsNo" name="criteriaKids" value="No"/>
+        <label for="criteriaKidsNo">No</label>
+
         <label for="filter">Pets allowed?</label>
-        <select>
-            <option value="0" selected>Yes</option>
-            <option value="1">No </option>
+        <select id="criteriaPets">
+            <option value="Yes" selected>Yes</option>
+            <option value="No">No </option>
         </select>
           <label for="filter">Nearby Resources</label>
-        <select multiple="3">
-            <option value="0" selected>Pharmacy</option>
-            <option value="1">Grocery Store </option>
-            <option value="2">Laundromat </option>
+          
+        <select multiple id="criteriaResources">
+        	<option value="None" selected></option>
+            <option value="Pharmacy">Pharmacy</option>
+            <option value="Grocery">Grocery Store </option>
+            <option value="Laundromat">Laundromat </option>
         </select>       
-        Settling Rating
-         <input type="range" min="1" max="5" class="slider" id="myRange">
+        Minimum Shelter Rating
+         <input type="range" min="1" max="5" class="slider" id="criteriaMinRating">
       <button type="submit"><i class="fa fa-search"></i></button>
     </form>
 	Preferences 
@@ -65,36 +67,18 @@
 	<br/>
 	<button id="signout" onclick="signOut();">Sign out button</button>
 	<div id="resultsTable">
-	<table>
-		<tr>
-			<th>Shelter Info</th>
-			<th>Shelter Name</th>
-		</tr>
-		<tr>
-			<td>Image</td>
-			<td> Name </td>
-		</tr>
-		<tr>
-			<td>Address</td>
-			<td> <table>
-			<tr><th></th><th></th>
-				</tr><tr><td>Display Preferences</td><td>Resources Offered</tr>
-				<tr><td>pref 1</td><td> resource 1</td></tr>
-				</table>  </td>
-		</tr>
-		<tr>
-			<td>Image2</td>
-			<td> Name2 </td>
-		</tr>
-		<tr>
-			<td>Address2</td>
-			<td> <table>
-			<tr><th></th><th></th>
-				</tr><tr><td>Display Preferences</td><td>Resources Offered</tr>
-				<tr><td>pref 2</td><td> resource 2</td></tr>
-				</table>  </td>
-		</tr>
-	</table>
+		<table id="searchResultsTable">
+			<thead>
+				<tr>
+					<th>Shelter Id</th>
+					<th>Shelter Info</th>
+					<th>Shelter ZipCode</th>
+				</tr>
+			</thead>
+			<tbody>
+			
+			</tbody>
+		</table>
 
 	</div> 
 		
@@ -105,8 +89,71 @@
 	</div>
 	
 	<script>
+	var prevNumSearchResults;
 	function signOut(){
 	    document.location.href = "http://localhost:8080/CSCI201-Project/signin.jsp";
+	}
+	
+	function onSearch() {
+		console.log(document.getElementsByName("criteriaKidsYes"));
+		console.log(document.getElementsByName("criteriaKidsNo"));
+
+		var xhttp = new XMLHttpRequest();
+		xhttp.open("POST", "Search", true);
+		xhttp.onreadystatechange = function () {
+			// Put the response in an array format
+			let responseText = this.responseText;
+			let responseArray = []
+			let currentStr = ""
+			for(let i = 0; i < responseText.length; i++) {
+				if (responseText[i] != "\n") {
+					currentStr += responseText[i];
+				}
+				else {
+					responseArray.push(currentStr);
+					currentStr = "";
+				}
+			}
+			
+			// Clear the search results table
+			let table = document.getElementById("searchResultsTable").getElementsByTagName('tbody')[0];
+			for(let i = prevNumSearchResults; i > 0; i--) {
+				try {
+					table.deleteRow(-1);
+				}
+				catch(error) {
+					continue;
+				}
+			}
+			
+			// Put the retrieved search results into the table
+			for(let i = 0; i < responseArray.length; i+=3) {
+				let row = table.insertRow();
+				row.style.height="60px";
+				for(let j = 0; j < 3; j++) {
+					let currentCell = row.insertCell();
+					currentCell.innerHTML = responseArray[i + j];
+					currentCell.style.borderTop = "1px solid #898989";
+					if (j % 3 == 0) currentCell.style.width = "450px";
+					else if (j % 3 == 1) currentCell.style.width ="200px";
+					else currentCell.style.width ="250px";
+					currentCell.addEventListener('click', function() {
+						loadSearchResult(responseArray[i]);
+					});
+				}
+				
+			}
+			
+			prevNumSearchResults = responseArray.length / 3;
+		}
+		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhttp.send("email=borie@usc.edu&pharmacyNearby=false&groceryNearby=true&laundromatNearby=false"); 
+	}
+	
+	function loadSearchResult(shelterId) {
+		console.log(shelterId);
+		document.location.href = "http://localhost:8080/ShelterSeekerEclipse/searchResult?shelterId=" + 
+				shelterId;
 	}
 	</script>
 </body>
