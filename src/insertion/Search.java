@@ -42,9 +42,9 @@ public class Search extends HttpServlet {
 		ResultSet rs = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:" + databasePort + "/" + 
+			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:" + databasePort + "/" + 
 				databaseName + "?user=" + databaseUserName + "&password= " + databasePassword + 
-				"&useSSL=false&serverTimezone=UTC");
+				"&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true");
 			String pharmacyNearby = request.getParameter("pharmacyNearby");
 			String groceryNearby = request.getParameter("groceryNearby");
 			String laundromatNearby = request.getParameter("laundromatNearby");
