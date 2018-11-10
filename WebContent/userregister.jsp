@@ -17,7 +17,7 @@
 		<!-- sign up section onsubmit="return !!(validateEmail() & validateUsername() & validatePassword() & validateZip());" -->
 		
 		<form name="signup"  action="bSignUp" method="GET" ><!-- method="POST" action ="Servlet" -->
-			Sign-U <br/>
+			Sign-Up <br/>
 			<input id="email" type="text" name ="email" placeholder ="Email" > <span id="email-error"></span>
 			<br/>
 			<input id="un" type="text" name ="username" placeholder ="Username" > <span id="un-error"></span>

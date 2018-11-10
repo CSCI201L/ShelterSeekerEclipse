@@ -6,32 +6,63 @@
 	<title>Shelter Seekers Organization Settings</title>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
-<body onload="defaultContactInfo();">
+<%
+	String currpassworderror=(String)request.getAttribute("currpass_err");
+	if(currpassworderror==null){
+		currpassworderror="";
+	}
+	String newpassworderror=(String)request.getAttribute("newpass_err");
+	if(newpassworderror==null){
+		newpassworderror="";
+	}
+	String ziperror=(String)request.getAttribute("zip_err");
+	if(ziperror==null){
+		ziperror="";
+	}
+	String phoneerror=(String)request.getAttribute("phone_err");
+	if(phoneerror==null){
+		phoneerror="";
+	}
+%>
+<body> <!-- onload="defaultContactInfo();"> -->
 	<div id="security">
 	<h1>Security Preferences</h1><br>
-	<form onsubmit="return validate();"><!-- method="POST" action="Servlet" -->
+	<form action="bUpdateOrg" method="GET"><!-- onsubmit="return validate();"> --><!-- method="POST" action="Servlet" -->
 		Current Email: currentemail@.com<br>
-		Change your email: <input id="new_email" type="text" name="new email" placeholder="New Email"><span id="email-error"></span><br> 
 		<h4>Reset your password here</h4>
-		Enter your current password: <input id="curr_pass" type="text" name="current_password" placeholder="Current password"><span id="curr_pass-error"></span><br> 
-		Enter your new password: <input id="new_pass" type="text" name="new_password" placeholder="New password"><span id="new_pass-error"></span><br>
-		<input type="submit" value= "Submit">
-	</form>
-	</div>
-	<div id="shelter">
-	<h1>Shelter Description</h1><br>
-	<form ><!-- method="POST" action="Servlet" -->
-		Shelter Allows Children ?<br>
-		<input type="radio" name="children" value="yes"> Yes<br>
-		<input type="radio" name="children" value="no"> No<br>
-		Shelter Allows Pets ? <br>
-		<input type="radio" name="pets" value="yes" > Yes<br>
-		<input type="radio" name="pets" value="no"> No<br>
-		Shelter Near Pharmacy within 5 mile distance ? <br>
-		<input type="radio" name="pharmacy" value="yes"> Yes<br>
-		<input type="radio" name="pharmacy" value="no"> No<br>
+		Enter your current password: <input id="curr_pass" type="text" name="current_password" placeholder="Current password">
+		<%= currpassworderror %>
+		<br> 
+		Enter your new password: <input id="new_pass" type="text" name="new_password" placeholder="New password">
+		<%= newpassworderror %>
+		<br>
+	<h1>Shelter Description</h1>
+		Are you a shelter that allows children ?<br>
+		<input type="radio" name="children" value="1" required> Yes<br>
+		<input type="radio" name="children" value="0"> No<br>
+		Are you a shelter that allows pets ? <br>
+		<input type="radio" name="pets" value="1" required> Yes<br>
+		<input type="radio" name="pets" value="0"> No<br>
+		Are you a shelter that is near a pharmacy within a 5 mile distance? <br>
+		<input type="radio" name="pharmacy" value="1" required> Yes<br>
+		<input type="radio" name="pharmacy" value="0"> No<br>
+		Are you a shelter that is near a grocery within a 5 mile distance? <br>
+		<input type="radio" name="grocery" value="1" required> Yes<br>
+		<input type="radio" name="grocery" value="0"> No<br>
+		Are you a shelter that is near a laundromat within a 5 mile distance? <br>
+		<input type="radio" name="laundromat" value="1" required> Yes<br>
+		<input type="radio" name="laundromat" value="0"> No<br>
 		Organizations Contact Info <br>
-		<input id="org_info" type="text" name="org_info"> <br>
+		<a href="http://localhost:8080/ShelterSeeker/orgprofile.jsp"><input id="pic" type="text" value="Press to go to Picture" readonly></a><br>
+		<br>
+		Current Zipcode: 12345<br>
+		Update Zipcode: <input id="new_zipcode" type="text" name="new_zipcode" placeholder="Update Zip Code">
+		<%= ziperror %>
+		<br>
+		Current Phone Number: (123)456-7890<br>
+		Update Phone Number: <input id="new_phone" type="tel" name="new_phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+		<%= phoneerror %>
+		<br>
 		<input type="submit" value= "Submit">
 	</form>
 	</div>
