@@ -31,7 +31,7 @@
 	<ul>
 		<li><a href="search.jsp">Search</a></li>
 		<li><a href="usermessages.jsp">Messages</a></li>
-		<li><a href="profile.jsp">Profile</a></li>
+		<li><a href="userprofile.jsp">Profile</a></li>
 	
 	</ul>
 	</div>
