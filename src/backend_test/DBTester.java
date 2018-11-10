@@ -24,7 +24,7 @@ public class DBTester {
 		u1.bio = "Hi this is a bio";
 		u1.email = "test@usc.edu";
 		u1.zipcode = 98075;
-		u1.phoneNumber = 9854079;
+		u1.phoneNumber = "sdfas";
 		u1.kids = 2;
 		u1.pets = 2;
 		u1.password = "pass1";
@@ -59,8 +59,8 @@ public class DBTester {
 		//testing message functions
 		Message m = new Message ();
 		m.body = " BODY TEST!";
-		m.recipient = db1.user.id;
-		m.sender= db2.user.id;
+		m.recipient = db1.user.username;
+		m.sender= db2.user.username;
 		m.subject = "Subject 1!";
 		m.timeSent = 0;
 		
@@ -68,6 +68,7 @@ public class DBTester {
 			System.out.println("Message function sent message!");
 		} else {
 			System.out.println("Error in sending message");
+			return;
 		}
 		
 		ArrayList<Message> mail = db1.getMessages();
@@ -75,19 +76,21 @@ public class DBTester {
 			System.out.println("Get Messages works " + mail.get(0).body);
 		} else {
 			System.out.println("Error in recieving messages");
+			return;
 		}
 		
-		db2.user.username = "blahnew";
+		db2.user.password = "blahnew";
 		db2.updateUserSettings(db2.user);
 		db2.shInfo.zipcode = 12345;
 		db2.updateShelterSettings(db2.shInfo);
 		//re sign in
-		db2 = new DBHelper("org@usc.edu","pass1");
-		if (db2.user.username.equalsIgnoreCase("blahnew")) {
+		db2 = new DBHelper("org@usc.edu","blahnew");
+		if (db2.user.password.equalsIgnoreCase("blahnew")) {
 			System.out.println("update user info works");
 		} else {
 			System.out.println("user info not updated!");
 			System.out.println(db2.user.username);
+			return;
 		}
 		
 		if (db2.shInfo.zipcode == 12345) {
@@ -95,8 +98,9 @@ public class DBTester {
 		} else {
 			System.out.println("shelter settings not updated!");
 			System.out.println(db2.shInfo.zipcode);
+			return;
 		}
-		DBHelper.visitShelter(db2.shInfo.id);
+		DBHelper.visitShelter(db2.shInfo.owner);
 
 		
 	}
