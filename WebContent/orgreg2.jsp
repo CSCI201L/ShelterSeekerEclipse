@@ -109,24 +109,28 @@
 	<div id="top" class = " purple block"> 
 		
 	</div>
-		<p class = "segoe" style = "font-size: 20px; font-weight: bold;color: red"><%= err %></p>
 	<div id="middle"> 
 		<button onClick = "redirectHome();" style = "top:0;float:left;" class ="back oh segoe blueFont"> <span> Back </span> </button>
 		<div id="content" style="margin-left:500px; text-align:center; display:inline-block;">
 			<div id="Sign-Up" style="display:inline-block;">
-				<p class = "segoe title blueFont" style="font-size:34px"> Register Now!</p>
-				<form name="signup"  action="bSignUp" method="GET" ><!-- method="POST" action ="Servlet" -->
-					<input id="email" type="email" class = "segoe blueFont" name ="email" style="margin:10px" placeholder ="Email" required> <br>
-					<input id="un" type="text" class = "segoe blueFont" style="margin:10px" name ="username" placeholder ="Username" required> <br>
-					<input id="pwd" type="text" class = "segoe blueFont" style="margin:10px" name ="password" placeholder ="Password" required> <br>
-					<input id="zip" type="text"class = "segoe blueFont" style="margin:10px"  name ="zipcode" placeholder ="Zipcode" required > <br>
-					<input id="zip" type="text"class = "segoe blueFont" style="margin:10px"  name ="phone" placeholder ="Phone Number" required > <br>
-					<p class = "segoe title blueFont" style="font-size:30px; font-style:italic; margin-bottom:10px;">Preferences</p> 
-					<p  class = "style-options segoe blueFont" >Are you looking for shelters that allow children?</p>
+				<p class = "segoe title blueFont" style="font-size:34px"> Register Organization</p>
+				<form name="signup"  action="oSignUp2" method="GET" ><!-- method="POST" action ="Servlet" -->
+					<p class = "segoe title blueFont" style="font-size:30px; font-style:italic; margin-bottom:10px;">Shelter Info</p> 
+				<p class = "segoe" style = "font-size: 20px; font-weight: bold;color: red"><%= err %></p>
+					<p  class = "style-options segoe blueFont" >Do you allow children?</p>
 					<input type="checkbox" name="children" checked> Yes<br>
-					<p  class = "style-options segoe blueFont" >Are you looking for shelters that allow pets?</p>
+					<p  class = "style-options segoe blueFont" >Do you allow pets?</p>
 					<input type="checkbox" name="pets" value="yes" checked> Yes<br>
-					<input type="submit" class ="b oh segoe blueFont" value= "Sign-Up">
+					<p  class = "style-options segoe blueFont" >Are you near a Pharmacy?</p>
+					<input type="checkbox" name="pharmacy" value="yes" checked> Yes<br>
+					<p  class = "style-options segoe blueFont" >Do you allow Grocery?</p>
+					<input type="checkbox" name="grocery" value="yes" checked> Yes<br>
+					<p  class = "style-options segoe blueFont" >Do you allow Laundromat?</p>
+					<input type="checkbox" name="laundromat" value="yes" checked> Yes<br>
+					<input  type="number" class = "segoe blueFont" name ="occupants" style="margin:10px" placeholder ="Current Occupants" required> <br>
+					<input  type="number" class = "segoe blueFont" name ="capacity" style="margin:10px" placeholder ="Capacity" required> <br>
+					<input  type="textarea" form="Sign-up" class = "segoe blueFont" name ="bio" style="height: 100px;margin:10px" placeholder ="Tell us about your shelter!" required> <br>
+					<input type="submit" class ="b oh segoe blueFont" value= "Sign-UP">
 				</form>
 		  	</div>	
 		</div>

@@ -2,10 +2,10 @@ package retrieval;
 
 public class Shelter {
 	//Shelter Identifiers
-	public int id;
+	//public int id;
 	public String shelterName;
 	public int zipcode;
-	
+	public String owner;
 	public int capacity = 0;
 	public int phoneNumber = 0;
 	public String bio = "";
@@ -13,7 +13,6 @@ public class Shelter {
 	public int numRatingGiven = 0;
 	public Byte nearGrocery = 0;
 	public int numPendingRequests = 0;
-	
 	// Amenities
 	public int kids = 0;
 	public int pets = 0;
