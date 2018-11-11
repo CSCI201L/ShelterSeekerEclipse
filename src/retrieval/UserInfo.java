@@ -7,7 +7,7 @@ public class UserInfo {
 	public String bio;
 	public String email; //this will be unique identifier
 	public int zipcode;
-	public int phoneNumber;
+	public String phoneNumber;
 	public int kids;
 	public int pets;
 	public String password;

@@ -10,18 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import retrieval.DBHelper;
+import retrieval.UserInfo;
 
 /**
- * Servlet implementation class vSignIn
+ * Servlet implementation class oSignUp1
  */
-@WebServlet("/vSignIn")
-public class vSignIn extends HttpServlet {
+@WebServlet("/oSignUp1")
+public class oSignUp1 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public vSignIn() {
+    public oSignUp1() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,33 +32,24 @@ public class vSignIn extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String username = request.getParameter("username");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		if (email ==null) {
-			email = "";
-		} 
-		if (password ==null) {
-			password = "";
+		int zipcode =Integer.parseInt( request.getParameter("zipcode"));
+		String phone = request.getParameter("phone");
+
+
+
+		String path = "/userregister.jsp";
+		boolean error = false;
+		if (email.equals ("") || password.equals("") || username.equals("") ) {
+			error = true;
 		}
-		DBHelper db = new DBHelper (email,password);
-		String path = "/signin.jsp";
-		if (db.didConnect()) {
-			if(db.user.isShelter ==1) {
-				//TEMPORARY -- REDIRECT TO ORGHOMEPAGE
-				path = "/orgsignin.jsp";
-			} else {
-				path = "/userhomepage.jsp";
-				 	
-			}
+		if (DBHelper.userExists(email) && !error) {
+			request.setAttribute("err", "User Already Exists");
+			path = "/orgreg1.jsp";
 		} else {
-			if (email.equalsIgnoreCase	("guest")) {
-				System.out.println("SPECIAL GUEST CASE");
-				path = "/userhomepage.jsp";
-			}else {
-				System.out.println("Normal Failed");
-				System.out.println(email);
-				request.setAttribute("err", "Sign In Failed");
-			}
+			path = "/orgreg2.jsp";
 		}
 		
 		RequestDispatcher dispatch = getServletContext().getRequestDispatcher(path);
