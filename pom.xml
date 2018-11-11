@@ -9,8 +9,6 @@
   <description>A webapp that helps connect domestic abuse victims to domestic abuse oriented shelters</description>
   
   <properties>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <maven.compiler.source>1.8</maven.compiler.source>
   	<java.version>1.8</java.version>
   </properties>
   
@@ -28,12 +26,7 @@
 	    <artifactId>mysql-connector-java</artifactId>
 	    <version>8.0.13</version>
 	</dependency>
-  	<dependency>
-	    <groupId>javax.faces</groupId>
-	    <artifactId>javax.faces-api</artifactId>
-	    <version>2.3</version>
-	    <scope>provided</scope>
-	</dependency>
+  	
   </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
