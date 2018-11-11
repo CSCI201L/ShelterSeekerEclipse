@@ -1,145 +1,56 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- sign up section onsubmit="return !!(validateEmail() & validateUsername() & validatePassword() & validateZip());" -->
-<%
-	String err = (String) request.getAttribute("err");
-	if (err==null){
-		err = "";
-	}
-	%>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Shelter Seekers User Register</title>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	
-	<style>
-		.purple {
-			background-color: purple;
-			opacity:0.7;
-			filter: grayscale(10%);	
-			
-		}
-		.style-options {
-			margin-bottom:0px;
-			font-size:18px;
-			
-			
-		}
-		.blueFont {
-			color: blue;
-			opacity:0.9;
-			filter: grayscale(80%);
-		}
-		.block {
-			width:100%;
-			height:10%;
-		}
-		.oh:hover{
-			background-color: purple;
-			opacity:0.7;
-			filter: grayscale(10%);	
-			color: white;
-		}
-		.title {
-		    font-size: 34px;
-   	 margin-top: 50px;
-		}
-		.segoe{
-		font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif; 
-		font-size: 24px; 
-		font-style: normal;
-		 font-variant: normal; 
-		 font-weight: 200; 
-		 line-height: 26.4px; 
-		 }
-		 .back span {
-			  cursor: pointer;
-			  display: inline-block;
-			  position: relative;
-			  transition: 0.5s;
-			}
-			
-			.back span:before {
-			
-			  content: '\00ab';
-			  position: absolute;
-			  opacity: 0;
-			  top: 0;
-			  left: -10px;
-			  transition: 0.5s;
-			}
-			
-			.back:hover span {
-			  padding-left: 25px;
-			}
-			
-			.back:hover span:before {
-			  opacity: 1;
-			  left: 0;
-			}
-			.b span {
-			  cursor: pointer;
-			  display: inline-block;
-			  position: relative;
-			  transition: 0.5s;
-			}
-			
-			.b span:after {
-			  content: '\00bb';
-			  position: absolute;
-			  opacity: 0;
-			  top: 0;
-			  right: -20px;
-			  transition: 0.5s;
-			}
-			
-			.b:hover span {
-			  padding-right: 25px;
-			}
-			
-			.b:hover span:after {
-			  opacity: 1;
-			  right: 0;
-			}
-	</style>
 </head>
-<body style = "width: 1500px; height: 1000px" >
-	<div id="top" class = " purple block"> 
-		
-	</div>
-		<p class = "segoe" style = "font-size: 20px; font-weight: bold;color: red"><%= err %></p>
-	<div id="middle"> 
-		<button onClick = "redirectHome();" style = "top:0;float:left;" class ="back oh segoe blueFont"> <span> Back </span> </button>
-		<div id="content" style="margin-left:500px; text-align:center; display:inline-block;">
-			<div id="Sign-Up" style="display:inline-block;">
-				<p class = "segoe title blueFont" style="font-size:34px"> Register Now!</p>
-				<form name="signup"  action="bSignUp" method="GET" ><!-- method="POST" action ="Servlet" -->
-					<input id="email" type="email" class = "segoe blueFont" name ="email" style="margin:10px" placeholder ="Email" required> <br>
-					<input id="un" type="text" class = "segoe blueFont" style="margin:10px" name ="username" placeholder ="Username" required> <br>
-					<input id="pwd" type="text" class = "segoe blueFont" style="margin:10px" name ="password" placeholder ="Password" required> <br>
-					<input id="zip" type="text"class = "segoe blueFont" style="margin:10px"  name ="zipcode" placeholder ="Zipcode" required > <br>
-					<input id="zip" type="text"class = "segoe blueFont" style="margin:10px"  name ="phone" placeholder ="Phone Number" required > <br>
-					<p class = "segoe title blueFont" style="font-size:30px; font-style:italic; margin-bottom:10px;">Preferences</p> 
-					<p  class = "style-options segoe blueFont" >Are you looking for shelters that allow children?</p>
-					<input type="checkbox" name="children" checked> Yes<br>
-					<p  class = "style-options segoe blueFont" >Are you looking for shelters that allow pets?</p>
-					<input type="checkbox" name="pets" value="yes" checked> Yes<br>
-					<input type="submit" class ="b oh segoe blueFont" value= "Sign-Up">
-				</form>
-		  	</div>	
-		</div>
+<body>
+	<div id="top"> 
+	
 	</div>
 	
-	<div id="bottom" class = "purple block"> 
+	<div id="middle"> 
+	
+		<div id="Sign-Up">
+		<!-- sign up section onsubmit="return !!(validateEmail() & validateUsername() & validatePassword() & validateZip());" -->
+		
+		<form name="signup"  action="bSignUp" method="GET" ><!-- method="POST" action ="Servlet" -->
+			Sign-U <br/>
+			<input id="email" type="text" name ="email" placeholder ="Email" > <span id="email-error"></span>
+			<br/>
+			<input id="un" type="text" name ="username" placeholder ="Username" > <span id="un-error"></span>
+			<br/>
+			<input id="pwd" type="text" name ="password" placeholder ="Password" > <span id="pw-error"></span>
+			<br/>
+			<input id="zip" type="text" name ="zipcode" placeholder ="Zipcode" > <span id="zip-error"></span>
+			<br/>
+			Preferences <br/> 
+			Are you looking for shelters that allow children?
+			<br/>
+			<input type="radio" name="children" value="yes"> Yes<br>
+			<input type="radio" name="children" value="no"> No<br>
+			Are you looking for shelters that allow pets?
+			<br/>
+			<input type="radio" name="pets" value="yes"> Yes<br>
+			<input type="radio" name="pets" value="no"> No<br>
+			Are you looking for shelters that are located five miles from a pharmacy?
+			<br/>
+			<input type="radio" name="pharma" value="yes"> Yes<br>
+			<input type="radio" name="pharma" value="no"> No<br>
+			<input type="submit" value= "Sign-Up">
+		</form>
+	  	</div>
+	<!-- <button id="loc" onclick="getLocation()">Find my Location</button>	  	
+	  <div id="myLoc"></div> -->	
+	</div>
+	
+	<div id="bottom"> 
 	
 	</div>
 	
 	<script>
-	function redirectHome(){
-		location.href="signin.jsp";
-	}
 	//validate email
 	function validateEmail(){
 		var x=document.getElementById("email").value;

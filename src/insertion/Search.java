@@ -30,7 +30,6 @@ public class Search extends HttpServlet {
 	static final String databasePassword = "password1";
 	static final String databasePort = "3306";
 	static final String databaseName = "shelterSeeker";
-	static final String googleAPIKey = "AIzaSyByHkT9nYExPGBdrF8go_Iep92WAnfloWk";
        
     public Search() {
         super();
@@ -90,9 +89,9 @@ public class Search extends HttpServlet {
 				currentShelter.id = rs.getInt("id");
 				currentShelter.kids = rs.getInt("kids");
 				currentShelter.pets = rs.getInt("pets");
-				currentShelter.phoneNumber = rs.getString("phoneNumber");
-				currentShelter.currentRating = rs.getDouble("currentRating");
-				currentShelter.zipcode = rs.getInt("zipCode");
+				currentShelter.phoneNumber = rs.getInt("phoneNumber");
+				currentShelter.rating = rs.getDouble("currentRating");
+				currentShelter.zipCode = rs.getInt("zipCode");
 				shelters.add(currentShelter);
 			}
 			
@@ -100,61 +99,55 @@ public class Search extends HttpServlet {
 				public int compare(Shelter lhs, Shelter rhs) {
 					URL url;
 					try {
-						url = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial"
-								+ "&origins=" + Integer.toString(searcherZipCode) + "&destinations=" + 
-								Integer.toString(lhs.zipcode) + "&key=" + googleAPIKey);
+						url = new URL("https://www.zipcodeapi.com/rest/" +
+							"dYZyo4NBkBmvPIE8EzqA3NABipAJG4wFOLkvJdTFufVARAcVmSE2HCVf8NRp4imi/distance.json/" + 
+							Integer.toString(searcherZipCode) + "/" + Integer.toString(lhs.zipCode) + "/mile");
 						HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 						connection.setRequestMethod("GET");
 					    connection.connect();
 					    BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 					    String line = br.readLine();
 					    double distanceLHS = 0;
-					    boolean distanceOnNextLine = false;
-					    while (line != null) {
-					    	if (distanceOnNextLine) {
-					    		String distance = "";
-					    		for(int i = 0; i < line.length(); i++) {
-					    			if ((line.charAt(i) <= '9' && line.charAt(i) >= '0') || line.charAt(i) == '.') {
-					    				distance += line.charAt(i);
-					    			}
-					    		}
-					    		distanceLHS = Double.parseDouble(distance);
-					    		distanceOnNextLine = false;
-					    	}
-					    	if (line.contains("distance")) {
-					    		distanceOnNextLine = true;
-					    	}
-					    	line = br.readLine();
-					    }
-				    	url = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial"
-								+ "&origins=" + Integer.toString(searcherZipCode) + "&destinations=" + 
-								Integer.toString(rhs.zipcode) + "&key=" + googleAPIKey);
+				    	if (line != null) {
+				    		try {
+				    			line = line.substring(line.indexOf(":") + 1, line.length() - 1);
+				    			distanceLHS = Double.parseDouble(line);
+				    		} catch (Exception e) {
+				    			System.out.println("Formatting error with return value from zipcode API");
+				    		}
+				    	} else {
+				    		System.out.println("Error with return value from zipcode API: response was null");
+				    	}
+				    	
+				    	url = new URL("https://www.zipcodeapi.com/rest/" +
+								"dYZyo4NBkBmvPIE8EzqA3NABipAJG4wFOLkvJdTFufVARAcVmSE2HCVf8NRp4imi/distance.json/" + 
+								Integer.toString(searcherZipCode) + "/" + Integer.toString(rhs.zipCode) + "/mile");
 						connection = (HttpURLConnection)url.openConnection();
 						connection.setRequestMethod("GET");
 					    connection.connect();
 					    br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 					    line = br.readLine();
 					    double distanceRHS = 0;
-					    distanceOnNextLine = false;
-					    while (line != null) {
-					    	if (distanceOnNextLine) {
-					    		String distance = "";
-					    		for(int i = 0; i < line.length(); i++) {
-					    			if ((line.charAt(i) <= '9' && line.charAt(i) >= '0') || line.charAt(i) == '.') {
-					    				distance += line.charAt(i);
-					    			}
-					    		}
-					    		distanceRHS = Double.parseDouble(distance);
-					    		distanceOnNextLine = false;
-					    	}
-					    	if (line.contains("distance")) {
-					    		distanceOnNextLine = true;
-					    	}
-					    	line = br.readLine();
-					    }
+				    	if (line != null) {
+				    		try {
+				    			line = line.substring(line.indexOf(":") + 1, line.length() - 1);
+				    			distanceRHS = Double.parseDouble(line);
+				    		} catch (Exception e) {
+				    			System.out.println("Formatting error with return value from zipcode API");
+				    		}
+				    	} else {
+				    		System.out.println("Error with return value from zipcode API: response was null");
+				    	}
 				    	int result = (int)distanceLHS - (int)distanceRHS;
+//				    	System.out.println("*****");
+//				    	System.out.println(lhs.biography);
+//				    	System.out.println(rhs.biography);
+//				    	System.out.println(distanceLHS);
+//				    	System.out.println(distanceRHS);
+//				    	System.out.println(result);
+//				    	System.out.println("*****");
 				    	if (result == 0) { // Same ZipCode, sort by rating
-				    		if (lhs.currentRating > rhs.currentRating) result = -1;
+				    		if (lhs.rating > rhs.rating) result = -1;
 				    		else result = 1;
 				    	}
 				    	return result;
@@ -166,13 +159,8 @@ public class Search extends HttpServlet {
 				}	
 			});
 			
-	    	response.setContentType("text");
-			PrintWriter out = response.getWriter();
-			
 			for(Shelter s : shelters) {
-				out.println(s.id);
-				out.println(s.bio);
-				out.println(s.zipcode);
+				s.printInfo();
 			}
 			
 //			

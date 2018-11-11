@@ -8,7 +8,6 @@ CREATE TABLE Adds (
 	kids int,
 	pets int,
 	phoneNumber int,
-	biography varchar,
 	nearGrocery boolean,
 	nearPharmacy boolean,
 	nearLaundromat boolean,
