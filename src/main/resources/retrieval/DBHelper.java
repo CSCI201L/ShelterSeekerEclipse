@@ -45,12 +45,12 @@ public class DBHelper {
 				user.username = rs.getString("username");
 				user.isShelter = rs.getByte("isShelter");
 				user.password = password;
-				updateUserInfo(user.username);
+				updateUserInfo(userId);
 				user.id = this.userId;
 				if (user.isShelter == 1) {
 					System.out.println("A SHELTER!");
-					shInfo = getShelterInfo(user.username);
-					shInfo.owner=user.username;
+					shInfo = getShelterInfo(user.id);
+					shInfo.id=user.id;
 				} else {
 					System.out.println("NOT A SHELTER!");
 				}
@@ -83,7 +83,7 @@ public class DBHelper {
 		//END DUMMY
 	}
 	
-	public void updateUserInfo (String username) {
+	public void updateUserInfo (int userId) {
 		Connection conn1 = null;
 		PreparedStatement ps1 = null;
 		ResultSet rs1 = null;
@@ -91,15 +91,15 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn1 = DriverManager.getConnection(CONNECTION_URL); 
 			
-			String query = "SELECT * FROM userInfo WHERE username=?";
+			String query = "SELECT * FROM userInfo WHERE id=?";
 			ps1 = conn1.prepareStatement(query);		
-			ps1.setString(1, username);
+			ps1.setInt(1, userId);
 			rs1 = ps1.executeQuery();
 			while (rs1.next()) {
 				user.zipcode = rs1.getInt("zipcode");
 				user.kids = rs1.getInt("kids");
 				user.pets = rs1.getInt("pets");
-				user.phoneNumber = rs1.getString("phoneNumber");
+				user.phoneNumber = rs1.getInt("phoneNumber");
 			}
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -122,7 +122,7 @@ public class DBHelper {
 			}
 		}
 	}
-	public Shelter getShelterInfo(String owner) {
+	public Shelter getShelterInfo(int userId) {
 		Shelter s = new Shelter();
 		Connection conn1 = null;
 		PreparedStatement ps1 = null;
@@ -131,13 +131,13 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn1 = DriverManager.getConnection(CONNECTION_URL); 
 			
-			String query = "SELECT * FROM shelterInfo WHERE own=?";
+			String query = "SELECT * FROM shelterInfo WHERE id=?";
 			ps1 = conn1.prepareStatement(query);		
-			ps1.setString(1, owner);
+			ps1.setInt(1, userId);
 			rs1 = ps1.executeQuery();
 			while (rs1.next()) {
 				System.out.println("FOUND VALUES!");
-				s.owner = rs1.getString("own");
+				s.id = rs1.getInt("id");
 				s.zipcode = rs1.getInt("zipcode");
 				s.kids = rs1.getInt("kids");
 				s.pets = rs1.getInt("pets");
@@ -184,9 +184,9 @@ public class DBHelper {
 	}
 	
 	//SIGN UP VARIOUS USERS ---
-	public  String addNormalUser(UserInfo u) {
+	public  int addNormalUser(UserInfo u) {
 		//should sign up basic survivor
-		String userId = "";
+		int userId = -1;
 
 		Connection conn2 = null;
 		PreparedStatement ps2 = null;
@@ -226,24 +226,58 @@ public class DBHelper {
 		 ps2 = null;
 		 rs2 = null;
 			//if isn't a shelter, create a table in userInfo
-			
+			try {
+				Class.forName(CLASS_NAME);
+				conn = DriverManager.getConnection(CONNECTION_URL); 
+				
+				String query = "SELECT * FROM users WHERE username=? AND pass=?";
+				ps = conn.prepareStatement(query);		
+				ps.setString(1, u.username);
+				ps.setString(2, u.password);
+				rs = ps.executeQuery();
+				if (rs.next()) {
+					userId = rs.getInt("userID"); 
+					u.id=userId;
+				}
+			}catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				try {
+					if (rs != null) {
+						rs.close();
+					}
+					if (ps != null) {
+						ps.close();
+					}
+					if (conn!= null) {
+						conn.close();
+					}
+				} catch (SQLException sqle) {
+					System.out.println("sqle closing streams: " + sqle.getMessage());
+				}
+			}
 			if (u.isShelter==0) {
 
 			 Connection conn3 = null;
 			 PreparedStatement ps3 = null;
 			 ResultSet rs3 = null;
-			
+			if (userId == -1) {
+				System.out.println("could not find the id?");
+			} else {
 				try {
 					Class.forName(CLASS_NAME);
 					conn3 = DriverManager.getConnection(CONNECTION_URL); 
 					
-					String query = "INSERT INTO userInfo(username,zipcode,kids,pets,phoneNumber) VALUES (?,?,?,?,?)";
+					String query = "INSERT INTO userInfo(id,zipcode,kids,pets,phoneNumber) VALUES (?,?,?,?,?)";
 					ps3 = conn3.prepareStatement(query);		
-					ps3.setString(1, u.username);
+					ps3.setInt(1, userId);
 					ps3.setInt(2, u.zipcode);
 					ps3.setInt(3, u.kids);
 					ps3.setInt(4, u.pets);
-					ps3.setString(5, u.phoneNumber);
+					ps3.setInt(5, u.phoneNumber);
 					
 					 ps3.executeUpdate();
 
@@ -266,16 +300,16 @@ public class DBHelper {
 					} catch (SQLException sqle) {
 						System.out.println("sqle closing streams: " + sqle.getMessage());
 					}
-				
+				}
 			}
 		}
-		return u.username;
+		return userId;
 		
 	}
 	public void createOrg (UserInfo u, Shelter s) {
 		//should sign up organization user with isShelter = true by adding to userinfo table
 		//should add entry to Shelter table. Both Should contain the same values
-		String userId = addNormalUser(u);
+		int userId = addNormalUser(u);
 		System.out.println(userId + " is the new id ");
 		Connection conn2 = null;
 		PreparedStatement ps2 = null;
@@ -284,9 +318,9 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
 			
-			String query = "INSERT INTO shelterInfo(own,zipcode,kids,pets,phoneNumber,biography,nearGrocery,nearPharmacy,nearLaundromat) VALUES (?,?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO shelterInfo(id,zipcode,kids,pets,phoneNumber,biography,nearGrocery,nearPharmacy,nearLaundromat) VALUES (?,?,?,?,?,?,?,?,?)";
 			ps2 = conn2.prepareStatement(query);		
-			ps2.setString(1, userId);
+			ps2.setInt(1, userId);
 			ps2.setInt(2, s.zipcode);
 			ps2.setInt(3, s.kids);
 			ps2.setInt(4, s.pets);
@@ -381,7 +415,7 @@ public class DBHelper {
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				String tempId = rs.getString("userID");
+				int tempId = rs.getInt("userID");
 				res.add(getShelterInfo(tempId));
 			}
 		}catch (ClassNotFoundException e) {
@@ -412,7 +446,7 @@ public class DBHelper {
 	
 	public boolean sendMessage (Message m) {
 		//add m to messages table
-		if(!unameExists(m.recipient)) {
+		if(!userExists(m.recipient)) {
 			return false;
 		} else {
 			//send message here
@@ -420,11 +454,11 @@ public class DBHelper {
 				Class.forName(CLASS_NAME);
 				conn = DriverManager.getConnection(CONNECTION_URL); 
 				
-				String query = "INSERT INTO messages(senderName,recipientName,timeSent,mSubject,mContent,mRead) VALUES (?,?,?,?,?,?)";
+				String query = "INSERT INTO messages(senderID,recipientID,timeSent,mSubject,mContent,mRead) VALUES (?,?,?,?,?,?)";
 				Byte b = 0;
 				ps = conn.prepareStatement(query);
-				ps.setString(1, user.username);
-				ps.setString(2, m.recipient);
+				ps.setInt(1, this.userId);
+				ps.setInt(2, m.recipient);
 				ps.setInt(3,m.timeSent);
 				ps.setString(4, m.subject);
 				ps.setString(5, m.body);
@@ -461,15 +495,15 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn = DriverManager.getConnection(CONNECTION_URL); 
 			
-			String query = "SELECT * FROM messages WHERE recipientName=?";
+			String query = "SELECT * FROM messages WHERE recipientID=?";
 			ps = conn.prepareStatement(query);
-			ps.setString(1, user.username);
+			ps.setInt(1, this.userId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Message m = new Message();
-				m.id = rs.getInt("messageID");
-				m.sender = rs.getString("senderName");
-				m.recipient = user.username;
+				m.id = rs.getInt("id");
+				m.sender = rs.getInt("senderID");
+				m.recipient = this.userId;
 				m.subject = rs.getString("mSubject");
 				m.body = rs.getString("mContent");
 				m.read = rs.getByte("mRead");
@@ -549,8 +583,8 @@ public class DBHelper {
 			rs2 = ps2.executeQuery();
 			while (rs2.next()) {
 				m.id = id;
-				m.sender = rs2.getString("senderName");
-				m.recipient = rs2.getString("recipientName");
+				m.sender = rs2.getInt("senderID");
+				m.recipient = rs2.getInt("recipientID");
 				m.subject = rs2.getString("mSubject");
 				m.body = rs2.getString("mContent");
 				m.read = rs2.getByte("mRead");
@@ -587,11 +621,12 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
 			
-			String query = "UPDATE users SET pass=?, email=? WHERE username=?";
+			String query = "UPDATE users SET username=?, pass=?, email=? WHERE userID=?";
 			ps2 = conn2.prepareStatement(query);		
-			ps2.setString(2, user.email);
-			ps2.setString(1, user.password);
-			ps2.setString(3, user.username);
+			ps2.setString(1, user.username);
+			ps2.setString(3, user.email);
+			ps2.setString(2, user.password);
+			ps2.setInt(4, user.id);
 			ps2.executeUpdate();
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -618,13 +653,13 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
 			
-			String query = "UPDATE userInfo SET zipcode=?, kids=?, pets=?, phoneNumber=? WHERE username=?";
+			String query = "UPDATE userInfo SET zipcode=?, kids=?, pets=?, phoneNumber=? WHERE id=?";
 			ps2 = conn2.prepareStatement(query);		
 			ps2.setInt(1, user.zipcode);
 			ps2.setInt(2, user.kids);
 			ps2.setInt(3, user.pets);
-			ps2.setString(4, user.phoneNumber);
-			ps2.setString(5, user.username);
+			ps2.setInt(4, user.phoneNumber);
+			ps2.setInt(5, user.id);
 			ps2.executeUpdate();
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -662,7 +697,7 @@ public class DBHelper {
 			
 			String query = "UPDATE shelterInfo SET zipcode=?, kids=?, pets=?, phoneNumber=?, biography=?,"
 					+ " numRatingGiven=?, nearPharmacy=?, nearLaundromat=?, currentRating=?,"
-					+ " pageVisits=?, numStays=?, numPendingRequests=?, avgStayDuration=? WHERE own=?";
+					+ " pageVisits=?, numStays=?, numPendingRequests=?, avgStayDuration=? WHERE id=?";
 			ps1 = conn1.prepareStatement(query);		
 			ps1.setInt(1, s.zipcode);
 			ps1.setInt(2, s.kids);
@@ -677,7 +712,7 @@ public class DBHelper {
 			ps1.setInt(11, s.numStays);	
 			ps1.setInt(12, s.numPendingRequests);			
 			ps1.setDouble(13, s.avgStayDuration);	
-			ps1.setString(14, s.owner);
+			ps1.setInt(14, s.id);
 			ps1.executeUpdate();
 
 			
@@ -704,7 +739,7 @@ public class DBHelper {
 	}
 	
 	//MISC. HELPER FUNCTIONS
-	public static void visitShelter(String shelterOwner) {
+	public static void visitShelter(int shelterId) {
 		//user statement: 
 		//UPDATE  shelterinfo SET visits = 
 			//(SELECT visits FROM shelterinfo WHERE shelterId = shelterId)+1 
@@ -716,9 +751,9 @@ public class DBHelper {
 				Class.forName(CLASS_NAME);
 				conn1 = DriverManager.getConnection(CONNECTION_URL); 
 				
-				String query = "UPDATE shelterInfo SET pageVisits=pageVisits + 1 WHERE own=?";
+				String query = "UPDATE shelterInfo SET pageVisits=pageVisits + 1 WHERE id=?";
 				ps1 = conn1.prepareStatement(query);		
-				ps1.setString(1, shelterOwner);		
+				ps1.setInt(1, shelterId);		
 				ps1.executeUpdate();
 
 				
@@ -743,58 +778,7 @@ public class DBHelper {
 				}
 			}
 		}
-	public static boolean userExists(String email) {
-		Connection conn2 = null;
-		PreparedStatement ps2 = null;
-		ResultSet rs2 = null;
-		try {
-			Class.forName(CLASS_NAME);
-			conn2 = DriverManager.getConnection(CONNECTION_URL); 
-			
-			String query = "SELECT * FROM users WHERE email=?";
-			ps2 = conn2.prepareStatement(query);		
-			ps2.setString(1, email);
-			rs2 = ps2.executeQuery();
-			while(rs2.next()) {
-				try {
-					if (rs2 != null) {
-						rs2.close();
-					}
-					if (ps2 != null) {
-						ps2.close();
-					}
-					if (conn2!= null) {
-						conn2.close();
-					}
-				} catch (SQLException sqle) {
-					System.out.println("sqle closing streams: " + sqle.getMessage());
-				}
-					return true;
-				
-			}
-		}catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			try {
-				if (rs2 != null) {
-					rs2.close();
-				}
-				if (ps2 != null) {
-					ps2.close();
-				}
-				if (conn2!= null) {
-					conn2.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("sqle closing streams: " + sqle.getMessage());
-			}
-		}
-		//checks userInfo and sees if email exists in the table
-		return false;
-	}
+	
 	public boolean userExists(int id) {
 		Connection conn2 = null;
 		PreparedStatement ps2 = null;
@@ -806,58 +790,6 @@ public class DBHelper {
 			String query = "SELECT * FROM users WHERE userID=?";
 			ps2 = conn2.prepareStatement(query);		
 			ps2.setInt(1, id);
-			rs2 = ps2.executeQuery();
-			while(rs2.next()) {
-				try {
-					if (rs2 != null) {
-						rs2.close();
-					}
-					if (ps2 != null) {
-						ps2.close();
-					}
-					if (conn2!= null) {
-						conn2.close();
-					}
-				} catch (SQLException sqle) {
-					System.out.println("sqle closing streams: " + sqle.getMessage());
-				}
-					return true;
-				
-			}
-		}catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			try {
-				if (rs2 != null) {
-					rs2.close();
-				}
-				if (ps2 != null) {
-					ps2.close();
-				}
-				if (conn2!= null) {
-					conn2.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("sqle closing streams: " + sqle.getMessage());
-			}
-		}
-		//checks userInfo and sees if email exists in the table
-		return false;
-	}
-	public boolean unameExists(String uname) {
-		Connection conn2 = null;
-		PreparedStatement ps2 = null;
-		ResultSet rs2 = null;
-		try {
-			Class.forName(CLASS_NAME);
-			conn2 = DriverManager.getConnection(CONNECTION_URL); 
-			
-			String query = "SELECT * FROM users WHERE username=?";
-			ps2 = conn2.prepareStatement(query);		
-			ps2.setString(1, uname);
 			rs2 = ps2.executeQuery();
 			while(rs2.next()) {
 				try {
