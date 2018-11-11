@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ page import="retrieval.DBHelper, retrieval.Message, java.util.ArrayList" %>
+    <%@ page import="retrieval.DBHelper, retrieval.Message, java.util.*" %>
 <!DOCTYPE html>
 <html>
 <head>
