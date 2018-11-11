@@ -36,7 +36,6 @@ public class bSignUp extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		int zipcode =Integer.parseInt( request.getParameter("zipcode"));
-		String phone = request.getParameter("phone");
 		String pets = request.getParameter("pets");
 		String children = request.getParameter("children");
 
@@ -44,17 +43,8 @@ public class bSignUp extends HttpServlet {
 		u.username = username;
 		u.email = email;
 		u.password = password;
-		u.phoneNumber = phone;
-		String path = "/userregister.jsp";
-		boolean error = false;
-		if (email.equals ("") || password.equals("") || username.equals("") ) {
-			error = true;
-		}
-		if (DBHelper.userExists(email) && !error) {
-			request.setAttribute("err", "User Already Exists");
-		} else {
-		System.out.println(pets);
-		
+		u.phoneNumber = 9854079;
+
 		u.zipcode = zipcode;
 		if (pets.equalsIgnoreCase("yes")) {
 			u.pets = 1;
@@ -68,15 +58,14 @@ public class bSignUp extends HttpServlet {
 		}
 		u.isShelter = 0;
 		
-		 DBHelper db = new DBHelper("dne","dne");
-			db.addNormalUser(u);
-			db = new DBHelper(email,password);
-			if (db.didConnect()) {
-				path = "/userhomepage.jsp";
-			} else {
-				request.setAttribute("err", "Creation Failed");
-			}
+		DBHelper db = new DBHelper("dne","dne");
+		db.addNormalUser(u);
+		db = new DBHelper(email,password);
+		String path = "/userregister.jsp";
+		if (db.didConnect()) {
+			path = "/userhomepage.jsp";
 		}
+		
 		RequestDispatcher dispatch = getServletContext().getRequestDispatcher(path);
     	
     	try {

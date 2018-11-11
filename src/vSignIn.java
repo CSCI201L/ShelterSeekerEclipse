@@ -47,19 +47,8 @@ public class vSignIn extends HttpServlet {
 				path = "/orgsignin.jsp";
 			} else {
 				path = "/userhomepage.jsp";
-				 	
-			}
-		} else {
-			if (email.equalsIgnoreCase	("guest")) {
-				System.out.println("SPECIAL GUEST CASE");
-				path = "/userhomepage.jsp";
-			}else {
-				System.out.println("Normal Failed");
-				System.out.println(email);
-				request.setAttribute("err", "Sign In Failed");
 			}
 		}
-		
 		RequestDispatcher dispatch = getServletContext().getRequestDispatcher(path);
     	
     	try {

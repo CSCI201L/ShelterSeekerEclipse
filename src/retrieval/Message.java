@@ -4,11 +4,11 @@ public class Message {
 	public String subject;
 	public int id;
 	public String body;
-	public String recipient;
-	public String sender = "";
+	public int recipient;
+	public int sender = 0;
 	public Byte read = 0;
 	public int timeSent = 0;
-	public Message (String subject, String body, String recipient) {
+	public Message (String subject, String body, int recipient) {
 		this.subject = subject;
 		this.body = body;
 		this.recipient = recipient;
@@ -16,6 +16,6 @@ public class Message {
 	public Message () {
 		this.subject = "";
 		this.body = "";
-		this.recipient = "";
+		this.recipient = -1;
 	}
 }

@@ -1,40 +1,39 @@
+/* Added availability to shelterInfo*/
+
 DROP DATABASE IF EXISTS shelterSeeker;
 CREATE DATABASE shelterSeeker;
 USE shelterSeeker;
 CREATE TABLE users (
 	userID INT(11) PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(255) NOT NULL UNIQUE,
+    username VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     pass VARCHAR(255) NOT NULL,
     isShelter BIT NOT NULL DEFAULT 0
     );
 CREATE TABLE userInfo (
-	id INT(11) PRIMARY KEY AUTO_INCREMENT,		
-    username VARCHAR (255) NOT NULL UNIQUE,
+	id INT(11) PRIMARY KEY AUTO_INCREMENT,
     zipcode INT(5),
     kids INT(3),
     pets INT(3),
-    phoneNumber VARCHAR(255),
-	FOREIGN KEY (id) REFERENCES users(userID),
-    foreign key (username) REFERENCES users(username)
+    phoneNumber INT(15),
+	FOREIGN KEY (id) REFERENCES users(userID)
 );
 
 CREATE TABLE messages (
 	messageID INT(11) PRIMARY KEY AUTO_INCREMENT,
-    senderName VARCHAR (255) NOT NULL,
-    recipientName VARCHAR (255) NOT NULL,
+    senderID INT (11) NOT NULL,
+    recipientID INT (11) NOT NULL,
     timeSent INT (11) NOT NULL,
-    mSubject VARCHAR (255) NOT NULL,
-    mContent TEXT NOT NULL,
+    mSubject VARCHAR (255),
+    mContent TEXT,
 	mRead BIT NOT NULL DEFAULT 0,
-    FOREIGN KEY (senderName) REFERENCES users(username),
-    FOREIGN KEY (recipientName) REFERENCES users(username)
+    FOREIGN KEY (senderID) REFERENCES users(userID),
+    FOREIGN KEY (recipientID) REFERENCES users(userID)
     
 );
 
 CREATE TABLE shelterInfo (
-	id INT (11) PRIMARY KEY auto_increment,
-    own VARCHAR (255) UNIQUE NOT NULL,
+	id INT (11) PRIMARY KEY,
     zipcode INT(5) NOT NULL,
     kids INT(3),
     pets INT(3),
@@ -50,6 +49,9 @@ CREATE TABLE shelterInfo (
     numPendingRequests INT (11) NOT NULL DEFAULT 0,
     avgStayDuration DOUBLE (8,2) NOT NULL DEFAULT 0,
     availability INT(11),
-    FOREIGN KEY (id) REFERENCES users(userId),
-    FOREIGN KEY (own) REFERENCES users(username)
+    FOREIGN KEY (id) REFERENCES users(userId)
 );
+
+
+
+
