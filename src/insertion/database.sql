@@ -38,7 +38,7 @@ CREATE TABLE shelterInfo (
     zipcode INT(5) NOT NULL,
     kids INT(3),
     pets INT(3),
-    phoneNumber INT(15) NOT NULL,
+    phoneNumber VARCHAR(255) NOT NULL,
     biography TEXT,
     numRatingGiven INT(11),
     nearGrocery BIT NOT NULL DEFAULT 0,	

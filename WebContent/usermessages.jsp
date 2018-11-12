@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="retrieval.DBHelper, retrieval.Message, java.util.*"%>
+<%@ page import="retrieval.DBHelper, retrieval.Message, retrieval.Mail, java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,7 +44,7 @@ li a {
 	}
 	
 	CompareMessageByReadAndTime comp = new CompareMessageByReadAndTime();
-	mail.sort();
+	mail.SortByReadAndTime(comp);
 	
 	ArrayList<Message> messages = mail.getMessages();
 	
