@@ -147,7 +147,7 @@ public class bUpdateUser extends HttpServlet {
 		}
 		//if change phone, update phone
 		if(changephone) {
-			db.user.phoneNumber=phonenumber;
+			db.user.phoneNumber="dsfa";
 		}
 		//update kids/pets if so
 		db.user.kids=children;

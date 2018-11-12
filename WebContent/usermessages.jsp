@@ -71,23 +71,6 @@ li a {
 				}
 			%>
 		</table>
-		<!--
-			<div
-				onClick="seeFullMessage('<%= mSubject %>','<%= sender %>','<%= mContent %>')">
-				<li>Message Opened <%=r %></li>
-				<br>
-				<li>Send time <%=sendtime %></li>
-				<br>
-				<li>Username of Sender <%=sender %></li>
-				<br>
-				<li>Subject of Message <%=mSubject %></li>
-				<br>
-				<li>First Line of Message <%=mContent %></li>
-				<br>
-			</div>
-			-->
-		<%} %>
-		</ul>
 		<form>
 			<!--  method="post" action="Servlet"-->
 			<input id="search" type="text" name="search"

@@ -159,7 +159,7 @@ public class bUpdateOrg extends HttpServlet {
 		}
 		//if change phone, update phone
 		if(changephone) {
-			db.shInfo.phoneNumber=phonenumber;
+			db.shInfo.phoneNumber=phonenum;
 		}
 		//update kids/pets if so
 		db.shInfo.kids=children;
