@@ -425,7 +425,7 @@ public class DBHelper {
 				ps = conn.prepareStatement(query);
 				ps.setString(1, user.username);
 				ps.setString(2, m.recipient);
-				ps.setInt(3,m.timeSent);
+				ps.setLong(3,m.timeSent);
 				ps.setString(4, m.subject);
 				ps.setString(5, m.body);
 				ps.setByte(6, b);
