@@ -3,6 +3,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<style>
+	li {
+   		display: inline;
+   		float:left;
+	}	
+	ul {
+	    list-style-type: none;
+	    margin: 0;
+	    padding: 0;
+	    overflow: hidden;
+	    background-color: blue;
+	}
+	li a {
+	    display: block;
+	    color: white;
+	    text-align: center;
+	    padding: 14px 16px;
+	    text-decoration: none;
+	}
+	</style>
 	<title>Shelter Seekers Organization Settings</title>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
@@ -25,6 +45,11 @@
 	}
 %>
 <body> <!-- onload="defaultContactInfo();"> -->
+<ul>
+		<li><a href="orgstats.html">Search</a></li>
+		<li><a href="usermessages.jsp">Messages</a></li>
+		<li><a href="orgsettings.jsp">Profile</a></li>
+		</ul>
 	<div id="security">
 	<h1>Security Preferences</h1><br>
 	<form action="bUpdateOrg" method="GET"><!-- onsubmit="return validate();"> --><!-- method="POST" action="Servlet" -->

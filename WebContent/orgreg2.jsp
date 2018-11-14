@@ -129,7 +129,14 @@
 					<input type="checkbox" name="laundromat" value="yes" checked> Yes<br>
 					<input  type="number" class = "segoe blueFont" name ="occupants" style="margin:10px" placeholder ="Current Occupants" required> <br>
 					<input  type="number" class = "segoe blueFont" name ="capacity" style="margin:10px" placeholder ="Capacity" required> <br>
+					<input type="hidden" name = "zipcode" value = "<%=(String) request.getParameter("zipcode")%>">
+										<input type="hidden" name = "email" value = "<%=(String)request.getParameter("email")%>">
+										<input type="hidden" name = "username" value = "<%=(String) request.getParameter("username")%>">
+										<input type="hidden" name = "password" value = "<%=(String) request.getParameter("password")%>">
+										<input type="hidden" name = "phone" value = "<%=(String) request.getParameter("phone")%>">
 					<input  type="textarea" form="Sign-up" class = "segoe blueFont" name ="bio" style="height: 100px;margin:10px" placeholder ="Tell us about your shelter!" required> <br>
+										
+					
 					<input type="submit" class ="b oh segoe blueFont" value= "Sign-UP">
 				</form>
 		  	</div>	

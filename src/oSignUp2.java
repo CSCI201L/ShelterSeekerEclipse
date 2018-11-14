@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import retrieval.DBHelper;
 import retrieval.Shelter;
@@ -36,7 +37,8 @@ public class oSignUp2 extends HttpServlet {
 		String username = request.getParameter("username");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		int zipcode =Integer.parseInt( request.getParameter("zipcode"));
+		System.out.println(email +"is the email");
+		int zipcode =Integer.parseInt(request.getParameter("zipcode"));
 		String phone = request.getParameter("phone");
 		String children = request.getParameter("children");
 		String pets = request.getParameter("pets");
@@ -94,11 +96,13 @@ public class oSignUp2 extends HttpServlet {
 		if (email.equals ("") || password.equals("") || username.equals("") ) {
 			error = true;
 		}
+		HttpSession session = request.getSession();
+		session.setAttribute("DBHelper", db);
 		if (!db.didConnect() && !error) {
 			request.setAttribute("err", "User Already Exists");
 			path = "/orgreg2.jsp";
 		} else {
-			path = "/orghomepage.jsp";
+			path = "/orgstats.html";
 		}
 		
 		RequestDispatcher dispatch = getServletContext().getRequestDispatcher(path);

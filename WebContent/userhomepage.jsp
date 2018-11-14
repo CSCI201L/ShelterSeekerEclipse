@@ -29,9 +29,9 @@
 <body>
 	<div id="top">
 	<ul>
-		<li><a href="search.jsp">Search</a></li>
+		<li><a href="userhomepage.jsp">Search</a></li>
 		<li><a href="usermessages.jsp">Messages</a></li>
-		<li><a href="userprofile.jsp">Profile</a></li>
+		<li><a href="usersettings.jsp">Profile</a></li>
 	
 	</ul>
 	</div>
@@ -91,7 +91,7 @@
 	<script>
 	var prevNumSearchResults;
 	function signOut(){
-	    document.location.href = "http://localhost:8080/CSCI201-Project/signin.jsp";
+	    location.href = "signin.jsp";
 	}
 	
 	function onSearch() {
@@ -147,7 +147,7 @@
 			prevNumSearchResults = responseArray.length / 3;
 		}
 		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhttp.send("email=borie@usc.edu&pharmacyNearby=false&groceryNearby=true&laundromatNearby=false"); 
+		xhttp.send("email=test@usc.edu&pharmacyNearby=false&groceryNearby=true&laundromatNearby=false"); 
 	}
 	
 	function loadSearchResult(shelterId) {
