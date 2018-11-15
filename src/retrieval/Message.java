@@ -1,9 +1,9 @@
 package retrieval;
-
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
 public class Message {
+	public int id;
 	public String subject;
 	public String body;
 	public String recipient;

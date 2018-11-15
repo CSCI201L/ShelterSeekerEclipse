@@ -1,5 +1,4 @@
 package retrieval;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 

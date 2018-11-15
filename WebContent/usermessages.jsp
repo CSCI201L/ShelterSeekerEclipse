@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ page import="retrieval.DBHelper, retrieval.Message, java.util.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+	
+<%@ page import="retrieval.DBHelper, retrieval.Message, retrieval.Mail,  javax.servlet.http.HttpServlet, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, retrieval.CompareMessageByReadAndTime,java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +32,7 @@ li a {
 <body>
 	<% 
 	//REPLACE THIS WITH HTTPSESSION GLOBAL INSTANCE OF DB
-	DBHelper db = new DBHelper ("test@usc.edu","pass1");
+	DBHelper db =(DBHelper) request.getSession().getAttribute("DBHelper");
 	System.out.println(db.didConnect() + "is status");
 	
 	Mail mail = new Mail();
@@ -52,9 +52,9 @@ li a {
 %>
 	<div id="top">
 		<ul>
-			<li><a href="search.jsp">Search</a></li>
-			<li><a href="usermessages.jsp">Messages</a></li>
-			<li><a href="profile.jsp">Profile</a></li>
+		<li><a href="userhomepage.jsp">Search</a></li>
+		<li><a href="usermessages.jsp">Messages</a></li>
+		<li><a href="usersettings.jsp">Profile</a></li>
 		</ul>
 	</div>
 	<div id="middle">

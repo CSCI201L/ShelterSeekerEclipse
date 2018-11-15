@@ -143,7 +143,10 @@ public class bUpdateOrg extends HttpServlet {
 		}
 		l=(byte)laun;
 //		proceed to update settings
-		DBHelper db = new DBHelper(email,curr_password);
+		
+		//NEW STUFF
+		DBHelper db = (DBHelper) request.getSession().getAttribute("DBHelper");
+;
 		//update the user instance in the class
 		//if change password, update password
 		if(changepassword) {
@@ -159,7 +162,7 @@ public class bUpdateOrg extends HttpServlet {
 		}
 		//if change phone, update phone
 		if(changephone) {
-			db.shInfo.phoneNumber=phonenumber;
+			db.shInfo.phoneNumber=phonenum;
 		}
 		//update kids/pets if so
 		db.shInfo.kids=children;

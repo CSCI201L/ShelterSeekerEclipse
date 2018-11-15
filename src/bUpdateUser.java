@@ -128,7 +128,7 @@ public class bUpdateUser extends HttpServlet {
 			pets=0;
 		}
 //		//proceed to update settings
-		DBHelper db = new DBHelper(email,curr_password);
+		DBHelper db =(DBHelper) request.getSession().getAttribute("DBHelper");
 		
 		//update the user instance in the class
 		//update email 
@@ -147,7 +147,7 @@ public class bUpdateUser extends HttpServlet {
 		}
 		//if change phone, update phone
 		if(changephone) {
-			db.user.phoneNumber=phonenumber;
+			db.user.phoneNumber=phonenum;
 		}
 		//update kids/pets if so
 		db.user.kids=children;

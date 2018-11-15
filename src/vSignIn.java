@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import retrieval.DBHelper;
 
@@ -41,10 +42,12 @@ public class vSignIn extends HttpServlet {
 		}
 		DBHelper db = new DBHelper (email,password);
 		String path = "/signin.jsp";
+		HttpSession session = request.getSession();
+		session.setAttribute("DBHelper", db);
 		if (db.didConnect()) {
 			if(db.user.isShelter ==1) {
 				//TEMPORARY -- REDIRECT TO ORGHOMEPAGE
-				path = "/orgsignin.jsp";
+				path = "/orgstats.html";
 			} else {
 				path = "/userhomepage.jsp";
 				 	

@@ -2,12 +2,12 @@ package retrieval;
 
 public class Shelter {
 	//Shelter Identifiers
-	//public int id;
+	public int id;
 	public String shelterName;
 	public int zipcode;
 	public String owner;
 	public int capacity = 0;
-	public int phoneNumber = 0;
+	public String phoneNumber = "";
 	public String bio = "";
 	public double currentRating = 0;
 	public int numRatingGiven = 0;
@@ -27,12 +27,12 @@ public class Shelter {
 	
 	public Shelter (String name, int phoneNumber, int zipcode) {
 		this.shelterName = name;
-		this.phoneNumber = 0;
+		this.phoneNumber = "";
 		this.zipcode = zipcode;
 	}
 	public Shelter () {
 		shelterName = "";
-		phoneNumber = 0;
+		phoneNumber = "";
 		zipcode = 0;
 	}
 }

@@ -1,13 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="retrieval.DBHelper, retrieval.Message, retrieval.Mail,  javax.servlet.http.HttpServlet, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, retrieval.CompareMessageByReadAndTime,java.util.*"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Shelter Seekers User Settings</title>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<style>
+	li {
+   		display: inline;
+   		float:left;
+	}	
+	ul {
+	    list-style-type: none;
+	    margin: 0;
+	    padding: 0;
+	    overflow: hidden;
+	    background-color: blue;
+	}
+	li a {
+	    display: block;
+	    color: white;
+	    text-align: center;
+	    padding: 14px 16px;
+	    text-decoration: none;
+	}
+	</style>
 </head>
 <%
-	//DBHelper db= new DBHelper("guest","guest");
+	DBHelper db =(DBHelper) request.getSession().getAttribute("DBHelper");
 	//String email=db.user.email;
 	String emailerror=(String)request.getAttribute("email_err");
 	if(emailerror==null){
@@ -31,10 +53,18 @@
 	}
 %>
 <body> <!-- onload="defaultContactInfo();"> -->
+<div id="top">
+	<ul>
+		<li><a href="userhomepage.jsp">Search</a></li>
+		<li><a href="usermessages.jsp">Messages</a></li>
+		<li><a href="usersettings.jsp">Profile</a></li>
+	
+	</ul>
+	</div>
 	<div id="security">
 	<h1>Security Preferences</h1><br>
 	<form action="bUpdateUser" method="GET"><!-- <!-- onsubmit="return validate(); --"> -->
-		Current Email: currentemail@email.com<br>
+		Current Email: <%=db.user.email %><br>
 		Change your email: <input id="new_email" type="text" name="new_email" placeholder="New Email">
 		<%= emailerror %>
 		<br> 

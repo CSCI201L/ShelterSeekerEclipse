@@ -1,5 +1,6 @@
-package retrieval;
 import java.util.Comparator;
+
+import retrieval.Message;
 
 public class CompareMessageByReadAndTime implements Comparator<Message> {
 
