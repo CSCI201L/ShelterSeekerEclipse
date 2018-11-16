@@ -43,7 +43,7 @@ li a {
 		mail.addMessage(ms.get(i));
 	}
 	
-	CompareMessageByReadAndTime comp = new CompareMessageByReadAndTime();
+	//CompareMessageByReadAndTime comp = new CompareMessageByReadAndTime();
 	mail.SortByReadAndTime(comp);
 	
 	ArrayList<Message> messages = mail.getMessages();
@@ -58,19 +58,16 @@ li a {
 		</ul>
 	</div>
 	<div id="middle">
-		<!-- List
-		<ul> -->
 		<table>
 			<%
 				for(int i = 0; i < messages.size(); i++){
 					out.println("<tr>" + "<td>" + messages.get(i).readable());
-					out.println("<form action='' id='send'>");
-					out.println("Subject: " + "<input type='text'>");
-					out.println("<textarea rows='4' cols='50' name='body' form='send'>");
+					out.println("<button id='write' onclick='writeMessage();'>Reply</button>");
 					out.println("</td>" + "</tr>");
 				}
 			%>
 		</table>
+			
 		<form>
 			<!--  method="post" action="Servlet"-->
 			<input id="search" type="text" name="search"
