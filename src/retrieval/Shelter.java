@@ -5,6 +5,7 @@ public class Shelter {
 	public int id;
 	public String shelterName;
 	public int zipcode;
+	public String address;
 	public String owner;
 	public int capacity = 0;
 	public String phoneNumber = "";
