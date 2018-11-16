@@ -30,7 +30,9 @@
 </head>
 <%
 	DBHelper db =(DBHelper) request.getSession().getAttribute("DBHelper");
-	//String email=db.user.email;
+	String email= db.user.email;
+	String phonenum=db.user.phoneNumber;
+	int zip=db.user.zipcode;
 	String emailerror=(String)request.getAttribute("email_err");
 	if(emailerror==null){
 		emailerror="";	
@@ -64,7 +66,7 @@
 	<div id="security">
 	<h1>Security Preferences</h1><br>
 	<form action="bUpdateUser" method="GET"><!-- <!-- onsubmit="return validate(); --"> -->
-		Current Email: <%=db.user.email %><br>
+		Current Email: <%=email %><br>
 		Change your email: <input id="new_email" type="text" name="new_email" placeholder="New Email">
 		<%= emailerror %>
 		<br> 
@@ -83,11 +85,11 @@
 		<input type="radio" name="pets" value="1" required> Yes<br>
 		<input type="radio" name="pets" value="0"> No<br>
 		<br>
-		Current Zipcode: 12345<br>
+		Current Zipcode: <%=zip %><br>
 		Update Zipcode: <input id="new_zipcode" type="text" name="new_zipcode" placeholder="Update Zip Code">
 		<%= ziperror %>
 		<br>
-		Current Phone Number: (123)456-7890<br>
+		Current Phone Number: <%=phonenum %><br>
 		Update Phone Number: <input id="new_phone" type="tel" name="new_phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
 		<%= phoneerror %>
 		<br>
