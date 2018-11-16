@@ -21,7 +21,8 @@ public class DBHelper {
 	public PreparedStatement ps = null;
 	public Shelter shInfo = null;
 	public static final String CLASS_NAME = "com.mysql.jdbc.Driver";
-	public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/shelterseeker?user=root&password=root&useSSL=false";
+//	public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/shelterseeker?user=root&password=root&useSSL=false";
+	public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/safeshelter?user=root&password=Xboxlive1&useSSL=false";
 	public DBHelper(String email, String password)  {
 		this.email = email;
 		this.user = new UserInfo();
@@ -290,6 +291,9 @@ public class DBHelper {
 			ps2.setInt(2, s.zipcode);
 			ps2.setInt(3, s.kids);
 			ps2.setInt(4, s.pets);
+			if(s.phoneNumber.equals("")) {
+				s.phoneNumber="0";
+			}
 			ps2.setString(5, s.phoneNumber);
 			ps2.setString(6, s.bio);
 			ps2.setByte(7, s.nearGrocery);
@@ -667,6 +671,9 @@ public class DBHelper {
 			ps1.setInt(1, s.zipcode);
 			ps1.setInt(2, s.kids);
 			ps1.setInt(3, s.pets);
+			if(s.phoneNumber.equals("")) {
+				s.phoneNumber="0";
+			}
 			ps1.setString(4, s.phoneNumber);
 			ps1.setString(5, s.bio);
 			ps1.setInt(6, s.numRatingGiven);
