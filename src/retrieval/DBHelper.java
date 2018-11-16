@@ -21,7 +21,7 @@ public class DBHelper {
 	public PreparedStatement ps = null;
 	public Shelter shInfo = null;
 	public static final String CLASS_NAME = "com.mysql.jdbc.Driver";
-	public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/shelterseeker?user=root&password=root&useSSL=false";
+	public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/shelterSeeker?user=root&password=root&useSSL=false";
 	public DBHelper(String email, String password)  {
 		this.email = email;
 		this.user = new UserInfo();
@@ -283,7 +283,9 @@ public class DBHelper {
 		try {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
-			
+			if (s.phoneNumber.equals("")) {
+				s.phoneNumber = "1";
+			}
 			String query = "INSERT INTO shelterInfo(own,zipcode,kids,pets,phoneNumber,biography,nearGrocery,nearPharmacy,nearLaundromat) VALUES (?,?,?,?,?,?,?,?,?)";
 			ps2 = conn2.prepareStatement(query);		
 			ps2.setString(1, userId);
