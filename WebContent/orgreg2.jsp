@@ -114,7 +114,9 @@
 		<div id="content" style="margin-left:500px; text-align:center; display:inline-block;">
 			<div id="Sign-Up" style="display:inline-block;">
 				<p class = "segoe title blueFont" style="font-size:34px"> Register Organization</p>
-				<form name="signup"  action="oSignUp2" method="GET" ><!-- method="POST" action ="Servlet" -->
+				<form name="signup"  action="oSignUp2" method="POST" ><!-- method="POST" action ="Servlet" -->
+					Profile Pic<input type="file"  name = "f" id="f" accept="image/*" required>
+					<input type="text" id="base64" name="base64" hidden="true">
 					<p class = "segoe title blueFont" style="font-size:30px; font-style:italic; margin-bottom:10px;">Shelter Info</p> 
 				<p class = "segoe" style = "font-size: 20px; font-weight: bold;color: red"><%= err %></p>
 					<p  class = "style-options segoe blueFont" >Do you allow children?</p>
@@ -130,6 +132,7 @@
 					<input  type="number" class = "segoe blueFont" name ="occupants" style="margin:10px" placeholder ="Current Occupants" required> <br>
 					<input  type="number" class = "segoe blueFont" name ="capacity" style="margin:10px" placeholder ="Capacity" required> <br>
 					<input type="hidden" name = "zipcode" value = "<%=(String) request.getParameter("zipcode")%>">
+					<input type="hidden" name = "address" value = "<%=(String) request.getParameter("address")%>">
 										<input type="hidden" name = "email" value = "<%=(String)request.getParameter("email")%>">
 										<input type="hidden" name = "username" value = "<%=(String) request.getParameter("username")%>">
 										<input type="hidden" name = "password" value = "<%=(String) request.getParameter("password")%>">
@@ -167,6 +170,19 @@
 		 }
 
 	}
+	function readFile() {
+		if ( this.files && this.files[0]){
+			var FR = new FileReader();
+			FR.addEventListener("load", function(e){
+				document.getElementById("base64").value = e.target.result;
+			//	document.getElementById("test").src = e.target.result;
+			});
+			
+			FR.readAsDataURL(this.files[0]);
+		}
+	}
+	
+	document.getElementById("f").addEventListener("change", readFile);
 	//validate username
 	function validateUsername(){
 		var x=document.getElementById("un").value;

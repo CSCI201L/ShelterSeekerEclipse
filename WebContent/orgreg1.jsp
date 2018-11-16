@@ -120,7 +120,9 @@
 					<input id="email" type="email" class = "segoe blueFont" name ="email" style="margin:10px" placeholder ="Email" required> <br>
 					<input id="un" type="text" class = "segoe blueFont" style="margin:10px" name ="username" placeholder ="Username" required> <br>
 					<input id="pwd" type="text" class = "segoe blueFont" style="margin:10px" name ="password" placeholder ="Password" required> <br>
-					<input id="zip" type="number"class = "segoe blueFont" style="margin:10px"  name ="zipcode" placeholder ="Zipcode" required > <br>
+					<input id="zipcode" type="number"class = "segoe blueFont" style="margin:10px"  name ="zipcode" placeholder ="Zipcode" required > <br>
+					<div onClick="findLocation()" style="border: 1px; cursor:pointer "> CLICK ME TO Find My Location </div>
+					<input id="address" type="text" class = "segoe blueFont" style="margin:10px"  name ="address" placeholder ="Address" required>
 					<input id="zip" type="number"class = "segoe blueFont" style="margin:10px"  name ="phone" placeholder ="Phone Number" required > <br>
 					<input type="submit" class ="b oh segoe blueFont" value= "Continue">
 				</form>
@@ -129,7 +131,10 @@
 	</div>
 	
 	<div id="bottom" class = "purple block"> 
-	
+	<div style="height:0px; width:0px">
+			<div id ="startLat"></div>
+			<div id = "startLon"></div>
+		</div>
 	</div>
 	
 	<script>
@@ -151,6 +156,71 @@
 			 return false;
 		 }
 
+	}
+	function findLocation(){
+		//find location using geoLocation
+		if (navigator.geolocation) {
+			  console.log('Geolocation is supported!');
+			}
+			else {
+			  console.log('Geolocation is not supported for this Browser/OS.');
+			}	
+		var lat;
+		var lon;
+		var geoSuccess = function(position) {
+		    startPos = position;
+		    document.getElementById('startLat').innerHTML = startPos.coords.latitude;
+		    document.getElementById('startLon').innerHTML = startPos.coords.longitude;
+
+		  };
+		 	
+		 	console.log("HERE", navigator.geolocation.getCurrentPosition(geoSuccess));
+			lat = document.getElementById('startLat').innerHTML;
+			lon = document.getElementById('startLon').innerHTML; 
+		 	console.log(lat);
+		 	console.log(lon);
+
+		 	const xhttp = new XMLHttpRequest();
+		 	var URL = "http://api.geonames.org/findNearestAddressJSON?lat=" + document.getElementById('startLat').innerHTML + "&lng=" + document.getElementById('startLon').innerHTML +"&username=dhan";
+		 	//var URL = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + document.getElementById('startLat').innerHTML + ","+ document.getElementById('startLon').innerHTML+",7.3553838&sensor=true"
+		 	var request = createCORSRequest("get", URL);
+		 	if (request){
+		 	    request.onload = function() {
+	//				console.log("RESPONSE" ,this.responseText);
+		 	    };
+		 	    request.onreadystatechange = function() {
+					console.log("RESPONSE" ,this.responseText);
+					var info = JSON.parse(this.responseText);
+					var address = info.address.streetNumber + " " +info.address.street+ ", " +info.address.placename + " " + info.address.adminCode1 + " " +info.address.postalcode;
+					console.log("Address ", address);
+					document.getElementById("address").value = address;
+					document.getElementById("zipcode").value = info.address.postalcode;
+
+				};
+		 	    request.send();
+		 	}
+		 	/*		 	xhttp.open("GET", URL, false);
+				xhttp.onreadystatechange = function() {
+					console.log("RESPONSE" ,this.responseText);
+
+				};
+				xhttp.setRequestHeader("Content-Type","application/x-www-urlencoded");
+				xhttp.send(); */
+		 	//user Geolocation API
+		
+	}
+	
+	function createCORSRequest(method, url){
+	    var xhr = new XMLHttpRequest();
+	    if ("withCredentials" in xhr){
+	        xhr.open(method, url, true);
+	    } else if (typeof XDomainRequest != "undefined"){
+	        xhr = new XDomainRequest();
+	        xhr.open(method, url);
+	    } else {
+	        xhr = null;
+	    }
+	    return xhr;
 	}
 	//validate username
 	function validateUsername(){

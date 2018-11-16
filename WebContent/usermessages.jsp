@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	
-<%@ page import="retrieval.DBHelper, retrieval.Message, retrieval.Mail,  javax.servlet.http.HttpServlet, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, retrieval.CompareMessageByReadAndTime,java.util.*"%>
+<%@ page import="java.util.Base64, retrieval.DBHelper, retrieval.Message, retrieval.Mail,  javax.servlet.http.HttpServlet, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, retrieval.CompareMessageByReadAndTime,java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,9 +34,10 @@ li a {
 	//REPLACE THIS WITH HTTPSESSION GLOBAL INSTANCE OF DB
 	DBHelper db =(DBHelper) request.getSession().getAttribute("DBHelper");
 	System.out.println(db.didConnect() + "is status");
-	
+	System.out.println("at " +db.user.username);
 	Mail mail = new Mail();
-	
+	String s = db.getImages(db.user.username);
+	//decoded= decoded.substring(19);
 	ArrayList<Message> ms = db.getMessages();
 	
 	for(int i = 0; i < ms.size(); i++){
@@ -44,7 +45,7 @@ li a {
 	}
 	
 	//CompareMessageByReadAndTime comp = new CompareMessageByReadAndTime();
-	mail.SortByReadAndTime(comp);
+	//mail.SortByReadAndTime(comp);
 	
 	ArrayList<Message> messages = mail.getMessages();
 	
@@ -57,6 +58,8 @@ li a {
 		<li><a href="usersettings.jsp">Profile</a></li>
 		</ul>
 	</div>
+	IMAGE
+	<img style="height:100px; width:100px;"src="<%=s %>">
 	<div id="middle">
 		<table>
 			<%
