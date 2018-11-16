@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ page import="retrieval.DBHelper, retrieval.Message, retrieval.Mail,  javax.servlet.http.HttpServlet, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, retrieval.CompareMessageByReadAndTime,java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +28,10 @@
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <%
+	DBHelper db =(DBHelper) request.getSession().getAttribute("DBHelper");
+	String email= db.user.email;
+	String phonenum=db.shInfo.phoneNumber;
+	int zip=db.shInfo.zipcode;
 	String currpassworderror=(String)request.getAttribute("currpass_err");
 	if(currpassworderror==null){
 		currpassworderror="";
@@ -53,7 +58,7 @@
 	<div id="security">
 	<h1>Security Preferences</h1><br>
 	<form action="bUpdateOrg" method="GET"><!-- onsubmit="return validate();"> --><!-- method="POST" action="Servlet" -->
-		Current Email: currentemail@.com<br>
+		Current Email: <%=email %><br>
 		<h4>Reset your password here</h4>
 		Enter your current password: <input id="curr_pass" type="text" name="current_password" placeholder="Current password">
 		<%= currpassworderror %>
@@ -80,11 +85,11 @@
 		Organizations Contact Info <br>
 		<a href="http://localhost:8080/ShelterSeeker/orgprofile.jsp"><input id="pic" type="text" value="Press to go to Picture" readonly></a><br>
 		<br>
-		Current Zipcode: 12345<br>
+		Current Zipcode: <%=zip %><br>
 		Update Zipcode: <input id="new_zipcode" type="text" name="new_zipcode" placeholder="Update Zip Code">
 		<%= ziperror %>
 		<br>
-		Current Phone Number: (123)456-7890<br>
+		Current Phone Number: <%=phonenum %><br>
 		Update Phone Number: <input id="new_phone" type="tel" name="new_phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
 		<%= phoneerror %>
 		<br>
