@@ -67,7 +67,9 @@
 </head>
 <%
 	DBHelper db =(DBHelper) request.getSession().getAttribute("DBHelper");
-	//String email=db.user.email;
+	String email= db.user.email;
+	String phonenum=db.user.phoneNumber;
+	int zip=db.user.zipcode;
 	String emailerror=(String)request.getAttribute("email_err");
 	if(emailerror==null){
 		emailerror="";	

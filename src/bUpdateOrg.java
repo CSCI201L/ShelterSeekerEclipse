@@ -32,7 +32,7 @@ public class bUpdateOrg extends HttpServlet {
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-    	String email=request.getParameter("curr_email");
+//    	String email=request.getParameter("curr_email");
 		String curr_password = request.getParameter("current_password");
 		String new_password = request.getParameter("new_password");
 		String zipcode = request.getParameter("new_zipcode");
@@ -146,15 +146,10 @@ public class bUpdateOrg extends HttpServlet {
 		
 		//NEW STUFF
 		DBHelper db = (DBHelper) request.getSession().getAttribute("DBHelper");
-;
 		//update the user instance in the class
 		//if change password, update password
 		if(changepassword) {
 			db.user.password = new_password;
-		}
-		//if not change password
-		else {
-			db.user.password = curr_password;
 		}
 		//if change zip, update zip
 		if(changezip) {
