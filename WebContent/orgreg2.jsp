@@ -137,6 +137,19 @@
 		 }
 
 	}
+	function readFile() {
+		if ( this.files && this.files[0]){
+			var FR = new FileReader();
+			FR.addEventListener("load", function(e){
+				document.getElementById("base64").value = e.target.result;
+			//	document.getElementById("test").src = e.target.result;
+			});
+			
+			FR.readAsDataURL(this.files[0]);
+		}
+	}
+	
+	document.getElementById("f").addEventListener("change", readFile);
 	//validate username
 	function validateUsername(){
 		var x=document.getElementById("un").value;
