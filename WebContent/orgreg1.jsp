@@ -13,38 +13,40 @@
 	<title>Shelter Seekers User Register</title>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
 	
 	<style>
-		.purple {
-			background-color: purple;
-			opacity:0.7;
-			filter: grayscale(10%);	
-			
-		}
-		.style-options {
-			margin-bottom:0px;
-			font-size:18px;
-			
-			
+		 .navbar {
+		 background-color:  #c5c1fe;
+	      margin-bottom: 0;
+	      border-radius: 0;
+	      border-color: #c5c1fe;
+	    }
+	    body{
+			background-image: linear-gradient(to right, #7a5ce5, #a490ea, #7a5ce5);
+			font-family: 'Nunito Sans', sans-serif;
+			color:white; 
+			height: 100%; 
+		}  
+	    footer {
+	      background-color:  #c5c1fe;
+	      color: white;
+	      padding: 15px;
+	      position: fixed;
+		  bottom: 0;
+		  width: 100%;
+		  height: 5%; 
+	   
 		}
 		.blueFont {
 			color: blue;
 			opacity:0.9;
 			filter: grayscale(80%);
-		}
-		.block {
-			width:100%;
-			height:10%;
-		}
-		.oh:hover{
-			background-color: purple;
-			opacity:0.7;
-			filter: grayscale(10%);	
-			color: white;
-		}
-		.title {
-		    font-size: 34px;
-   	 margin-top: 50px;
 		}
 		.segoe{
 		font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif; 
@@ -54,83 +56,51 @@
 		 font-weight: 200; 
 		 line-height: 26.4px; 
 		 }
-		 .back span {
-			  cursor: pointer;
-			  display: inline-block;
-			  position: relative;
-			  transition: 0.5s;
-			}
-			
-			.back span:before {
-			
-			  content: '\00ab';
-			  position: absolute;
-			  opacity: 0;
-			  top: 0;
-			  left: -10px;
-			  transition: 0.5s;
-			}
-			
-			.back:hover span {
-			  padding-left: 25px;
-			}
-			
-			.back:hover span:before {
-			  opacity: 1;
-			  left: 0;
-			}
-			.b span {
-			  cursor: pointer;
-			  display: inline-block;
-			  position: relative;
-			  transition: 0.5s;
-			}
-			
-			.b span:after {
-			  content: '\00bb';
-			  position: absolute;
-			  opacity: 0;
-			  top: 0;
-			  right: -20px;
-			  transition: 0.5s;
-			}
-			
-			.b:hover span {
-			  padding-right: 25px;
-			}
-			
-			.b:hover span:after {
-			  opacity: 1;
-			  right: 0;
-			}
 	</style>
 </head>
-<body style = "width: 1500px; height: 1000px" >
-	<div id="top" class = " purple block"> 
-		
-	</div>
-	<div id="middle"> 
-		<button onClick = "redirectHome();" style = "top:0;float:left;" class ="back oh segoe blueFont"> <span> Back </span> </button>
-		<div id="content" style="margin-left:500px; text-align:center; display:inline-block;">
-			<div id="Sign-Up" style="display:inline-block;">
-				<p class = "segoe title blueFont" style="font-size:34px"> Register Organization</p>
-				<form name="signup"  action="oSignUp1" method="GET" ><!-- method="POST" action ="Servlet" -->
-					<p class = "segoe title blueFont" style="font-size:30px; font-style:italic; margin-bottom:10px;">SignUp Info</p> 
-				<p class = "segoe" style = "font-size: 20px; font-weight: bold;color: red"><%= err %></p>
-					<input id="email" type="email" class = "segoe blueFont" name ="email" style="margin:10px" placeholder ="Email" required> <br>
-					<input id="un" type="text" class = "segoe blueFont" style="margin:10px" name ="username" placeholder ="Username" required> <br>
-					<input id="pwd" type="text" class = "segoe blueFont" style="margin:10px" name ="password" placeholder ="Password" required> <br>
-					<input id="zip" type="number"class = "segoe blueFont" style="margin:10px"  name ="zipcode" placeholder ="Zipcode" required > <br>
-					<input id="zip" type="number"class = "segoe blueFont" style="margin:10px"  name ="phone" placeholder ="Phone Number" required > <br>
-					<input type="submit" class ="b oh segoe blueFont" value= "Continue">
-				</form>
-		  	</div>	
-		</div>
+<body >
+	<nav class="navbar navbar-default">
+  		<div class="container-fluid" style="padding-left: 0px;">
+		    <div class="navbar-header" >
+		    	<button onClick = "redirectHome();" style="padding-top: 5px; padding-left: 10px; border:none; background-color:#c5c1fe; "> <img src="arrow.png" style="width:50px; height: 40px"> </button>
+		    </div>
+		    <div class="collapse navbar-collapse" id="myNavbar">
+		       <ul class="nav navbar-nav navbar-right" style="margin-top: 10px; font-size: 20px">
+		       	<li style="padding-right:15px; margin-top:-10px;"><img src="bed.png" style="width: 30px;height: 40px;"></li>
+		       	<li >Safe Hands</li>
+		      </ul>
+		    </div>
+ 		</div>
+	</nav>
+	<div class="container-fluid text-center"> 
+		<h1>Registration</h1>
+		<div class="col col-sm-6 " style="margin-left: 25%;">
+			<form style="border: 2px double white; text-align: center;" name="signup"  action="oSignUp1" method="GET" ><!-- method="POST" action ="Servlet" -->
+			<h3 class="blueFont">Please enter your organization's information below:</h3>
+			<p class = "segoe" style = "font-size: 20px; font-weight: bold;color: red"><%= err %></p>
+			<div class="form-group">
+				<input id="email" type="email" class = "segoe blueFont" name ="email" placeholder ="Email" required> <br>
+			</div>
+			<div class="form-group">
+				<input id="un" type="text" class = "segoe blueFont" name ="username" placeholder ="Username" required> <br>
+			</div>
+			<div class="form-group">
+				<input id="pwd" type="text" class = "segoe blueFont" name ="password" placeholder ="Password" required> <br>
+			</div>
+			<div class="form-group">
+				<input id="zip" type="text"class = "segoe blueFont" name ="zipcode" placeholder ="Zipcode" required > <br>
+			</div>
+			<div class="form-group">
+				<input id="zip" type="text"class = "segoe blueFont" name ="phone" placeholder ="Phone Number" required > <br>
+			</div>
+			<input type="submit" class ="btn btn-lg btn-default"  style="margin-bottom: 20px" value= "Continue">
+		</form>
+	</div> 
 	</div>
 	
-	<div id="bottom" class = "purple block"> 
-	
-	</div>
+	<footer class="container-fluid text-center">
+	  <p> © 2018 Safe Hands </p>
+	</footer>
 	
 	<script>
 	function redirectHome(){
