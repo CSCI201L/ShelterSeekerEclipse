@@ -173,6 +173,8 @@ public class bUpdateOrg extends HttpServlet {
 		if (error) {
 			path = "/orgsettings.jsp";
 		} else {
+			//CHANGED TO ORG STATS.html
+			//MAKE A POP UP NOTIFICATION OR SOMETHING
 			path = "/orgstats.html";
 		}
 		RequestDispatcher dispatch = getServletContext().getRequestDispatcher(path);

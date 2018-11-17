@@ -4,89 +4,165 @@
 <html>
 <head>
 	<title>Shelter Seeker User Home Page</title>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
 	<style>
-	li {
-   		display: inline;
-   		float:left;
-	}	
-	ul {
-	    list-style-type: none;
-	    margin: 0;
-	    padding: 0;
-	    overflow: hidden;
-	    background-color: blue;
-	}
-	li a {
-	    display: block;
-	    color: white;
-	    text-align: center;
-	    padding: 14px 16px;
-	    text-decoration: none;
-	}
+		 .navbar {
+		 	background-color: #c5c1fe;
+		 	border-color:#c5c1fe;
+	      	margin-bottom: 0;
+	      	border-radius: 0;
+	      	color:white; 
+	      
+	    }
+		.navbar-default .navbar-brand {
+		    color: white;
+		   
+		}
+		.navbar-brand{
+    		padding: 0px 15px;
+    		margin-right: -15px;
+		}
+		.navbar-right{
+			margin-right: 0px;
+		}
+		.navbar-default .navbar-nav>li>a {
+		    color: white;
+		}
+		.navbar-default .navbar-nav>.active>a{
+			color: grey; 
+			background-color: white; 
+		}
+		
+	    body{
+			background-image: linear-gradient(to right, #7a5ce5, #a490ea, #7a5ce5);
+			font-family: 'Nunito Sans', sans-serif;
+			color:white; 
+			height: 100%; 
+		}  
+	    footer {
+	      background-color: #c5c1fe;
+	      color: white;
+	      padding: 15px;
+	      position: fixed;
+		  bottom: 0;
+		  width: 100%;
+		  height: 5%; 
+	   
+		}
 	</style>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-	<div id="top">
-	<ul>
-		<li><a href="userhomepage.jsp">Search</a></li>
-		<li><a href="usermessages.jsp">Messages</a></li>
-		<li><a href="usersettings.jsp">Profile</a></li>
-	
-	</ul>
-	</div>
-	<div id="middle">
-	<form action="javascript:onSearch();"><!-- action=""> -->
-     	<input type="text" placeholder="Search Shelters near Location" name="search">
-     	<h4>Kids allowed? </h4>
-     	<input type="radio" id="criteriaKidsYes" name="criteriaKids" value="Yes"/>
-     	<label for="criteriaKidsYes">Yes</label>
-     	<input type="radio" id="criteriaKidsNo" name="criteriaKids" value="No"/>
-        <label for="criteriaKidsNo">No</label>
-
-        <label for="filter">Pets allowed?</label>
-        <select id="criteriaPets">
-            <option value="Yes" selected>Yes</option>
-            <option value="No">No </option>
-        </select>
-          <label for="filter">Nearby Resources</label>
-          
-        <select multiple id="criteriaResources">
-        	<option value="None" selected></option>
-            <option value="Pharmacy">Pharmacy</option>
-            <option value="Grocery">Grocery Store </option>
-            <option value="Laundromat">Laundromat </option>
-        </select>       
-        Minimum Shelter Rating
-         <input type="range" min="1" max="5" class="slider" id="criteriaMinRating">
-      <button type="submit"><i class="fa fa-search"></i></button>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	  	<div class="navbar-header">
+		 	<figure class="navbar-brand">
+			  <img src="bed.png" style="width: 30px;height: 40px;">
+			</figure>	
+		</div>
+	    <ul class="nav navbar-nav">
+	   	 	<li><a style="font-size: 20px">Safe Hands</a></li>
+	      <li class="active"><a href="#">Search</a></li>
+	      <li><a href="usermessages.jsp">Messages</a></li>
+	      <li><a href="userprofile.jsp">Profile</a></li>
+	    </ul>
+	     <ul class="nav navbar-nav navbar-right">
+        	<li><a class="navbar-brand" href="signin.jsp">Sign Out</a></li>
+      	</ul>
+	  </div>
+	</nav>
+	<div class="container-fluid"> 
+	<h1 style="text-align: center; ">Search for a Shelter Now</h1>
+	<form class="form-inline"  action="javascript:onSearch();"><!-- action=""> -->
+		<div class="row">
+			<div class="col">
+	  		 <label class="control-label" for="loc">Search by name </label>
+		      <input type="text" class="form-control"  name="search" placeholder="Enter name">
+	  		 <label class="control-label" for="loc">Search by location <span class="glyphicon glyphicon-map-marker"></span></label>
+		      <input type="text" class="form-control"  name="search" placeholder="Enter zipcode">
+	     	</div>
+	     	<div class="col">
+	     		<div class="form-check form-check-inline">
+	     			<label>Kids Allowed? <span class="glyphicon glyphicon-user"></span> </label>
+		     		<input class="form-check-input" type="radio" id="criteriaKidsYes" name="criteriaKids" value="Yes"/>
+		     		<label class="form-check-label"  for="criteriaKidsYes">Yes</label>
+		     		<input  class="form-check-input" type="radio" id="criteriaKidsNo" name="criteriaKids" value="No"/>
+		       		 <label class="form-check-label" for="criteriaKidsNo">No</label>
+		     	</div>
+	       	</div>
+			 <div class="col">
+	       		 <label for="criteriaPets">Allow Pets?</label>
+		        <select style ="color: black;" id="criteriaPets">
+		            <option value="Yes" selected>Yes</option>
+		            <option value="No">No </option>
+		        </select>
+	        </div>
+		</div>
+	  	
+     	<div class="row">
+     		 <div class="col">
+	          <label for="criteriaResources">Things I prefer to have nearby</label>
+		        <select style ="color: black;" multiple id="criteriaResources">
+		        	<option value="None" selected>None</option>
+		            <option value="Pharmacy">Pharmacy </option>
+		            <option value="Grocery">Grocery Store  </option>
+		            <option value="Laundromat">Laundromat </option>
+		        </select>
+		    </div>    
+		   <div class="col">
+	       	 <label for="criteriaMinRating">Prefered Shelter Rating <span class="glyphicon glyphicon-star-empty"></span></label>
+	         <input type="range" min="1" max="5" class="form-control-range col-sm-5" id="criteriaMinRating">
+	       </div>
+	      <button class="col btn btn-md btn-default" style ="color: black;" type="submit">
+	      	<span class="glyphicon glyphicon-search"></span> Search
+	      </button>
+     	</div>
     </form>
-	Preferences 
-	<br/>
-	Location
-	<br/>
-	<button id="signout" onclick="signOut();">Sign out button</button>
-	<div id="resultsTable">
-		<table id="searchResultsTable">
-			<thead>
-				<tr>
-					<th>Shelter Id</th>
-					<th>Shelter Info</th>
-					<th>Shelter ZipCode</th>
-				</tr>
-			</thead>
-			<tbody>
-			
-			</tbody>
-		</table>
-
+   
+    	<div class="container">
+	  <h2>Search Results</h2>      
+	  <table class="table table-hover"  id="searchResultsTable">
+	    <thead>
+	      <tr>
+	        <th>Name</th>
+	        <th>Info</th>
+	        <th>Zipcode</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr>
+	        <td>Shelter 1</td>
+	        <td>Best place ever</td>
+	        <td>1234</td>
+	      </tr>
+	      <tr>
+	        <td>Shelter 2</td>
+	        <td>We have good food</td>
+	        <td>34354</td>
+	      </tr>
+	      <tr>
+	        <td>Shelter 3</td>
+	        <td>We allow pets!</td>
+	        <td>1232</td>
+	      </tr>
+	    </tbody>
+	  </table>
 	</div> 
-		
-		
+
+   
+   
+   	
 	</div>
-	<div id="bottom">
-	<footer></footer>
-	</div>
+	<footer class="container-fluid text-center">
+	  <p> © 2018 Safe Hands </p>
+	</footer>
 	
 	<script>
 	var prevNumSearchResults;
