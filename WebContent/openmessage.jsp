@@ -6,6 +6,7 @@
 <html>
 <head>
 <title>Shelter Seekers Open Message</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <style>
 li {
@@ -101,10 +102,9 @@ li a {
 		}
 
 		function writeMessage() {
-			var servletName = "openmessage.jsp";
-			location.href = "writemessage.jsp";
+			var servletName = "usermessages.jsp";
 			var form = $('<form action="' + servletName + '" method="GET">'
-					+ '<input type="text" name="sender" value="'
+					+ '<input type="text" name="recipient" value="'
 					+ <%
 					m.getSender();
 					%>

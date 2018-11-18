@@ -32,7 +32,9 @@ li a {
 </head>
 <body>
 	<%
-		String sender = request.getParameter("sender");
+		String sender_name;
+		if (request.getParameter("sender") != null)
+			sender_name = request.getParameter("sender");
 	%>
 	<div id="top">
 		<ul>
@@ -41,17 +43,7 @@ li a {
 			<li><a href="usersettings.jsp">Profile</a></li>
 		</ul>
 	</div>
-	Send a Message to someone!
-	<form id="send_message" onsubmit="return defaultMessage();">
-		<!--  method="post" action="Servlet"-->
-		To: <input id="recipient" type="text" name="recipient"
-			placeholder="Recipient"><br /> Subject: <input id="subject"
-			type="text" name="subject" placeholder="Subject" required><br />
-		Message:
-		<textarea rows='4' cols='50' id="message" name="message"
-			placeholder="Message" form='send_message'></textarea>
-		<br /> <input type="submit" value="Send">
-	</form>
+	
 
 	<button id="back" onclick="goBack();">Go Back to User Messages
 	</button>
@@ -66,36 +58,7 @@ li a {
 			location.href = "usermessages.jsp";
 		}
 
-		function defaultMessage() {
-
-			if (document.getElementById("recipient").value.length < 1) {
-				alert("Please input a recipient.");
-				return false;
-			}
-
-			if (document.getElementById("subject").value.length < 1) {
-				alert("Please input a subject.");
-				return false;
-			}
-
-			if (document.getElementById("message").value.length < 1) {
-				alert("Please input a message body.");
-				return false;
-			}
-	<%DBHelper db = (DBHelper) request.getSession().getAttribute("DBHelper");
-			System.out.println(db.didConnect() + "is status");
-			String subject = request.getParameter("subject");
-			String recip = request.getParameter("recipient");
-			String body = request.getParameter("message");
-			String sender = "";
-
-			if (!db.unameExists(recip)) {%>
-		alert("This user does not exist.");
-	<%} else {
-				Message m = new Message(subject, body, sender, recip);
-				db.sendMessage(m);
-			}%>
-		}
+		
 	</script>
 </body>
 </html>
