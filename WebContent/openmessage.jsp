@@ -48,17 +48,23 @@ li a {
 		mail.SortByReadAndTime(comp);
 
 		ArrayList<Message> messages = mail.getMessages();
-		int id = (Integer) session.getAttribute("messageID");
+		out.println(session.getAttribute("messageID"));
+		int id = 1;
+				//(Integer) session.getAttribute("messageID");
 		
 		Message m = new Message();
 
 		for (int i = 0; i < messages.size(); i++) {
+			
 			if (messages.get(i).getID() == id) {
 				m = messages.get(i);
 				m.read();
+				db.readMessage(id);
 				break;
 			}
+			
 		}
+		
 	%>
 	<div id="top">
 		<ul>
@@ -91,6 +97,7 @@ li a {
 	<br />
 	<button id="back" onclick="goBack();">Go Back to User Message</button>
 	<script>
+	
 		function goBack() {
 			location.href = "usermessages.jsp";
 		}
