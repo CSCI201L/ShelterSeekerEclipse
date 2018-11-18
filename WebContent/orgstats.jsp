@@ -1,60 +1,30 @@
-<!--  %@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%  -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 
 <head>
     <title>Shelter Seeker User Home Page</title>
-   <script src="https://apis.google.com/js/platform.js" async defer></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
-	<style>
-		 .navbar {
-		 	background-color: #c5c1fe;
-		 	border-color:#c5c1fe;
-	      	margin-bottom: 0;
-	      	border-radius: 0;
-	      	color:white; 
-	    }
-		.navbar-default .navbar-brand {
-		    color: white;
-		}
-		.navbar-default .navbar-nav>li>a {
-		    color: white;
-		}
-		.navbar-default .navbar-nav>.active>a{
-			color: grey; 
-			background-color: white; 
-		}
-		.navbar-brand{
-    		padding: 0px 15px;
-    		margin-right: -15px;
-		}
-		.navbar-right{
-			margin-right: 0px;
-		}
-	    body{
-			background-image: linear-gradient(to right, #7a5ce5, #a490ea, #7a5ce5);
-			font-family: 'Nunito Sans', sans-serif;
-			color:white; 
-			height: 100%; 
-		}  
-	    footer {
-	      background-color: #c5c1fe;
-	      color: white;
-	      padding: 15px;
-	      position: fixed;
-		  bottom: 0;
-		  width: 100%;
-		  height: 5%; 
-	   
-		}
-		</style>
+    <style>
+        li {
+   		display: inline;
+   		float:left;
+	}	
+	ul {
+	    list-style-type: none;
+	    margin: 0;
+	    padding: 0;
+	    overflow: hidden;
+	    background-color: blue;
+	}
+	li a {
+	    display: block;
+	    color: white;
+	    text-align: center;
+	    padding: 14px 16px;
+	    text-decoration: none;
+	}
+	</style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.1.0/lodash.min.js"></script>
@@ -65,25 +35,15 @@
 </head>
 
 <body>
-   <nav class="navbar navbar-default">
-	  <div class="container-fluid">
-	  		<div class="navbar-header">
-		 	<figure class="navbar-brand">
-			  <img src="bed.png" style="width: 30px;height: 40px;">
-			</figure>	
-		</div>
-	    <ul class="nav navbar-nav">
-	   	 	<li><a style="font-size: 20px">Safe Hands</a></li>
-	      <li><a href="userhomepage.jsp">Search</a></li>
-	      <li><a href="usermessages.jsp">Messages</a></li>
-	      <li class="active"><a href="#">My Stats</a></li>
-	    </ul>
-	     <ul class="nav navbar-nav navbar-right">
-        	<li><a class="navbar-brand" href="signin.jsp">Sign Out</a></li>
-      	</ul>
-	  </div>
-	</nav>
-	<div class="container-fluid"> 
+    <div id="top">
+        <ul>
+            <li><a href="search.jsp">Search</a></li>
+            <li><a href="usermessages.jsp">Messages</a></li>
+            <li><a href="orgsettings.jsp">Profile</a></li>
+
+        </ul>
+    </div>
+    <div id="middle">
         <div> Rating: </div>
         <div id='click-series'></div>
         <div id='interest-map'></div>
@@ -94,24 +54,29 @@
         <div id='pie-chart-4'></div>
         </div>
     </div>
-    <footer class="container-fluid text-center">
-	  <p> © 2018 Safe Hands </p>
-	</footer>
+    <div id="bottom">
+        <footer></footer>
+    </div>
 
     <script type="text/javascript">
-        /* var rawData = <%= session.getAttribute("DATA")%>; */
+        <% DBHelper dbh = (DBHelper) session.getAttribute("DBHelper");
+			Shelter sh = dbh.shInfo;
+		%>
+		
+		fetch("dbsearch?q=clicks&here=<%= sh.id %>", {"method":"GET"}).then(plotCallback);
+		
         // [{date:new Date('2013-01-01'),n:120,n3:200},...]
         /* Generate random times between two dates */
         function unpack(rows, key) {
   			return rows.map(function(row) { return row[key]; });
 		}
         
-        Plotly.d3.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv", function(err, rows){
+        function plotCallback(rows){
             var trace1 = {
               type: "scatter",
               mode: "lines",
               name: 'Clicks',
-              x: unpack(rows, 'Date'),
+              x: unpack(rows, 'time'),
               y: unpack(rows, 'Clicks'),
               line: {color: '#17BECF'}
             }

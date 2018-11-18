@@ -90,8 +90,8 @@
 	
 	function goToShelterChatRoom() {
 		sessionStorage.setItem('shelterID', <%=(String)request.getAttribute("shelterID")%>);
-		sessionStorage.setItem('shelterName', "<%=(String)request.getAttribute("shelterName")%>")
-		document.location.href = "http://localhost:8080/borie_CSCI201L_Final_Project/chatRoomSignin.jsp";
+		sessionStorage.setItem('shelterName', "<%=(String)request.getAttribute("shelterName")%>");
+		document.location.href = "http://localhost:8080/ShelterSeeker/chatRoomSignIn.jsp";
 		
 	}
 	
@@ -113,7 +113,6 @@
 		xhttp.send("rating=" + rating + "&email=" + sessionStorage.getItem('email') +
 			"&shelterID=" + <%=(String)request.getAttribute("shelterID")%>);
 	}
-
 	
 	</script>
 	

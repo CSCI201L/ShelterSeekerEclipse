@@ -49,7 +49,7 @@
 		if(e.keyCode == 13){
 			console.log("username = " + document.getElementById("user").value);
 			sessionStorage.setItem('username', document.getElementById("user").value);
-			window.location.href ='http://localhost:8080/borie_CSCI201L_Final_Project/chat.jsp';
+			window.location.href ='http://localhost:8080/ShelterSeeker/chat.jsp';
 		}
 	}
 	</script>

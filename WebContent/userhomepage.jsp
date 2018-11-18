@@ -171,7 +171,6 @@
 			}
 		}
 		parameters += "&numPets=" + numPets;
-
 		if (document.getElementById("criteriaPharmacy").checked)
 			parameters += "&pharmacyNearby=true";
 		else
@@ -283,7 +282,7 @@
 	
 	function loadSearchResult(shelterId) {
 		console.log(shelterId);
-		document.location.href = "http://localhost:8080/borie_CSCI201L_Final_Project/searchResult?shelterId=" + 
+		document.location.href = "http://localhost:8080/ShelterSeeker/searchResult?shelterId=" + 
 				shelterId;
 	}
 	

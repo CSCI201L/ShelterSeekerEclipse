@@ -47,4 +47,3 @@ INSERT INTO shelterInfo (id,zipcode,kids,pets,phoneNumber,biography,
     availability) 
     values(4,20027,2,3,1234567890,'This is my third shelter for testing',
     0,1,0,0,1.5,0,0,0,0,10);
-

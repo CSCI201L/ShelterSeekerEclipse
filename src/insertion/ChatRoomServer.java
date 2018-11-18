@@ -1,3 +1,5 @@
+package insertion;
+
 import java.io.IOException;
 import java.util.Vector;
 
@@ -12,22 +14,22 @@ import javax.websocket.server.ServerEndpoint;
 public class ChatRoomServer {
 
 	private static Vector<Session> sessionVector = new Vector<Session>();
-
+	
 	@OnOpen
 	public void open(Session session) {
 		//System.out.println("Connection made!");
 		sessionVector.add(session);
 	}
-
+	
 	@OnMessage
 	public void onMessage(String message, Session session) {
-		//		String username = (String) session.getUserProperties().get("username");
+//		String username = (String) session.getUserProperties().get("username");
 		String initialData = (String) session.getUserProperties().get("initialData");
 		try {
 			if(initialData == null) {
 				session.getUserProperties().put("username", message.substring(0, message.indexOf("|")));
 				session.getUserProperties().put("shelterID", message.substring(message.indexOf("|") + 1, 
-						message.length()));
+					message.length()));
 				session.getUserProperties().put("initialData", "true");
 				//session.getBasicRemote().sendText(username + "nhas joined the conversation!");
 			}
@@ -38,7 +40,7 @@ public class ChatRoomServer {
 				for(Session s : sessionVector) {
 					if (((String)s.getUserProperties().get("shelterID")).equals(shelterID)) {
 						s.getBasicRemote().sendText("@" + session.getUserProperties().get("username") 
-								+ ": " + messageContent);
+							+ ": " + messageContent);
 						System.out.println("Sending this message: " + messageContent);
 					}
 					else {
@@ -52,13 +54,13 @@ public class ChatRoomServer {
 			close(session);
 		}
 	}
-
+	
 	@OnClose
 	public void close(Session session) {
 		//System.out.println("Disconnecting!");
 		sessionVector.remove(session);
 	}
-
+	
 	@OnError
 	public void error(Throwable error) {
 		System.out.println("Error!");
