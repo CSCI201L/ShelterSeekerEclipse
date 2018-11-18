@@ -13,79 +13,40 @@
 	<%String nearPharmacy = (String)request.getAttribute("nearPharmacy"); %>
 	<%String nearGrocery = (String)request.getAttribute("nearGrocery"); %>
 	<%String nearLaundromat = (String)request.getAttribute("nearLaundromat"); %>
+	<%String shelterID = (String)request.getAttribute("shelterID"); %>
 	
 	<title>Shelter Seekers Organization Public Profile Page</title>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
 	<style>
-		 .navbar {
-		 	background-color: #c5c1fe;
-		 	border-color:#c5c1fe;
-	      	margin-bottom: 0;
-	      	border-radius: 0;
-	      	color:white; 
-	    }
-		.navbar-default .navbar-brand {
+		li {
+    		display: inline;
+    		float:left;
+		}	
+		#top ul {
+		    list-style-type: none; 
+		    margin: 0;
+		    padding: 0;
+		    overflow: hidden;
+		    background-color: blue;
+		}
+		li a {
+		    display: block;
 		    color: white;
-		}
-		.navbar-default .navbar-nav>li>a {
-		    color: white;
-		}
-		.navbar-default .navbar-nav>.active>a{
-			color: grey; 
-			background-color: white; 
-		}
-		.navbar-brand{
-    		padding: 0px 15px;
-    		margin-right: -15px;
-		}
-		.navbar-right{
-			margin-right: 0px;
-		}
-	    body{
-			background-image: linear-gradient(to right, #7a5ce5, #a490ea, #7a5ce5);
-			font-family: 'Nunito Sans', sans-serif;
-			color:white; 
-			height: 100%; 
-		}  
-	    footer {
-	      background-color: #c5c1fe;
-	      color: white;
-	      padding: 15px;
-	      position: fixed;
-		  bottom: 0;
-		  width: 100%;
-		  height: 5%; 
-	   
+		    text-align: center;
+		    padding: 14px 16px;
+		    text-decoration: none;
 		}
 		</style>
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
-	<nav class="navbar navbar-default">
-	  <div class="container-fluid">
-	  		<div class="navbar-header">
-		 	<figure class="navbar-brand">
-			  <img src="bed.png" style="width: 30px;height: 40px;">
-			</figure>	
-		</div>
-	    <ul class="nav navbar-nav">
-	   	 	<li><a style="font-size: 20px">Safe Hands</a></li>
-	      <li><a href="userhomepage.jsp">Search</a></li>
-	      <li><a href="usermessages.jsp">Messages</a></li>
-	      <li><a href="userprofile.jsp">Profile</a></li>
-	    </ul>
-	     <ul class="nav navbar-nav navbar-right">
-        	<li><a class="navbar-brand" href="signin.jsp">Sign Out</a></li>
-      	</ul>
-	  </div>
-	</nav>
-	<div class="container-fluid"> 
+	<div id="top">
+	<ul>
+		<li><a href="search.jsp">Search</a></li>
+		<li><a href="usermessages.jsp">Messages</a></li>
+		<li><a href="profile.jsp">Profile</a></li>
+	</ul>
+	</div>
+	<div id="middle">
 		<img id="pic" src="http://www-scf.usc.edu/~csci201/images/jeffrey_miller.jpg" width="100" height="100">
 		<div id="info">
 		<h3>Shelter Information</h3><br>
@@ -93,23 +54,68 @@
 		Zip Code: <%= zipCode %> <br>
 		Phone Number: <%= phoneNumber %> <br>
 		Biography: <%= bio %> <br>
-		Rating: <%= currentRating %> <br>
-		 
+		<div id="rating">
+			Rating: <%= currentRating %> <br>
 		</div>
-		<div id="preferences">
-		<h3>Org Information</h3>
 		Pets? <%= pets %> <br>
 		Children? <%= kids %> <br>
 		Near a pharmacy? <%= nearPharmacy %> <br>
 		Near a grocery store? <%= nearGrocery %> <br>
 		Near a laundromat? <%= nearLaundromat %>  <br>
 		</div>
+		<br />
+		<br />
+		
+		<button id="goToShelterChatRoom" onclick="goToShelterChatRoom();">Shelter Chat Room</button>
+		<br />
+		<br />
+		<h4>Give this shelter a rating</h4>
+		<input type="radio" id="criteriaMinRating1" name="criteriaMinRating" onclick="javascript:giveRatingOne();"/>
+        <label for="criteriaMinRating1">1 Star</label>
+        <input type="radio" id="criteriaMinRating2" name="criteriaMinRating" onclick="javascript:giveRatingTwo();"/>
+        <label for="criteriaMinRating2">2 Stars</label>
+        <input type="radio" id="criteriaMinRating3" name="criteriaMinRating" onclick="javascript:giveRatingThree();"/>
+        <label for="criteriaMinRating3">3 Stars</label>
+        <input type="radio" id="criteriaMinRating4" name="criteriaMinRating" onclick="javascript:giveRatingFour();"/>
+        <label for="criteriaMinRating4">4 Stars</label>
+        <input type="radio" id="criteriaMinRating5" name="criteriaMinRating" onclick="javascript:giveRatingFive();"/>
+        <label for="criteriaMinRating5">5 Stars</label>
 		
 	</div>
-	<footer class="container-fluid text-center">
-	  <p> © 2018 Safe Hands </p>
-	</footer>
+	<div id="bottom">
 	
+	</div>
+	
+	<script>
+	
+	function goToShelterChatRoom() {
+		sessionStorage.setItem('shelterID', <%=(String)request.getAttribute("shelterID")%>);
+		sessionStorage.setItem('shelterName', "<%=(String)request.getAttribute("shelterName")%>")
+		document.location.href = "http://localhost:8080/borie_CSCI201L_Final_Project/chatRoomSignin.jsp";
+		
+	}
+	
+	function giveRatingOne() {giveRating(1);}
+	function giveRatingTwo() {giveRating(2);}
+	function giveRatingThree() {giveRating(3);}
+	function giveRatingFour() {giveRating(4);}
+	function giveRatingFive() {giveRating(5);}
+	
+	function giveRating(rating) {
+		var xhttp = new XMLHttpRequest();
+		xhttp.open("POST", "GiveRating", true);
+		xhttp.onreadystatechange = function () {
+			let responseText = this.responseText;
+			document.getElementById("rating").innerHTML = "Rating: " + responseText.trim();
+		}
+		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		sessionStorage.setItem('email', "borie@usc.edu") // !!!!! Get rid of this and have it set on login !!!!!
+		xhttp.send("rating=" + rating + "&email=" + sessionStorage.getItem('email') +
+			"&shelterID=" + <%=(String)request.getAttribute("shelterID")%>);
+	}
+
+	
+	</script>
 	
 </body>
 </html>
