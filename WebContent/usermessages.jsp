@@ -6,6 +6,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="ISO-8859-1">
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <title>Shelter Seekers User Messages Page</title>
 <style>
 li {
@@ -66,6 +70,7 @@ th, td {
 
 		for (int i = 0; i < ms.size(); i++) {
 			mail.addMessage(ms.get(i));
+			System.out.println(ms.get(i).getID());
 		}
 
 		CompareMessageByReadAndTime comp = new CompareMessageByReadAndTime();
@@ -95,13 +100,16 @@ th, td {
 		%>
 		<table id="message_table">
 			<%
+			out.println(messages.size());
 				for (int i = 0; i < messages.size(); i++) {
 					if (messages.get(i).getRead() == 1) {
-						out.println("<tr>" + "<td id ='" + messages.get(i).getID() + "'; onclick='openMessage();'>" + messages.get(i).readable());
+						out.println("<tr>" + "<td id ='" + messages.get(i).getID() + "'; onClick=\"openMessage('"
+								+ messages.get(i).getID() + "');\">" + messages.get(i).readable());
 					}
 
 					if (messages.get(i).getRead() == 0) {
-						out.println("<tr>" + "<td id ='" + messages.get(i).getID() + "'; onclick='openMessage();'>" + "<b>" + messages.get(i).readable() + "</b>");
+						out.println("<tr>" + "<td id ='" + messages.get(i).getID() + "'; onClick=\"openMessage('"
+								+ messages.get(i).getID() + "');\">" + "<b>" + messages.get(i).readable() + "</b>");
 					}
 					out.println("</td>" + "</tr>");
 				}
@@ -118,15 +126,22 @@ th, td {
 			location.href = "writemessage.jsp";
 		}
 
-		function openMessage() {
-			location.href = "openmessage.jsp";
+		function openMessage(id) {
+			var servletName = "openmessage.jsp";
+			var form = $('<form action="' + servletName + '" method="GET">'
+					+ '<input type="text" name="messageID" value="'
+					+ id
+					+ '" />'
+					+ '</form>');
+			$('body').append(form);
+			form.submit();
 		}
-		
-		$(document).ready(function () {      
-		     $('#message_table td').click(function (event) {
-		    	 sessionStorage.messageID = $(this).attr('id');
-		     });
-		 });
+
+		$(document).ready(function() {
+			$('#message_table td').click(function(event) {
+				sessionStorage.messageID = $(this).attr('id');
+			});
+		});
 	</script>
 </body>
 </html>

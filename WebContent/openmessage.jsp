@@ -31,6 +31,7 @@ li a {
 </style>
 </head>
 <body>
+
 	<%
 		//REPLACE THIS WITH HTTPSESSION GLOBAL INSTANCE OF DB
 		DBHelper db = (DBHelper) request.getSession().getAttribute("DBHelper");
@@ -48,7 +49,9 @@ li a {
 		mail.SortByReadAndTime(comp);
 
 		ArrayList<Message> messages = mail.getMessages();
-		int id = (Integer) session.getAttribute("messageID");
+		String id_string = request.getParameter("messageID");
+		
+		int id = Integer.parseInt(id_string);
 		
 		Message m = new Message();
 
@@ -59,6 +62,8 @@ li a {
 				break;
 			}
 		}
+		
+		db.readMessage(id);
 	%>
 	<div id="top">
 		<ul>
@@ -96,7 +101,16 @@ li a {
 		}
 
 		function writeMessage() {
+			var servletName = "openmessage.jsp";
 			location.href = "writemessage.jsp";
+			var form = $('<form action="' + servletName + '" method="GET">'
+					+ '<input type="text" name="sender" value="'
+					+ <%
+					m.getSender();
+					%>
+		+ '" />' + '</form>');
+			$('body').append(form);
+			form.submit();
 		}
 	</script>
 </body>

@@ -31,6 +31,9 @@ li a {
 </style>
 </head>
 <body>
+	<%
+		String sender = request.getParameter("sender");
+	%>
 	<div id="top">
 		<ul>
 			<li><a href="userhomepage.jsp">Search</a></li>
@@ -56,6 +59,7 @@ li a {
 	<script>
 		function goBack() {
 			var x = document.getElementById("message").value;
+
 			if (x.length > 0) {
 				alert("Your message will not be saved.");
 			}
@@ -78,16 +82,20 @@ li a {
 				alert("Please input a message body.");
 				return false;
 			}
-		}
 	<%DBHelper db = (DBHelper) request.getSession().getAttribute("DBHelper");
 			System.out.println(db.didConnect() + "is status");
 			String subject = request.getParameter("subject");
 			String recip = request.getParameter("recipient");
 			String body = request.getParameter("message");
-			String sender = "example";
-			Message m = new Message(subject, body, sender, recip);
-			db.sendMessage(m);%>
-		
+			String sender = "";
+
+			if (!db.unameExists(recip)) {%>
+		alert("This user does not exist.");
+	<%} else {
+				Message m = new Message(subject, body, sender, recip);
+				db.sendMessage(m);
+			}%>
+		}
 	</script>
 </body>
 </html>
