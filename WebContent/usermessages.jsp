@@ -49,15 +49,6 @@ th, td {
 	height: 60px;
 	width: 600px;
 }
-
-#left, #right {
-	float: left;
-	width: 50%;
-}
-
-#right {
-	text-align: left;
-}
 </style>
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
@@ -92,87 +83,50 @@ th, td {
 		</ul>
 	</div>
 	<div id="middle">
-		<div id="left">
-			<br>
-			<form>
-				<!--  method="post" action="Servlet"-->
-				<input id="search" type="text" name="search"
-					placeholder="User Messages"> <input type="submit"
-					value="Search">
-			</form>
+		<form>
+			<!--  method="post" action="Servlet"-->
+			<input id="search" type="text" name="search"
+				placeholder="User Messages"> <input type="submit"
+				value="Search">
+
+		</form>
+		<%
+			out.println("<div>" + mail.getUnread() + " new messages.</div>");
+		%>
+		<table id="message_table">
 			<%
-				out.println("<div>" + mail.getUnread() + " new messages.</div>");
-			%>
-			<table id="message_table">
-				<%
-					for (int i = 0; i < messages.size(); i++) {
-						if (messages.get(i).getRead() == 1) {
-							out.println("<tr>" + "<td id ='" + messages.get(i).getID() + "'; onclick='openMessage();'>"
-									+ messages.get(i).readable());
-						}
-
-						if (messages.get(i).getRead() == 0) {
-							out.println("<tr>" + "<td id ='" + messages.get(i).getID() + "'; onclick='openMessage();'>" + "<b>"
-									+ messages.get(i).readable() + "</b>");
-						}
-						out.println("</td>" + "</tr>");
+				for (int i = 0; i < messages.size(); i++) {
+					if (messages.get(i).getRead() == 1) {
+						out.println("<tr>" + "<td id ='" + messages.get(i).getID() + "'; onclick='openMessage();'>" + messages.get(i).readable());
 					}
-				%>
-			</table>
-		</div>
 
-		<div id="right">
-			<br> Send a Message to someone!
-			<form id="send_message" onsubmit="return defaultMessage();">
-				<!--  method="post" action="Servlet"-->
-				To: <input id="recipient" type="text" name="recipient"
-					placeholder="Recipient"><br /> Subject: <input
-					id="subject" type="text" name="subject" placeholder="Subject"
-					required><br />
-				<textarea rows='20' cols='100' id="message" name="message"
-					placeholder="Message" form='send_message'></textarea>
-				<br /> <input type="submit" value="Send">
-			</form>
-		</div>
+					if (messages.get(i).getRead() == 0) {
+						out.println("<tr>" + "<td id ='" + messages.get(i).getID() + "'; onclick='openMessage();'>" + "<b>" + messages.get(i).readable() + "</b>");
+					}
+					out.println("</td>" + "</tr>");
+				}
+			%>
+		</table>
 
+		<br>
+		<button id="write" onclick="writeMessage();">Write Message</button>
 	</div>
 	<div id="bottom"></div>
 
 	<script>
-		function defaultMessage() {
-
-			if (document.getElementById("recipient").value.length < 1) {
-				alert("Please input a recipient.");
-				return false;
-			}
-
-			if (document.getElementById("subject").value.length < 1) {
-				alert("Please input a subject.");
-				return false;
-			}
-
-			if (document.getElementById("message").value.length < 1) {
-				alert("Please input a message body.");
-				return false;
-			}
+		function writeMessage() {
+			location.href = "writemessage.jsp";
 		}
-	<%System.out.println(db.didConnect() + "is status");
-			String subject = request.getParameter("subject");
-			String recip = request.getParameter("recipient");
-			String body = request.getParameter("message");
-			String sender = "example";
-			Message m = new Message(subject, body, sender, recip);
-			db.sendMessage(m);%>
+
 		function openMessage() {
 			location.href = "openmessage.jsp";
 		}
-
-		$(document).ready(function() {
-			$('#message_table td').click(function(event) {
-				sessionStorage.messageID = $(this).attr('id');
-				alert(sessionStorage.messageID);
-			});
-		});
+		
+		$(document).ready(function () {      
+		     $('#message_table td').click(function (event) {
+		    	 sessionStorage.messageID = $(this).attr('id');
+		     });
+		 });
 	</script>
 </body>
 </html>
