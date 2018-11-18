@@ -5,7 +5,7 @@ public class Shelter {
 	public int id;
 	public String shelterName;
 	public int zipcode;
-	
+	public String owner;
 	public int capacity = 0;
 	public String phoneNumber = "";
 	public String bio = "";
@@ -13,8 +13,6 @@ public class Shelter {
 	public int numRatingGiven = 0;
 	public Byte nearGrocery = 0;
 	public int numPendingRequests = 0;
-	public int availability = 0;
-	
 	// Amenities
 	public int kids = 0;
 	public int pets = 0;
@@ -27,9 +25,9 @@ public class Shelter {
 	public int numStays = 0;
 	
 	
-	public Shelter (String name, String phoneNumber, int zipcode) {
+	public Shelter (String name, int phoneNumber, int zipcode) {
 		this.shelterName = name;
-		this.phoneNumber = phoneNumber;
+		this.phoneNumber = "";
 		this.zipcode = zipcode;
 	}
 	public Shelter () {

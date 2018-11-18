@@ -27,9 +27,9 @@ import javax.servlet.http.HttpServletResponse;
 public class Search extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	static final String databaseUserName = "root";
-	static final String databasePassword = "password1";
+	static final String databasePassword = "root";
 	static final String databasePort = "3306";
-	static final String databaseName = "shelterSeeker";
+	static final String databaseName = "shelterseeker";
 	static final String googleAPIKey = "AIzaSyByHkT9nYExPGBdrF8go_Iep92WAnfloWk";
        
     public Search() {
@@ -41,23 +41,18 @@ public class Search extends HttpServlet {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:" + databasePort + "/" + 
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/shelterseeker?user=root&password=root&useSSL=false");
+			/*jdbc:mysql://localhost:" + databasePort + "/" + 
 				databaseName + "?user=" + databaseUserName + "&password= " + databasePassword + 
-				"&useSSL=false&serverTimezone=UTC");
+				"&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+				*/
 			String pharmacyNearby = request.getParameter("pharmacyNearby");
 			String groceryNearby = request.getParameter("groceryNearby");
 			String laundromatNearby = request.getParameter("laundromatNearby");
-			String minRating = request.getParameter("minRating");
-			String currentlyAvailable = request.getParameter("showAvailableOnly");
-			int numKids = Integer.parseInt(request.getParameter("numKids"));
-			int numPets = Integer.parseInt(request.getParameter("numPets"));
-			int searcherZipCode  = Integer.parseInt(request.getParameter("zipCode"));
-			String searchByName = request.getParameter("searchByName");
-			boolean doSearchByName = true;
-			if (searchByName == "" || searchByName == null) doSearchByName = false;
-			
+
 			System.out.println("This user called search: " + request.getParameter("email"));
+			//CHANGE
 			ps = conn.prepareStatement("SELECT userID from users where email=?");
 			ps.setString(1, request.getParameter("email"));
 			rs = ps.executeQuery();
@@ -69,23 +64,23 @@ public class Search extends HttpServlet {
 			ps.setInt(1, searcherID);
 			rs = ps.executeQuery();
 			rs.next();
-			int userZipCode = rs.getInt("zipcode");
-			System.out.println("User's ZipCode: " + userZipCode);
-			System.out.println("Searcher's chosen ZipCode: " + searcherZipCode);
+			int searcherZipCode = rs.getInt("zipcode");
+			int searcherNumKids = rs.getInt("kids");
+			int searcherNumPets = rs.getInt("pets");
+			System.out.println("Searcher's ZipCode: " + searcherZipCode);
+			System.out.println("Searcher's numKids: " + searcherNumKids);
+			System.out.println("Searcher's numPets: " + searcherNumPets);
 			
 			String searchStatement = "SELECT s.* FROM users u, shelterInfo s where u.userID = s.id ";
 			if(pharmacyNearby.equals("true")) searchStatement += " and nearPharmacy=1 ";
 			if(groceryNearby.equals("true")) searchStatement += " and nearGrocery=1 ";
 			if(laundromatNearby.equals("true")) searchStatement += " and nearLaundromat=1 ";
-			if(currentlyAvailable.equals("true")) searchStatement += " and availability>0 ";
-			if(doSearchByName) searchStatement += getAdditionalSearchStatement(searchByName);
 			searchStatement += " and s.kids>=? ";
 			searchStatement += " and s.pets >=? ";
-			searchStatement += " and s.currentRating>=? ";
+			searchStatement += " and availability>0 ";
 			ps = conn.prepareStatement(searchStatement);
-			ps.setInt(1, numKids);
-			ps.setInt(2, numPets);
-			ps.setDouble(3, Double.parseDouble(minRating));
+			ps.setInt(1, searcherNumKids);
+			ps.setInt(2, searcherNumPets);
 			
 			System.out.println("Executing this query: " + searchStatement);
 			rs = ps.executeQuery();
@@ -176,11 +171,26 @@ public class Search extends HttpServlet {
 			
 	    	response.setContentType("text");
 			PrintWriter out = response.getWriter();
+			
 			for(Shelter s : shelters) {
 				out.println(s.id);
 				out.println(s.bio);
 				out.println(s.zipcode);
 			}
+			
+//			
+//			URL url = new URL("https://www.zipcodeapi.com/rest/"
+//					+ "dYZyo4NBkBmvPIE8EzqA3NABipAJG4wFOLkvJdTFufVARAcVmSE2HCVf8NRp4imi/distance.json/90089/94301/mile");
+//			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+//			connection.setRequestMethod("GET");
+//		    connection.connect();
+//		    InputStream is = connection.getInputStream();
+//		    BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		   
+			
+//	    	response.setContentType("text");
+//			PrintWriter out = response.getWriter();
+	    	
 	    	
 		} catch (SQLException sqe) {
 			System.out.println("sqe in search: " + sqe.getMessage());
@@ -189,31 +199,8 @@ public class Search extends HttpServlet {
 		} catch (Exception e) {
 			System.out.println("e in search: " + e.getMessage());
 		}
+		
+		
 	}
-	
-	private String getAdditionalSearchStatement(String s) {
-		String additionalStatement = "and ( 0 ";
-		char lastChar = ' ';
-		String currentWord = "";
-		for(int i = 0; i < s.length(); i++) {
-			char currentChar = s.charAt(i);
-			if (currentChar != ' ')
-				currentWord += currentChar;
-			else if (lastChar != ' ') {
-				additionalStatement += " or LOWER(s.shelterName) like '%" +  currentWord.toLowerCase() + "%' ";
-				currentWord = "";
-			}		
-			else {
-				currentWord = "";
-			}
-			lastChar = currentChar;		
-		}
-		if (currentWord != "" && additionalStatement.indexOf(currentWord.toLowerCase()) == -1) {
-			additionalStatement += " or LOWER(s.shelterName) like '%" +  currentWord.toLowerCase() + "%' ";
-		}
-		additionalStatement += " ) ";
-		System.out.print("Adding this parameter to SQL statement: ");
-		System.out.println(additionalStatement);
-		return additionalStatement;
-	}
+
 }

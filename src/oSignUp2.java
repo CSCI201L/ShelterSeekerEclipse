@@ -48,9 +48,7 @@ public class oSignUp2 extends HttpServlet {
 		int capacity = Integer.parseInt(request.getParameter("capacity"));
 		int occupants = Integer.parseInt(request.getParameter("occupants"));
 		String bio = request.getParameter("bio");
-		String address = request.getParameter("address");
-		String base64 = request.getParameter("base64");
-		
+
 		UserInfo u = new UserInfo();
 		u.isShelter = 1;
 		u.username = username;
@@ -77,7 +75,6 @@ public class oSignUp2 extends HttpServlet {
 		}else {
 			sh.nearPharmacy = 0; 
 		}
-		sh.address = address;
 		
 		if (children.equals("yes")) {
 			sh.kids = 1;
@@ -94,7 +91,7 @@ public class oSignUp2 extends HttpServlet {
 		//THIS SHOULD BE A VALID DBHELPER
 		db = new DBHelper (email,password);
 		String path = "/userregister.jsp";
-		db.addImage(db.user.username, base64);
+		
 		boolean error = false;
 		if (email.equals ("") || password.equals("") || username.equals("") ) {
 			error = true;

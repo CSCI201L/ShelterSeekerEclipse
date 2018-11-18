@@ -13,41 +13,38 @@
 	<title>Shelter Seekers User Register</title>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script src="https://apis.google.com/js/platform.js" async defer></script>
-	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
 	
 	<style>
-		 .navbar {
-		 background-color: #c5c1fe;
-	      margin-bottom: 0;
-	      border-radius: 0;
-	      border-color:#c5c1fe;
-	    }
-	    body{
-			background-image: linear-gradient(to right, #7a5ce5, #a490ea, #7a5ce5);
-			font-family: 'Nunito Sans', sans-serif;
-			color:white; 
-			height: 100%; 
-		}  
-	    footer {
-	      background-color: #c5c1fe;
-	      color: white;
-	      padding: 15px;
-	      position: fixed;
-		  bottom: 0;
-		  width: 100%;
-		  height: 5%; 
-	   
+		.purple {
+			background-color: purple;
+			opacity:0.7;
+			filter: grayscale(10%);	
+			
+		}
+		.style-options {
+			margin-bottom:0px;
+			font-size:18px;
+			
+			
 		}
 		.blueFont {
 			color: blue;
 			opacity:0.9;
 			filter: grayscale(80%);
+		}
+		.block {
+			width:100%;
+			height:10%;
+		}
+		.oh:hover{
+			background-color: purple;
+			opacity:0.7;
+			filter: grayscale(10%);	
+			color: white;
+		}
+		.title {
+		    font-size: 34px;
+   	 margin-top: 50px;
 		}
 		.segoe{
 		font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif; 
@@ -57,65 +54,98 @@
 		 font-weight: 200; 
 		 line-height: 26.4px; 
 		 }
+		 .back span {
+			  cursor: pointer;
+			  display: inline-block;
+			  position: relative;
+			  transition: 0.5s;
+			}
+			
+			.back span:before {
+			
+			  content: '\00ab';
+			  position: absolute;
+			  opacity: 0;
+			  top: 0;
+			  left: -10px;
+			  transition: 0.5s;
+			}
+			
+			.back:hover span {
+			  padding-left: 25px;
+			}
+			
+			.back:hover span:before {
+			  opacity: 1;
+			  left: 0;
+			}
+			.b span {
+			  cursor: pointer;
+			  display: inline-block;
+			  position: relative;
+			  transition: 0.5s;
+			}
+			
+			.b span:after {
+			  content: '\00bb';
+			  position: absolute;
+			  opacity: 0;
+			  top: 0;
+			  right: -20px;
+			  transition: 0.5s;
+			}
+			
+			.b:hover span {
+			  padding-right: 25px;
+			}
+			
+			.b:hover span:after {
+			  opacity: 1;
+			  right: 0;
+			}
 	</style>
 </head>
 <body style = "width: 1500px; height: 1000px" >
-	<nav class="navbar navbar-default">
-  		<div class="container-fluid" style="padding-left: 0px;">
-		    <div class="navbar-header">
-		    	<button onClick = "redirectHome();" style="padding-top: 5px; padding-left: 10px; border:none; background-color:#c5c1fe; "> <img src="arrow.png" style="width:50px; height: 40px"> </button>
-		    </div>
-		    <div class="collapse navbar-collapse" id="myNavbar">
-		       <ul class="nav navbar-nav navbar-right" style="margin-top: 10px; font-size: 20px">
-		       	<li style="padding-right:15px; margin-top:-10px;"><img src="bed.png" style="width: 30px;height: 40px;"></li>
-		        <li>Safe Hands</li>
-		      </ul>
-		    </div>
- 		</div>
-	</nav>
-	<div class="container-fluid text-center"> 
-		<h1>Registration Continued</h1>
-		<div class="col col-sm-6 " style="margin-left: 25%;">
-			<form style="border: 2px double white; text-align: center;" name="signup"  action="oSignUp2" method="GET" ><!-- method="POST" action ="Servlet" -->
-				<h3 class = "blueFont">Shelter Info</h3> 
+	<div id="top" class = " purple block"> 
+		
+	</div>
+	<div id="middle"> 
+		<button onClick = "redirectHome();" style = "top:0;float:left;" class ="back oh segoe blueFont"> <span> Back </span> </button>
+		<div id="content" style="margin-left:500px; text-align:center; display:inline-block;">
+			<div id="Sign-Up" style="display:inline-block;">
+				<p class = "segoe title blueFont" style="font-size:34px"> Register Organization</p>
+				<form name="signup"  action="oSignUp2" method="GET" ><!-- method="POST" action ="Servlet" -->
+					<p class = "segoe title blueFont" style="font-size:30px; font-style:italic; margin-bottom:10px;">Shelter Info</p> 
 				<p class = "segoe" style = "font-size: 20px; font-weight: bold;color: red"><%= err %></p>
-				<div class="form-group">
-					<p  >Do you allow children?</p>
+					<p  class = "style-options segoe blueFont" >Do you allow children?</p>
 					<input type="checkbox" name="children" checked> Yes<br>
-				</div>
-				<div class="form-group">
-					<p >Do you allow pets?</p>
+					<p  class = "style-options segoe blueFont" >Do you allow pets?</p>
 					<input type="checkbox" name="pets" value="yes" checked> Yes<br>
-				</div>
-				<div class="form-group">
-					<p >Are you near a Pharmacy?</p>
+					<p  class = "style-options segoe blueFont" >Are you near a Pharmacy?</p>
 					<input type="checkbox" name="pharmacy" value="yes" checked> Yes<br>
-				</div>
-				<div class="form-group">
-					<p>Do you allow Grocery?</p>
+					<p  class = "style-options segoe blueFont" >Do you allow Grocery?</p>
 					<input type="checkbox" name="grocery" value="yes" checked> Yes<br>
-				</div>
-				<div class="form-group">
-					<p>Do you allow Laundromat?</p>
+					<p  class = "style-options segoe blueFont" >Do you allow Laundromat?</p>
 					<input type="checkbox" name="laundromat" value="yes" checked> Yes<br>
-				</div>
-				<div class="form-group">
 					<input  type="number" class = "segoe blueFont" name ="occupants" style="margin:10px" placeholder ="Current Occupants" required> <br>
-				</div>
-				<div class="form-group">
 					<input  type="number" class = "segoe blueFont" name ="capacity" style="margin:10px" placeholder ="Capacity" required> <br>
-				</div>
-				<div class="form-group">
-					<input  type="text" form="Sign-up" class = "segoe blueFont" name ="bio" style="height: 100px;margin:10px" placeholder ="Tell us about your shelter!" required> <br>
-				</div>
-				<input type="submit" class ="btn btn-lg btn-default"  style="margin-bottom: 20px" value= "Sign-Up">
-			</form>
+					<input type="hidden" name = "zipcode" value = "<%=(String) request.getParameter("zipcode")%>">
+										<input type="hidden" name = "email" value = "<%=(String)request.getParameter("email")%>">
+										<input type="hidden" name = "username" value = "<%=(String) request.getParameter("username")%>">
+										<input type="hidden" name = "password" value = "<%=(String) request.getParameter("password")%>">
+										<input type="hidden" name = "phone" value = "<%=(String) request.getParameter("phone")%>">
+					<input  type="textarea" form="Sign-up" class = "segoe blueFont" name ="bio" style="height: 100px;margin:10px" placeholder ="Tell us about your shelter!" required> <br>
+										
+					
+					<input type="submit" class ="b oh segoe blueFont" value= "Sign-UP">
+				</form>
+		  	</div>	
 		</div>
 	</div>
 	
-	<footer class="container-fluid text-center">
-	  <p> © 2018 Safe Hands </p>
-	</footer>
+	<div id="bottom" class = "purple block"> 
+	
+	</div>
 	
 	<script>
 	function redirectHome(){
@@ -137,19 +167,6 @@
 		 }
 
 	}
-	function readFile() {
-		if ( this.files && this.files[0]){
-			var FR = new FileReader();
-			FR.addEventListener("load", function(e){
-				document.getElementById("base64").value = e.target.result;
-			//	document.getElementById("test").src = e.target.result;
-			});
-			
-			FR.readAsDataURL(this.files[0]);
-		}
-	}
-	
-	document.getElementById("f").addEventListener("change", readFile);
 	//validate username
 	function validateUsername(){
 		var x=document.getElementById("un").value;

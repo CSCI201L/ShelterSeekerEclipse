@@ -12,82 +12,78 @@
 	<head>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
 	
 	<style>
-		h3{
-			margin: 30px;
+		.purple {
+			background-color: purple;
+			opacity:0.7;
+			filter: grayscale(10%);	
+			
 		}
-		body{
-			background-image: linear-gradient(to right, #7a5ce5, #a490ea, #7a5ce5);
-			font-family: 'Nunito Sans', sans-serif;
-			color:white; 
-			height: 100%; 
-		}  
-	    footer {
-	      background-color: #c5c1fe;
-	      color: white;
-	      padding: 15px;
-	      position: fixed;
-		  bottom: 0;
-		  width: 100%;
-		  height: 5%; 
-	   
+		.blueFont {
+			color: blue;
+			opacity:0.9;
+			filter: grayscale(80%);
 		}
-	  
-		.btn-space {
-		    margin: 20px;
+		.block {
+			width:100%;
+			height:10%;
 		}
+		.title {
+		    font-size: 34px;
+   	 margin-top: 50px;
+		}
+		.segoe{
+		font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif; 
+		font-size: 24px; 
+		font-style: normal;
+		 font-variant: normal; 
+		 font-weight: 200; 
+		 line-height: 26.4px; 
+		 }
 	</style>
 	<title>Shelter Seekers Sign-In</title>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	</head>
-<body>
-	<div class="jumbotron text-center" style="background-image: radial-gradient(#dedbfd, #c5c1fe)">
-	  <h1 style="color: white; font-weight: bold;">Welcome to Safe Hands
-	  	<img src="bed.png" style="width: 50px;height: 60px; margin-bottom: 20px;"> 
-	  
-	  </h1>
-	  <p style="color: gray;">We're here to help</p> 
+<body style = "width: 1500px; height: 1000px">
+	<div id="top" class = " purple block"> 
+		
 	</div>
-	<div class="container-fluid text-center"> 
-		<div class="row">
-			<div class="col-sm-6">
-			<h2>New to Safe Hands?</h2>
-			<h3>No Problem! Please select an option below:  </h3>
-			<button type="button" class="btn btn-default btn-lg btn-space" onclick="redirectGuestSign()">Continue as Guest</button>
-			<h3>Register Now as</h3>
-				<button type="button" class="btn btn-default btn-lg btn-space" onclick="redirectRegister()">New User</button>
-	  			<button type="button" class="btn btn-default btn-lg btn-space" onclick="redirectShelter()">New Shelter</button>
-			
-			</div>
-			<div class="col-sm-6">	
-		 		<h2>Already have an account?</h2>
-		 		<h3>Sign in</h3>
-				<form action="vSignIn" method="GET"><!-- method="POST" action ="Servlet" -->
-					<div class="form-group">
-						<input id="un" type="text" name ="email" style = "color: black; font-size:18px" placeholder ="email" required>
-					</div>
-					<div class="form-group">	
-						<input id="pwd" type="text" name ="password" style = "color: black; font-size:18px"  placeholder ="password" required>
-					</div>
-					<div class="checkbox">
-				      <label style = "font-size:18px;"><input type="checkbox"> Remember me</label>
-				    </div>
-				 	 <input class="btn btn-md btn-default" type="submit" value= "Sign-In">
-					
-				</form>
-				<p class = "segoe" style = "font-size: 20px; font-weight: bold;color: red"><%= err %></p>
-	  		</div>	
-		</div>
+	
+	<div id="middle" class = "amber" style="height:80%"> 
+		<!-- sign in section -->	
+		<div id="content" style="margin-left:450px; text-align:center; display:inline-block;">
+			<p class = "segoe title blueFont" style="font-size:34px">Welcome to Shelter Seekers User </p>
+			<div id="Sign-In" >
+			<form action="vSignIn" method="GET"><!-- method="POST" action ="Servlet" -->
+				<p  class = "segoe blueFont" style = "font-size:25px;">Sign-In</p> <br/>
+				<input id="un" type="text" name ="email" class = "segoe blueFont" style = " font-size:18px" placeholder ="email" required>
+				<br/>
+				<input id="pwd" type="text" name ="password" class = "segoe blueFont" style = "font-size:18px"  placeholder ="password" required>
+				<br/>
+				<label class = "segoe blueFont" style = "font-size:18px; 	"><input type="checkbox"  > Remember me</label>
+				<input type="submit" value= "Sign-In">
+			</form>
+			<p class = "segoe" style = "font-size: 20px; font-weight: bold;color: red"><%= err %></p>
+		  	</div>	
+		  	
+		  	<!-- guest section -->
+		  	<button id="guestsignin" class ="segoe blueFont" style = "font-size:25px; display:inline-block; margin-top:50px;" onclick="redirectGuestSign()">Sign In as Guest</button>
+		  	<!-- register section -->
+		  	<br>
+
+		  	<button id="reg" class ="segoe blueFont" style = "font-size:25px; display:inline-block; margin-top:50px; " onclick="redirectRegister()">Register User</button>
+		  	<!-- shelter section -->
+		  	<div id="shelter">
+		  	<button id="sheltersignin" onclick="redirectShelter()" class ="segoe blueFont" style = "font-size:25px; display:inline-block; margin-top:50px; ">Register Organization</button>
+		  	</div>
+	  	</div>
+	  	
 	</div>
-	<footer class="container-fluid text-center">
-	  <p> © 2018 Safe Hands </p>
-	</footer>
+	
+	<div id="bottom" class = "purple block"> 
+	
+	</div>
 	
 	
 	<script>
