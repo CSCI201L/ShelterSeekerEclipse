@@ -31,14 +31,6 @@ li a {
 </style>
 </head>
 <body>
-	<div id="top">
-		<ul>
-			<li><a href="userhomepage.jsp">Search</a></li>
-			<li><a href="usermessages.jsp">Messages</a></li>
-			<li><a href="usersettings.jsp">Profile</a></li>
-		</ul>
-	</div>
-
 	<%
 		//REPLACE THIS WITH HTTPSESSION GLOBAL INSTANCE OF DB
 		DBHelper db = (DBHelper) request.getSession().getAttribute("DBHelper");
@@ -51,19 +43,48 @@ li a {
 		for (int i = 0; i < ms.size(); i++) {
 			mail.addMessage(ms.get(i));
 		}
-		
+
 		CompareMessageByReadAndTime comp = new CompareMessageByReadAndTime();
 		mail.SortByReadAndTime(comp);
 
 		ArrayList<Message> messages = mail.getMessages();
 		int id = (Integer) session.getAttribute("messageID");
-		//Message m = db.messageById(id);
-	%>
+		
+		Message m = new Message();
 
-	<h1 id ="subject"><% /*out.println(m.getSubject());*/ %></h1>
-	<h3>From <% /*out.println(m.getSender());*/ %></h3>
+		for (int i = 0; i < messages.size(); i++) {
+			if (messages.get(i).getID() == id) {
+				m = messages.get(i);
+				m.read();
+				break;
+			}
+		}
+	%>
+	<div id="top">
+		<ul>
+			<li><a href="userhomepage.jsp">Search</a></li>
+			<li><a href="usermessages.jsp">Messages</a></li>
+			<li><a href="usersettings.jsp">Profile</a></li>
+		</ul>
+	</div>
+
+
+
+	<h1 id="subject">
+		<%
+			out.println(m.getSubject());
+		%>
+	</h1>
+	<h3>
+		From
+		<%
+		out.println(m.getSender());
+	%>
+	</h3>
 	<div id="body_message">
-		Body of Message <br>
+		<%
+			out.println(m.getBody());
+		%>
 		<p id="test"></p>
 	</div>
 	<button id="back" onclick="writeMessage();">Reply</button>
