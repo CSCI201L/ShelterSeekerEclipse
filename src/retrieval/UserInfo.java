@@ -5,6 +5,7 @@ public class UserInfo {
 	public int id;
 	public String imgurl;
 	public String bio;
+	public String address;
 	public String email; //this will be unique identifier
 	public int zipcode;
 	public String phoneNumber;

@@ -1,5 +1,12 @@
 package retrieval;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,6 +15,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import sun.misc.IOUtils;
 //DBHelper u = new DBHELPER(....)
 //u.updateUserInfo(UserInfo new);
 
@@ -21,7 +30,8 @@ public class DBHelper {
 	public PreparedStatement ps = null;
 	public Shelter shInfo = null;
 	public static final String CLASS_NAME = "com.mysql.jdbc.Driver";
-	public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/shelterSeeker?user=root&password=root&useSSL=false";
+//	public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/shelterseeker?user=root&password=root&useSSL=false";
+	public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/safeshelter?user=root&password=Xboxlive1&useSSL=false";
 	public DBHelper(String email, String password)  {
 		this.email = email;
 		this.user = new UserInfo();
@@ -53,6 +63,7 @@ public class DBHelper {
 					shInfo.owner=user.username;
 				} else {
 					System.out.println("NOT A SHELTER!");
+					//user.address = rs.getString("address");
 				}
 				//now userObject will be fully updated
 				//if it is a shelter, then shInfo will also be populated!
@@ -99,6 +110,7 @@ public class DBHelper {
 				user.zipcode = rs1.getInt("zipcode");
 				user.kids = rs1.getInt("kids");
 				user.pets = rs1.getInt("pets");
+				user.address = rs1.getString("address");
 				user.phoneNumber = rs1.getString("phoneNumber");
 			}
 		}catch (ClassNotFoundException e) {
@@ -138,6 +150,7 @@ public class DBHelper {
 			while (rs1.next()) {
 				System.out.println("FOUND VALUES!");
 				s.owner = rs1.getString("own");
+				s.address = rs1.getString("address");
 				s.zipcode = rs1.getInt("zipcode");
 				s.kids = rs1.getInt("kids");
 				s.pets = rs1.getInt("pets");
@@ -237,13 +250,14 @@ public class DBHelper {
 					Class.forName(CLASS_NAME);
 					conn3 = DriverManager.getConnection(CONNECTION_URL); 
 					
-					String query = "INSERT INTO userInfo(username,zipcode,kids,pets,phoneNumber) VALUES (?,?,?,?,?)";
+					String query = "INSERT INTO userInfo(username,zipcode,address,kids,pets,phoneNumber) VALUES (?,?,?,?,?,?)";
 					ps3 = conn3.prepareStatement(query);		
 					ps3.setString(1, u.username);
 					ps3.setInt(2, u.zipcode);
-					ps3.setInt(3, u.kids);
-					ps3.setInt(4, u.pets);
-					ps3.setString(5, u.phoneNumber);
+					ps3.setString(3, u.address);
+					ps3.setInt(4, u.kids);
+					ps3.setInt(5, u.pets);
+					ps3.setString(6, u.phoneNumber);
 					
 					 ps3.executeUpdate();
 
@@ -283,15 +297,19 @@ public class DBHelper {
 		try {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
+			
+			String query = "INSERT INTO shelterInfo(own,zipcode,address,kids,pets,phoneNumber,biography,nearGrocery,nearPharmacy,nearLaundromat) VALUES (?,?,?,?,?,?,?,?,?,?)";
 			if (s.phoneNumber.equals("")) {
-				s.phoneNumber = "1";
+				s.phoneNumber="1";
 			}
-			String query = "INSERT INTO shelterInfo(own,zipcode,kids,pets,phoneNumber,biography,nearGrocery,nearPharmacy,nearLaundromat) VALUES (?,?,?,?,?,?,?,?,?)";
 			ps2 = conn2.prepareStatement(query);		
 			ps2.setString(1, userId);
 			ps2.setInt(2, s.zipcode);
 			ps2.setInt(3, s.kids);
 			ps2.setInt(4, s.pets);
+			if(s.phoneNumber.equals("")) {
+				s.phoneNumber="0";
+			}
 			ps2.setString(5, s.phoneNumber);
 			ps2.setString(6, s.bio);
 			ps2.setByte(7, s.nearGrocery);
@@ -620,13 +638,14 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
 			
-			String query = "UPDATE userInfo SET zipcode=?, kids=?, pets=?, phoneNumber=? WHERE username=?";
+			String query = "UPDATE userInfo SET zipcode=?, address=?, kids=?, pets=?, phoneNumber=? WHERE username=?";
 			ps2 = conn2.prepareStatement(query);		
 			ps2.setInt(1, user.zipcode);
-			ps2.setInt(2, user.kids);
-			ps2.setInt(3, user.pets);
-			ps2.setString(4, user.phoneNumber);
-			ps2.setString(5, user.username);
+			ps2.setString(2, user.address);
+			ps2.setInt(3, user.kids);
+			ps2.setInt(4, user.pets);
+			ps2.setString(5, user.phoneNumber);
+			ps2.setString(6, user.username);
 			ps2.executeUpdate();
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -662,13 +681,16 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn1 = DriverManager.getConnection(CONNECTION_URL); 
 			
-			String query = "UPDATE shelterInfo SET zipcode=?, kids=?, pets=?, phoneNumber=?, biography=?,"
+			String query = "UPDATE shelterInfo SET zipcode=?, address =?, kids=?, pets=?, phoneNumber=?, biography=?,"
 					+ " numRatingGiven=?, nearPharmacy=?, nearLaundromat=?, currentRating=?,"
 					+ " pageVisits=?, numStays=?, numPendingRequests=?, avgStayDuration=? WHERE own=?";
 			ps1 = conn1.prepareStatement(query);		
 			ps1.setInt(1, s.zipcode);
 			ps1.setInt(2, s.kids);
 			ps1.setInt(3, s.pets);
+			if(s.phoneNumber.equals("")) {
+				s.phoneNumber="0";
+			}
 			ps1.setString(4, s.phoneNumber);
 			ps1.setString(5, s.bio);
 			ps1.setInt(6, s.numRatingGiven);
@@ -745,7 +767,7 @@ public class DBHelper {
 				}
 			}
 		}
-	public static boolean userExists(String email) {
+	public static boolean userExists(String username) {
 		Connection conn2 = null;
 		PreparedStatement ps2 = null;
 		ResultSet rs2 = null;
@@ -753,9 +775,9 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
 			
-			String query = "SELECT * FROM users WHERE email=?";
+			String query = "SELECT * FROM users WHERE username=?";
 			ps2 = conn2.prepareStatement(query);		
-			ps2.setString(1, email);
+			ps2.setString(1, username);
 			rs2 = ps2.executeQuery();
 			while(rs2.next()) {
 				try {
@@ -796,6 +818,107 @@ public class DBHelper {
 		}
 		//checks userInfo and sees if email exists in the table
 		return false;
+	}
+	public String getImages (String username) {
+		byte [] b = null;
+		Connection conn2 = null;
+		PreparedStatement ps2 = null;
+		ResultSet rs2 = null;
+		try {
+			Class.forName(CLASS_NAME);
+			conn2 = DriverManager.getConnection(CONNECTION_URL); 
+			
+			String query = "SELECT * FROM images WHERE username=?";
+			ps2 = conn2.prepareStatement(query);		
+			ps2.setString(1, username);
+			rs2 = ps2.executeQuery();
+			while (rs2.next()) {
+				System.out.println("PICS FOUND");
+				//InputStream binaryStream = rs2.getBinaryStream("image");
+				//b = IOUtils.toByteArray(binaryStream);
+				//b = new byte[16384];
+				String s = rs2.getString("image");
+				return s;
+				//				ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+//
+//				int nRead;
+//				while ((nRead = binaryStream.read(b, 0, b.length)) != -1) {
+//				  buffer.write(b, 0, nRead);
+//				}
+//
+//				b= buffer.toByteArray();
+			}
+				System.out.println("NO MORE PICS");
+			
+			}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		}finally {
+			try {
+				if (rs2 != null) {
+					rs2.close();
+				}
+				if (ps2 != null) {
+					ps2.close();
+				}
+				if (conn2!= null) {
+					conn2.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle closing streams: " + sqle.getMessage());
+			}
+		}	
+		
+		return "";
+	}
+	public void addImage(String username, String base64) {
+		Connection conn2 = null;
+		PreparedStatement ps2 = null;
+		ResultSet rs2 = null;
+	//	File f = new File(path);
+		try {
+		//	FileInputStream fis = new FileInputStream(f);
+		
+		try {
+			Class.forName(CLASS_NAME);
+			conn2 = DriverManager.getConnection(CONNECTION_URL); 
+			
+			String query = "INSERT INTO images(username,image) VALUES (?,?)";
+			ps2 = conn2.prepareStatement(query);		
+			ps2.setString(1, username);
+			ps2.setString(2,base64);
+			 ps2.executeUpdate();
+			
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if (rs2 != null) {
+					rs2.close();
+				}
+				if (ps2 != null) {
+					ps2.close();
+				}
+				if (conn2!= null) {
+					conn2.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle closing streams: " + sqle.getMessage());
+			}
+		}
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 	public boolean userExists(int id) {
 		Connection conn2 = null;
