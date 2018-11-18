@@ -17,6 +17,7 @@ public class Message {
 		this.body = "";
 		this.recipient = "";
 		this.sender = "";
+		this.id = 0;
 	}
 
 	//Constructor that actually sets values
@@ -25,6 +26,7 @@ public class Message {
 		this.body = body;
 		this.sender = sender;
 		this.recipient = recipient;
+		this.id = 0;
 
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 		LocalDateTime now = LocalDateTime.now();
@@ -40,6 +42,11 @@ public class Message {
 	public String getBody() {
 		return body;
 	}
+	
+	public String getBodyReadable() {
+		if(body.length() >= 20) return body.substring(0, 20) + "...";
+		else return body.substring(0,body.length() - 1) + "...";
+	}
 
 	public String getRecip() {
 		return recipient;
@@ -49,10 +56,16 @@ public class Message {
 		return sender;
 	}
 
-	public String getRead() {
-		if(read == 1) return "Read";
-
-		return "Unread";
+	public Byte getRead() {
+		return read;
+	}
+	
+	public int getID() {
+		return id;
+	}
+	
+	public void setID(int id) {
+		this.id = id;
 	}
 
 	//Returns the timestamp as a printable string
@@ -74,7 +87,7 @@ public class Message {
 
 	//Parse into readable format for testing
 	public String readable() {
-		return "Message from " + getSender() + ": <br />" + getSubject() + ": <br />" + getBody();
+		return "Message from " + getSender() + ": <br />" + getSubject() + ": <br />" + getBodyReadable() + "<br /> Sent at " + getTime();
 	}
 
 	//Set whether a message is read

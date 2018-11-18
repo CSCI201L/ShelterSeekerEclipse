@@ -1,96 +1,110 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ page
+	import="retrieval.DBHelper, retrieval.Message, retrieval.Mail,  javax.servlet.http.HttpServlet, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, retrieval.CompareMessageByReadAndTime,java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Shelter Seekers Open Message</title>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
-	<style>
-		 .navbar {
-		 	background-color: #c5c1fe;
-		 	border-color:#c5c1fe;
-	      	margin-bottom: 0;
-	      	border-radius: 0;
-	      	color:white; 
-	    }
-		.navbar-default .navbar-brand {
-		    color: white;
-		}
-		.navbar-default .navbar-nav>li>a {
-		    color: white;
-		}
-		.navbar-default .navbar-nav>.active>a{
-			color: grey; 
-			background-color: white; 
-		}
-	    body{
-			background-image: linear-gradient(to right, #7a5ce5, #a490ea, #7a5ce5);
-			font-family: 'Nunito Sans', sans-serif;
-			color:white; 
-			height: 100%; 
-		}  
-	    footer {
-	      background-color: #c5c1fe;
-	      color: white;
-	      padding: 15px;
-	      position: fixed;
-		  bottom: 0;
-		  width: 100%;
-		  height: 5%; 
-	   
-		}
-		
-		.blueFont {
-			color: blue;
-			opacity:0.9;
-			filter: grayscale(80%);
-		}
-		
-		.segoe{
-			font-size: 20px; 
-		 	font-weight: 200; 
-		 }
-		</style>
+<title>Shelter Seekers Open Message</title>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<style>
+li {
+	display: inline;
+	float: left;
+}
+
+#top ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: blue;
+}
+
+li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+</style>
 </head>
 <body>
-	<nav class="navbar navbar-default">
-  		<div class="container-fluid" style="padding-left: 0px;">
-		    <div class="navbar-header">
-		    	<button onClick = "goBack();" style="padding-top: 5px; padding-left: 10px; border:none; background-color:#c5c1fe; "> <img src="arrow.png" style="width:50px; height: 40px"> </button>
-		    </div>
-		    <div class="collapse navbar-collapse" id="myNavbar">
-		       <ul class="nav navbar-nav navbar-right">
-		        <li style="margin-top: 10px; font-size: 20px">Safe Hands</li>
-		      </ul>
-		    </div>
- 		</div>
-	</nav>
-	<div class="container-fluid"> 
-		<h1>Subject line</h1>
-		<h3>From senders's username</h3>
-		<img src="http://www-scf.usc.edu/~csci201/images/jeffrey_miller.jpg" width="100" height="100">
-		Body of Message <br>
-	</div>
-	<footer class="container-fluid text-center">
-	  <p> © 2018 Safe Hands </p>
-	</footer>
-<script>
-	function defaultMessage(){
-		if(document.getElementById("message").value.length<1){
-			document.getElementById("message").defaultValue=document.getElementById("subject").value;
-			alert(document.getElementById("message").defaultValue);
+	<%
+		//REPLACE THIS WITH HTTPSESSION GLOBAL INSTANCE OF DB
+		DBHelper db = (DBHelper) request.getSession().getAttribute("DBHelper");
+		System.out.println(db.didConnect() + "is status");
+
+		Mail mail = new Mail();
+
+		ArrayList<Message> ms = db.getMessages();
+
+		for (int i = 0; i < ms.size(); i++) {
+			mail.addMessage(ms.get(i));
 		}
-	}
-	function goBack(){
-		location.href="usermessages.jsp";
-	}
+
+		CompareMessageByReadAndTime comp = new CompareMessageByReadAndTime();
+		mail.SortByReadAndTime(comp);
+
+		ArrayList<Message> messages = mail.getMessages();
+		out.println(session.getAttribute("messageID"));
+		int id = 1;
+				//(Integer) session.getAttribute("messageID");
+		
+		Message m = new Message();
+
+		for (int i = 0; i < messages.size(); i++) {
+			
+			if (messages.get(i).getID() == id) {
+				m = messages.get(i);
+				m.read();
+				db.readMessage(id);
+				break;
+			}
+			
+		}
+		
+	%>
+	<div id="top">
+		<ul>
+			<li><a href="userhomepage.jsp">Search</a></li>
+			<li><a href="usermessages.jsp">Messages</a></li>
+			<li><a href="usersettings.jsp">Profile</a></li>
+		</ul>
+	</div>
+
+
+
+	<h1 id="subject">
+		<%
+			out.println(m.getSubject());
+		%>
+	</h1>
+	<h3>
+		From
+		<%
+		out.println(m.getSender());
+	%>
+	</h3>
+	<div id="body_message">
+		<%
+			out.println(m.getBody());
+		%>
+		<p id="test"></p>
+	</div>
+	<button id="back" onclick="writeMessage();">Reply</button>
+	<br />
+	<button id="back" onclick="goBack();">Go Back to User Message</button>
+	<script>
+	
+		function goBack() {
+			location.href = "usermessages.jsp";
+		}
+
+		function writeMessage() {
+			location.href = "writemessage.jsp";
+		}
 	</script>
 </body>
 </html>
