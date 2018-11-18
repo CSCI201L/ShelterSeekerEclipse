@@ -73,9 +73,8 @@
  		</div>
 	</nav>
 	<div class="container-fluid"> 
-		<h1>Subject line</h1>
-		<h3>From senders's username</h3>
-		<img src="http://www-scf.usc.edu/~csci201/images/jeffrey_miller.jpg" width="100" height="100">
+		<h2>From senders's username</h2>
+		<h2>Subject line</h2>
 		Body of Message <br>
 	</div>
 	<footer class="container-fluid text-center">

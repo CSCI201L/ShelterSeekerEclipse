@@ -50,16 +50,12 @@
 			filter: grayscale(80%);
 		}
 		.segoe{
-		font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif; 
-		font-size: 24px; 
-		font-style: normal;
-		 font-variant: normal; 
-		 font-weight: 200; 
-		 line-height: 26.4px; 
+			font-size: 20px; 
+		 	font-weight: 200; 
 		 }
 	</style>
 </head>
-<body style = "width: 1500px; height: 1000px" >
+<body>
 	<nav class="navbar navbar-default">
   		<div class="container-fluid" style="padding-left: 0px;">
 		    <div class="navbar-header">
@@ -80,33 +76,33 @@
 				<h3 class = "blueFont">Shelter Info</h3> 
 				<p class = "segoe" style = "font-size: 20px; font-weight: bold;color: red"><%= err %></p>
 				<div class="form-group">
-					<p  >Do you allow children?</p>
+					<label>Do you allow children? </label>
 					<input type="checkbox" name="children" checked> Yes<br>
 				</div>
 				<div class="form-group">
-					<p >Do you allow pets?</p>
-					<input type="checkbox" name="pets" value="yes" checked> Yes<br>
+					<label class="form-check-label" for="pets">Do you allow pets?</label>
+					<input class="form-check-input" type="checkbox" id="pets" name="pets" value="yes" checked> Yes<br>
 				</div>
 				<div class="form-group">
-					<p >Are you near a Pharmacy?</p>
-					<input type="checkbox" name="pharmacy" value="yes" checked> Yes<br>
+					<label class="form-check-label" for="pharmacy">Is there a Pharmacy nearby?</label>
+					<input class="form-check-input" type="checkbox" id="pharmacy" name="pharmacy" value="yes" checked> Yes<br>
 				</div>
 				<div class="form-group">
-					<p>Do you allow Grocery?</p>
-					<input type="checkbox" name="grocery" value="yes" checked> Yes<br>
+					<label class="form-check-label" for="grocery">Are you located near a Grocery?</label>
+					<input class="form-check-input" type="checkbox" id="grocery" name="grocery" value="yes" checked> Yes<br>
 				</div>
 				<div class="form-group">
-					<p>Do you allow Laundromat?</p>
-					<input type="checkbox" name="laundromat" value="yes" checked> Yes<br>
+					<label class="form-check-label" for="laundromat">Are you located near a Laundromat?</label>
+					<input class="form-check-input" type="checkbox" id="laundromat" name="laundromat" value="yes" checked> Yes<br>
 				</div>
 				<div class="form-group">
-					<input  type="number" class = "segoe blueFont" name ="occupants" style="margin:10px" placeholder ="Current Occupants" required> <br>
+					<input  type="number" class = "segoe blueFont" name ="occupants" placeholder ="# of occupants" required> <br>
 				</div>
 				<div class="form-group">
-					<input  type="number" class = "segoe blueFont" name ="capacity" style="margin:10px" placeholder ="Capacity" required> <br>
+					<input  type="number" class = "segoe blueFont" name ="capacity" placeholder ="Max Capacity #" required> <br>
 				</div>
 				<div class="form-group">
-					<input  type="text" form="Sign-up" class = "segoe blueFont" name ="bio" style="height: 100px;margin:10px" placeholder ="Tell us about your shelter!" required> <br>
+				  <textarea style="width: 50%; margin-left: 25%"placeholder="Tell us about yourself.."class="form-control segoe blueFont" form="Sign-up" class = "segoe blueFont" name ="bio" rows="5" id="bio" required></textarea>
 				</div>
 				<input type="submit" class ="btn btn-lg btn-default"  style="margin-bottom: 20px" value= "Sign-Up">
 			</form>

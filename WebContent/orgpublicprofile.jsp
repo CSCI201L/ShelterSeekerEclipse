@@ -85,25 +85,21 @@
       	</ul>
 	  </div>
 	</nav>
-	<div class="container-fluid"> 
-		<img id="pic" src="http://www-scf.usc.edu/~csci201/images/jeffrey_miller.jpg" width="100" height="100">
-		<div id="info">
-		<h3>Shelter Information</h3><br>
+	<div class="container-fluid text-center"> 
+		<div class="col-sm-12">
+		<h2>Shelter Information</h2><br>
 		Availability: <%= availability %> <br>
 		Zip Code: <%= zipCode %> <br>
 		Phone Number: <%= phoneNumber %> <br>
 		Biography: <%= bio %> <br>
 		Rating: <%= currentRating %> <br>
-		 
+		Pets allowed: <%= pets %> <br>
+		Children allowed: <%= kids %> <br>
+		Near a pharmacy: <%= nearPharmacy %> <br>
+		Near a grocery store: <%= nearGrocery %> <br>
+		Near a laundromat: <%= nearLaundromat %>  <br>
 		</div>
-		<div id="preferences">
-		<h3>Org Information</h3>
-		Pets? <%= pets %> <br>
-		Children? <%= kids %> <br>
-		Near a pharmacy? <%= nearPharmacy %> <br>
-		Near a grocery store? <%= nearGrocery %> <br>
-		Near a laundromat? <%= nearLaundromat %>  <br>
-		</div>
+		<button  style="margin-top: 15px"class="btn btn-lg btn-default"  id="chatroom">Enter Chat Room</button>
 		
 	</div>
 	<footer class="container-fluid text-center">

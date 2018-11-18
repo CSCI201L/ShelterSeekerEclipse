@@ -14,6 +14,7 @@
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style>
 		 .navbar {
 		 	background-color: #c5c1fe;
@@ -108,20 +109,31 @@
       	</ul>
 	  </div>
 	</nav>
-	<div class="container-fluid "> 
+	<div class="container-fluid text-center"> 
 		<div class="col col-sm-6 ">
 			<h3>Search Messages</h3>
 			<div style="border: 1px double white; height:435px;" >
 				<form>
 				<div class="formgroup" style="margin-top: 20px ;margin-left:20px;">
-					<input id="search" type="text" style="background-color:white; width: 375px;" class="segoe blueFont" name="search" placeholder="Enter sender's name..."> 
-					<input class="btn btn-md btn-default" type="submit" value="Look Up">
+					<input id="search" class="segoe blueFont" type="text" style="background-color:white; width: 375px;" name="search" placeholder="Enter sender's name..."> 
+					<button class="btn btn-md btn-default" style="margin-bottom: 5px;"type="submit" value="Search"><i class="fa fa-search"></i></button>
 				</div>
 	
 				</form>
 				<!-- Message table should pop up below? -->
-				<table>
+				<table class="table">
 				<%
+					if(messages.size() > 0){
+						out.println("<thread>");
+						out.println("<tr>");
+						out.println("<th scope='col'>From</th>");
+						out.println("<th scope='col'>Subject</th>");
+						out.println("<th scope='col'>Time</th>");
+						out.println("</tr>");
+						out.println("</thread>");
+						
+					}
+					out.println("<tbody>");
 					for(int i = 0; i < messages.size(); i++){
 						out.println("<tr>" + "<td>" + messages.get(i).readable());
 						out.println("<form action='' id='send'>");
@@ -129,8 +141,9 @@
 						out.println("<textarea rows='4' cols='50' name='body' form='send'>");
 						out.println("</td>" + "</tr>");
 					}
+					out.println("</tbody>");
 				%>
-			</table>
+				</table>
 			</div>
 		</div>
 		<div class="col col-sm-6 ">
@@ -138,13 +151,13 @@
 			<div style="border: 1px double white;">
 				<form onsubmit="defaultMessage();"><!--  method="post" action="Servlet"-->
 				<div class="form-group" style="margin-top: 20px ;margin-left:20px;">
-					To: <br><input style="width: 400px;"id="recipient" type="text" class="segoe blueFont" name="recipient">
+					<input style="width: 400px;"id="recipient" type="text" class="segoe blueFont" name="recipient" placeholder="Recipient" required>
 				</div>
 				<div class="form-group" style="margin-left:20px;">
-					Subject:<br><input style="width: 400px;" id="subject" type="text" class="segoe blueFont" name="subject" required>
+					<input style="width: 400px;" id="subject" type="text" class="segoe blueFont" name="subject" placeholder="Subject" required>
 				</div>
-				<div class="form-group" style="margin-left:20px;">
-					<input id="message" style="padding: 0px; height: 195px; width: 400px;"type="text" class="segoe blueFont" name="message">
+				<div class="form-group">
+				  <textarea id="message" style="padding-left: 2px; width: 400px; margin-left: 20%"placeholder="Type message here.."class="form-control segoe blueFont" form="Sign-up" class = "segoe blueFont" name ="message" rows="8" required></textarea>
 				</div>
 				<input class="btn btn-lg btn-default" style="margin-bottom: 20px; margin-left:20px; width: 400px"  type="submit" value= "Send">
 			</form>

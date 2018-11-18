@@ -63,6 +63,9 @@
 		.navbar-right{
 			margin-right: 0px;
 		}
+		input{
+			color: gray
+		}
 		</style>
 </head>
 <%
@@ -113,41 +116,41 @@
 	
 	<form action="bUpdateUser" method="GET"><!-- <!-- onsubmit="return validate(); --"> -->
 		<div class="col-lg-6">	
-			<h1 style="text-align: center">Security Preferences</h1>
+			<h1>Security Preferences</h1>
 			<h3 class="blueFont">Update Email </h3>
 		  	<div style="font-size: 16px" class="form-group">
-		   	 	<label for="curr_email"> Current Email:</label>
+		   	 	<label for="curr_email"> Current Email:</label><br>
 		      	<input style="color: gray" id="curr_email" type="text" readonly class="form-control-plaintext" value="email@example.com">
-				<br><label for="new_email">New Email:</label>
+				<br><label for="new_email">New Email:</label><br>
 				<input id="new_email" type="text" name="new_email">
 				<%= emailerror %>
 			 </div>
 			 <h3 class="blueFont">Update Password</h3>
 			 <div style="font-size: 16px" class="form-group">
-				<label for="curr_pass">Please re-enter your current password:</label>
-				<input style="color: gray" id="curr_pass" type="text" name="current_password">
+				<label for="curr_pass">Please re-enter your current password:</label><br>
+				<input  id="curr_pass" type="text" name="current_password">
 				<%= currpassworderror %>
-				<br><label for="new_pass">New password:</label>
-				<input style="color: gray" id="new_pass" type="text" name="new_password">
+				<br><label for="new_pass">New password:</label><br>
+				<input  id="new_pass" type="text" name="new_password">
 				<%= newpassworderror %>
 			</div>
 			<h3 class="blueFont">Update Number </h3>
 			 <div  style="font-size: 16px" class="form-group">
-				<label for="curr_num"> Current Phone Number:</label>
-				<input style="color: gray" id="curr_num" type="text" readonly class="form-control-plaintext" value="(123)456-7890 ">
-				<br><label for="new_phone">New Number:</label>
-				<input style="color: gray" id="new_phone" type="tel" name="new_phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+				<label for="curr_num"> Current Phone Number:</label><br>
+				<input  id="curr_num" type="text" readonly class="form-control-plaintext" value="(123)456-7890 ">
+				<br><label for="new_phone">New Number:</label><br>
+				<input  id="new_phone" type="tel" name="new_phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
 				<%= phoneerror %>
 			</div>
 		</div>
 		<div class="col-lg-6">	
-			<h1 style="text-align: center;">Personal Preferences</h1>
+			<h1>Personal Preferences</h1>
 			<h3 class="blueFont" >Update Zipcode </h3>
 			 <div style="font-size: 16px" class="form-group"> 
-				 <label for="curr_zip"> Current Zipcode:</label>
-				 <input style="color: gray" type="text" readonly id="curr_zip" class="form-control-plaintext" value="12345"> 
-				 <br><label for="new_zipcode">New Zipcode:</label>
-				<input id="new_zipcode" type="text" name="new_zipcode" placeholder="Update Zip Code">
+				 <label for="curr_zip"> Current Zipcode:</label><br>
+				 <input type="text" readonly id="curr_zip" class="form-control-plaintext" value="12345"> 
+				 <br><label for="new_zipcode">New Zipcode:</label><br>
+				<input id="new_zipcode" type="text" name="new_zipcode">
 					<%= ziperror %>
 			</div>
 			<h3 class="blueFont" >Update Other</h3>

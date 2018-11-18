@@ -49,12 +49,8 @@
 			filter: grayscale(80%);
 		}
 		.segoe{
-		font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif; 
-		font-size: 24px; 
-		font-style: normal;
-		 font-variant: normal; 
-		 font-weight: 200; 
-		 line-height: 26.4px; 
+			font-size: 20px; 
+		 	font-weight: 200; 
 		 }
 	</style>
 </head>

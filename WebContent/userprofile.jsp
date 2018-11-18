@@ -74,24 +74,17 @@
       	</ul>
 	  </div>
 	</nav>
-	<div class="container-fluid"> 
-		<div class="col-sm-6">
+	<div class="container-fluid text-center"> 
+		<div class="col-sm-12">
 			<img class="img-fluid img-circle center" alt="Responsive image" id="pic" src="http://www-scf.usc.edu/~csci201/images/jeffrey_miller.jpg" 
-				style="margin-top: 20px;  display: block; margin-left: auto; margin-right: auto;  height: 150px; width: 150px;">
+				style="margin-top: 20px;  display: block; margin-left: auto; margin-right: auto;  height: 200px; width: 200px;">
 			<h3>Contact Information</h3><br>
-			Username: <br>
-			Email: <br>
-			<button  class="btn btn-md btn-default"  id="user_secrity" onclick="userSettings();" >Update Settings</button>
-		</div>
-		<div class="col-sm-6">
-		
+			<h4>Username:</h4> <br>
+			<h4>Email:</h4> <br>
 			<h3>User Preferences</h3>
-			Pets: <br>
-			Children: <br>
-			Proximity to Resources: <br>
-			Pharmacys: <br>
-			Grocery Stores: <br>
-			Laundromats: <br>
+			<h4> Pets:</h4> <br>
+			<h4>Children:</h4> <br>
+			<button  style="margin-top: 15px"class="btn btn-lg btn-default"  id="user_secrity" onclick="userSettings();" >Update Settings</button>
 		</div>
 
 	</div>
