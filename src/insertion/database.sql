@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS shelterSeeker;
-CREATE DATABASE shelterSeeker;
-USE shelterSeeker;
+DROP DATABASE IF EXISTS safeHands;
+CREATE DATABASE safeHands;
+USE safeHands;
 CREATE TABLE users (
 	userID INT(11) PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(255) NOT NULL UNIQUE,
@@ -12,6 +12,7 @@ CREATE TABLE userInfo (
 	id INT(11) PRIMARY KEY AUTO_INCREMENT,		
     username VARCHAR (255) NOT NULL UNIQUE,
     zipcode INT(5),
+    address VARCHAR (255),
     kids INT(3),
     pets INT(3),
     phoneNumber VARCHAR(255),
@@ -35,7 +36,8 @@ CREATE TABLE messages (
 CREATE TABLE shelterInfo (
 	id INT (11) PRIMARY KEY auto_increment,
     own VARCHAR (255) UNIQUE NOT NULL,
-    zipcode INT(5) NOT NULL,
+    zipcode INT(5),
+    address VARCHAR (255) NOT NULL,
     kids INT(3),
     pets INT(3),
     phoneNumber INT(15) NOT NULL,
@@ -52,4 +54,20 @@ CREATE TABLE shelterInfo (
     availability INT(11),
     FOREIGN KEY (id) REFERENCES users(userId),
     FOREIGN KEY (own) REFERENCES users(username)
+);
+
+CREATE TABLE images (
+	id INT (11) PRIMARY KEY auto_increment,
+    username VARCHAR (255),
+    image LONGBLOB,    
+    FOREIGN KEY (username) REFERENCES users(username)
+);
+
+CREATE TABLE clicks (
+	clickID int PRIMARY KEY auto_increment,
+	userID int not null,
+	shelterID not null,
+	clicked date,
+	FOREIGN KEY (userID) REFERENCES users(userId),
+	FOREIGN KEY (shelterID) REFERENCES shelterInfo(id)
 );

@@ -1,5 +1,5 @@
-<!--  %@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%  -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 
@@ -59,19 +59,24 @@
     </div>
 
     <script type="text/javascript">
-        /* var rawData = <%= session.getAttribute("DATA")%>; */
+        <% DBHelper dbh = (DBHelper) session.getAttribute("DBHelper");
+			Shelter sh = dbh.shInfo;
+		%>
+		
+		fetch("dbsearch?q=clicks&here=<%= sh.id %>", {"method":"GET"}).then(plotCallback);
+		
         // [{date:new Date('2013-01-01'),n:120,n3:200},...]
         /* Generate random times between two dates */
         function unpack(rows, key) {
   			return rows.map(function(row) { return row[key]; });
 		}
         
-        Plotly.d3.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv", function(err, rows){
+        function plotCallback(rows){
             var trace1 = {
               type: "scatter",
               mode: "lines",
               name: 'Clicks',
-              x: unpack(rows, 'Date'),
+              x: unpack(rows, 'time'),
               y: unpack(rows, 'Clicks'),
               line: {color: '#17BECF'}
             }

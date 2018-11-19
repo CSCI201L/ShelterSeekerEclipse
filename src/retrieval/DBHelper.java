@@ -1,5 +1,13 @@
 package retrieval;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,7 +29,7 @@ public class DBHelper {
 	public PreparedStatement ps = null;
 	public Shelter shInfo = null;
 	public static final String CLASS_NAME = "com.mysql.jdbc.Driver";
-	public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/shelterSeeker?user=root&password=root&useSSL=false";
+	public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/safeHands?user=root&password=root&useSSL=false";
 	public DBHelper(String email, String password)  {
 		this.email = email;
 		this.user = new UserInfo();
@@ -290,13 +298,14 @@ public class DBHelper {
 			ps2 = conn2.prepareStatement(query);		
 			ps2.setString(1, userId);
 			ps2.setInt(2, s.zipcode);
-			ps2.setInt(3, s.kids);
-			ps2.setInt(4, s.pets);
-			ps2.setString(5, s.phoneNumber);
-			ps2.setString(6, s.bio);
-			ps2.setByte(7, s.nearGrocery);
-			ps2.setByte(8, s.nearPharmacy);
-			ps2.setByte(9, s.nearLaundromat);
+			ps2.setString(3, s.address);
+			ps2.setInt(4, s.kids);
+			ps2.setInt(5, s.pets);
+			ps2.setString(6, s.phoneNumber);
+			ps2.setString(7, s.bio);
+			ps2.setByte(8, s.nearGrocery);
+			ps2.setByte(9, s.nearPharmacy);
+			ps2.setByte(10, s.nearLaundromat);
 			ps2.executeUpdate();
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -325,7 +334,7 @@ public class DBHelper {
 	 * @param u
 	 * @param s
 	 */
-	public void trackAdd (UserInfo u, Shelter s) {
+	public void trackAdd (int u, int s) {
 		//should sign up organization user with isShelter = true by adding to userinfo table
 		//should add entry to Shelter table. Both Should contain the same values
 
@@ -336,17 +345,10 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
 			
-			String query = "INSERT INTO Adds(shelterID, time zipcode,kids,pets,phoneNumber,biography,nearGrocery,nearPharmacy,nearLaundromat) VALUES (?,UTC_DATE(),?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO clicks(userID,shelterID,clicked) VALUES (?,?,UTC_DATE())";
 			ps2 = conn2.prepareStatement(query);		
-			ps2.setInt(1, s.id);
-			ps2.setInt(2, s.zipcode);
-			ps2.setInt(3, s.kids);
-			ps2.setInt(4, s.pets);
-			ps2.setString(5, s.phoneNumber);
-			ps2.setString(6, s.bio);
-			ps2.setByte(7, s.nearGrocery);
-			ps2.setByte(8, s.nearPharmacy);
-			ps2.setByte(9, s.nearLaundromat);
+			ps2.setInt(1, u);
+			ps2.setInt(2, s);
 			ps2.executeUpdate();
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -370,7 +372,95 @@ public class DBHelper {
 		}
 	}
 	
+	public ResultSet retrieveClicks(int sid, PrintWriter pw) {
+		//should sign up organization user with isShelter = true by adding to userinfo table
+		//should add entry to Shelter table. Both Should contain the same values
+
+		Connection conn2 = null;
+		PreparedStatement ps2 = null;
+		ResultSet rs2 = null;
+		try {
+			Class.forName(CLASS_NAME);
+			conn2 = DriverManager.getConnection(CONNECTION_URL); 
+			
+			String query = "SELECT userID as u, clicked as cks from clicks WHERE shelterID = ?";
+			ps2 = conn2.prepareStatement(query);		
+			ps2.setInt(1, sid);
+			rs2 = ps2.executeQuery();
+			pw.print("[");
+			while(rs2.next()) {
+				pw.print("{");
+				pw.print("'user':'"+rs.getInt("u") + "',");
+				pw.print("'time':'"+rs.getString("cks")+"'");
+				pw.print("},");
+			}
+			pw.println("]");
+			pw.flush();
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if (rs2 != null) {
+					rs2.close();
+				}
+				if (ps2 != null) {
+					ps2.close();
+				}
+				if (conn2!= null) {
+					conn2.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle closing streams: " + sqle.getMessage());
+			}
+		}
+		return null;
+	}
 	
+	public void retrievePlaces(int sid, PrintWriter pw) {
+		Connection conn2 = null;
+		PreparedStatement ps2 = null;
+		ResultSet rs2 = null;
+		try {
+			Class.forName(CLASS_NAME);
+			conn2 = DriverManager.getConnection(CONNECTION_URL); 
+			
+			String query = "SELECT u.zipcode as zip, c.clicked as cks from clicks as c, userInfo as u WHERE c.userID=u.id AND shelterID = ?";
+			ps2 = conn2.prepareStatement(query);		
+			ps2.setInt(1, sid);
+			rs2 = ps2.executeQuery();
+			pw.print("[");
+			while(rs2.next()) {
+				pw.print("{");
+				pw.print("'zip':'"+rs.getInt("zip") + "',");
+				pw.print("'time':'"+rs.getString("cks")+"'");
+				pw.print("},");
+			}
+			pw.println("]");
+			pw.flush();
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if (rs2 != null) {
+					rs2.close();
+				}
+				if (ps2 != null) {
+					ps2.close();
+				}
+				if (conn2!= null) {
+					conn2.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle closing streams: " + sqle.getMessage());
+			}
+		}
+	}
 	
 	//TO BE USED ON SEARCH SHELTER PAGE --
 	public ArrayList<Shelter> getShelters(){
@@ -667,19 +757,20 @@ public class DBHelper {
 					+ " pageVisits=?, numStays=?, numPendingRequests=?, avgStayDuration=? WHERE own=?";
 			ps1 = conn1.prepareStatement(query);		
 			ps1.setInt(1, s.zipcode);
-			ps1.setInt(2, s.kids);
-			ps1.setInt(3, s.pets);
-			ps1.setString(4, s.phoneNumber);
-			ps1.setString(5, s.bio);
-			ps1.setInt(6, s.numRatingGiven);
-			ps1.setInt(7, s.nearGrocery);
-			ps1.setInt(8, s.nearLaundromat);
-			ps1.setDouble(9, s.currentRating);
-			ps1.setInt(10, s.pageVisits);
-			ps1.setInt(11, s.numStays);	
-			ps1.setInt(12, s.numPendingRequests);			
-			ps1.setDouble(13, s.avgStayDuration);	
-			ps1.setString(14, s.owner);
+			ps1.setString(2, s.address);
+			ps1.setInt(3, s.kids);
+			ps1.setInt(4, s.pets);
+			ps1.setString(5, s.phoneNumber);
+			ps1.setString(6, s.bio);
+			ps1.setInt(7, s.numRatingGiven);
+			ps1.setInt(8, s.nearGrocery);
+			ps1.setInt(9, s.nearLaundromat);
+			ps1.setDouble(10, s.currentRating);
+			ps1.setInt(11, s.pageVisits);
+			ps1.setInt(12, s.numStays);	
+			ps1.setInt(13, s.numPendingRequests);			
+			ps1.setDouble(14, s.avgStayDuration);	
+			ps1.setString(15, s.owner);
 			ps1.executeUpdate();
 
 			

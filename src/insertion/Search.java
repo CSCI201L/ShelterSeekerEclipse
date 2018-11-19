@@ -29,7 +29,7 @@ public class Search extends HttpServlet {
 	static final String databaseUserName = "root";
 	static final String databasePassword = "root";
 	static final String databasePort = "3306";
-	static final String databaseName = "shelterseeker";
+	static final String databaseName = "safeHands";
 	static final String googleAPIKey = "AIzaSyByHkT9nYExPGBdrF8go_Iep92WAnfloWk";
        
     public Search() {
@@ -42,11 +42,7 @@ public class Search extends HttpServlet {
 		ResultSet rs = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/shelterseeker?user=root&password=root&useSSL=false");
-			/*jdbc:mysql://localhost:" + databasePort + "/" + 
-				databaseName + "?user=" + databaseUserName + "&password= " + databasePassword + 
-				"&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-				*/
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/safeHands?user=root&password=root&useSSL=false");
 			String pharmacyNearby = request.getParameter("pharmacyNearby");
 			String groceryNearby = request.getParameter("groceryNearby");
 			String laundromatNearby = request.getParameter("laundromatNearby");
@@ -202,5 +198,30 @@ public class Search extends HttpServlet {
 		
 		
 	}
-
+	
+	private String getAdditionalSearchStatement(String s) {
+		String additionalStatement = "and ( 0 ";
+		char lastChar = ' ';
+		String currentWord = "";
+		for(int i = 0; i < s.length(); i++) {
+			char currentChar = s.charAt(i);
+			if (currentChar != ' ')
+				currentWord += currentChar;
+			else if (lastChar != ' ') {
+				additionalStatement += " or LOWER(s.shelterName) like '%" +  currentWord.toLowerCase() + "%' ";
+				currentWord = "";
+			}		
+			else {
+				currentWord = "";
+			}
+			lastChar = currentChar;		
+		}
+		if (currentWord != "" && additionalStatement.indexOf(currentWord.toLowerCase()) == -1) {
+			additionalStatement += " or LOWER(s.shelterName) like '%" +  currentWord.toLowerCase() + "%' ";
+		}
+		additionalStatement += " ) ";
+		System.out.print("Adding this parameter to SQL statement: ");
+		System.out.println(additionalStatement);
+		return additionalStatement;
+	}
 }

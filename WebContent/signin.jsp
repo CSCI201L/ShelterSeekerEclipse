@@ -14,7 +14,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	
 	<style>
-		.purple {
+		.purple {	
 			background-color: purple;
 			opacity:0.7;
 			filter: grayscale(10%);	
@@ -31,12 +31,12 @@
 		}
 		.title {
 		    font-size: 34px;
-   	 margin-top: 50px;
+   	 		margin-top: 50px;
 		}
 		.segoe{
-		font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif; 
-		font-size: 24px; 
-		font-style: normal;
+		 font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif; 
+		 font-size: 24px; 
+		 font-style: normal;
 		 font-variant: normal; 
 		 font-weight: 200; 
 		 line-height: 26.4px; 

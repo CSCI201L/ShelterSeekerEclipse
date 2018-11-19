@@ -120,6 +120,26 @@
 					<input id="email" type="email" class = "segoe blueFont" name ="email" style="margin:10px" placeholder ="Email" required> <br>
 					<input id="un" type="text" class = "segoe blueFont" style="margin:10px" name ="username" placeholder ="Username" required> <br>
 					<input id="pwd" type="text" class = "segoe blueFont" style="margin:10px" name ="password" placeholder ="Password" required> <br>
+					<input id="zipcode" type="number"class = "segoe blueFont" style="margin:10px"  name ="zipcode" placeholder ="Zipcode" required > <br>
+					<div onClick="findLocation()" style="border: 1px; cursor:pointer "> CLICK ME TO Find My Location </div>
+					<input id="address" type="text" class = "segoe blueFont" style="margin:10px"  name ="address" placeholder ="Address" required>
+					<input id="zip" type="number"class = "segoe blueFont" style="margin:10px"  name ="phone" placeholder ="Phone Number" required > <br>
+					<input type="submit" class ="b oh segoe blueFont" value= "Continue">
+				</form>
+		  	</div>	
+		</div>
+	</div>
+	<div id="middle"> 
+		<button onClick = "redirectHome();" style = "top:0;float:left;" class ="back oh segoe blueFont"> <span> Back </span> </button>
+		<div id="content" style="margin-left:500px; text-align:center; display:inline-block;">
+			<div id="Sign-Up" style="display:inline-block;">
+				<p class = "segoe title blueFont" style="font-size:34px"> Register Organization</p>
+				<form name="signup"  action="oSignUp1" method="GET" ><!-- method="POST" action ="Servlet" -->
+					<p class = "segoe title blueFont" style="font-size:30px; font-style:italic; margin-bottom:10px;">SignUp Info</p> 
+				<p class = "segoe" style = "font-size: 20px; font-weight: bold;color: red"><%= err %></p>
+					<input id="email" type="email" class = "segoe blueFont" name ="email" style="margin:10px" placeholder ="Email" required> <br>
+					<input id="un" type="text" class = "segoe blueFont" style="margin:10px" name ="username" placeholder ="Username" required> <br>
+					<input id="pwd" type="text" class = "segoe blueFont" style="margin:10px" name ="password" placeholder ="Password" required> <br>
 					<input id="zip" type="number"class = "segoe blueFont" style="margin:10px"  name ="zipcode" placeholder ="Zipcode" required > <br>
 					<input id="zip" type="number"class = "segoe blueFont" style="margin:10px"  name ="phone" placeholder ="Phone Number" required > <br>
 					<input type="submit" class ="b oh segoe blueFont" value= "Continue">
@@ -130,6 +150,11 @@
 	
 	<div id="bottom" class = "purple block"> 
 	
+	<div id="bottom" class = "purple block"> 
+	<div style="height:0px; width:0px">
+			<div id ="startLat"></div>
+			<div id = "startLon"></div>
+		</div>
 	</div>
 	
 	<script>

@@ -95,9 +95,75 @@
 	}
 	
 	function onSearch() {
-		console.log(document.getElementsByName("criteriaKidsYes"));
-		console.log(document.getElementsByName("criteriaKidsNo"));
-
+		let parameters = "email=borie@usc.edu";
+		let numKids = 0;
+		if (document.getElementById("criteriaKidsYes").checked) {
+			if (isNaN(document.getElementById("criteriaNumKids").value) || 
+					document.getElementById("criteriaNumKids").value.includes(".") ||
+					document.getElementById("criteriaNumKids").value.includes("-")) {
+				alert("Please enter a valid number of kids.");
+				return;
+			} else {
+				numKids = document.getElementById("criteriaNumKids").value;
+			}
+		}
+		parameters += "&numKids=" + numKids;
+		
+		let numPets = 0;
+		if (document.getElementById("criteriaPetsYes").checked) {
+			if (isNaN(document.getElementById("criteriaNumPets").value) || 
+					document.getElementById("criteriaNumPets").value.includes(".") ||
+					document.getElementById("criteriaNumPets").value.includes("-")) {
+				alert("Please enter a valid number of pets.");
+				return;
+			} else {
+				numPets = document.getElementById("criteriaNumPets").value;
+			}
+		}
+		parameters += "&numPets=" + numPets;
+		if (document.getElementById("criteriaPharmacy").checked)
+			parameters += "&pharmacyNearby=true";
+		else
+			parameters += "&pharmacyNearby=false";
+		
+		if (document.getElementById("criteriaGrocery").checked)
+			parameters += "&groceryNearby=true";
+		else
+			parameters += "&groceryNearby=false";
+		
+		if (document.getElementById("criteriaLaundromat").checked)
+			parameters += "&laundromatNearby=true";
+		else
+			parameters += "&laundromatNearby=false";
+		
+		if (document.getElementById("criteriaMinRating1").checked) 
+			parameters += "&minRating=1";
+		else if (document.getElementById("criteriaMinRating2").checked)
+			parameters += "&minRating=2";
+		else if (document.getElementById("criteriaMinRating3").checked)
+			parameters += "&minRating=3";
+		else if (document.getElementById("criteriaMinRating4").checked)
+			parameters += "&minRating=4";
+		else if (document.getElementById("criteriaMinRating5").checked)
+			parameters += "&minRating=5";
+		else 
+			parameters += "&minRating=0";
+		
+		if (document.getElementById("criteriaAvailableYes").checked)
+			parameters += "&showAvailableOnly=true";
+		else parameters += "&showAvailableOnly=false";
+		
+		if (document.getElementById("criteriaZipCode").value == "")
+			parameters += "&zipCode=94301"; // !!!!! Hard coded, use session!
+		else if (isNaN(document.getElementById("criteriaZipCode").value) || 
+			document.getElementById("criteriaZipCode").value.length != 5) {
+			alert("Please enter a valid 5-digit ZipCode");
+			return;
+		} else parameters += "&zipCode=" + document.getElementById("criteriaZipCode").value;
+				
+		
+		parameters += "&searchByName=" + document.getElementById("criteriaSearchByName").value;
+		
 		var xhttp = new XMLHttpRequest();
 		xhttp.open("POST", "Search", true);
 		xhttp.onreadystatechange = function () {
@@ -152,7 +218,7 @@
 	
 	function loadSearchResult(shelterId) {
 		console.log(shelterId);
-		document.location.href = "http://localhost:8080/ShelterSeekerEclipse/searchResult?shelterId=" + 
+		document.location.href = "http://localhost:8080/ShelterSeeker/searchResult?shelterId=" + 
 				shelterId;
 	}
 	</script>

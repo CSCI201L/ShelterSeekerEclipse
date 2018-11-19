@@ -31,9 +31,9 @@ public class ClickLogger extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		HttpSession sess = request.getSession();
-		UserInfo info = (UserInfo)sess.getAttribute("USER");
-		DBHelper mydb = (DBHelper) sess.getAttribute("DB");
-		Shelter shelter = (Shelter) sess.getAttribute("LAST_SHELTER");
+		DBHelper mydb = (DBHelper) sess.getAttribute("DBHelper");
+		int info = mydb.user.id;
+		int shelter = mydb.shInfo.id;
 		mydb.trackAdd(info, shelter);
 	}
 

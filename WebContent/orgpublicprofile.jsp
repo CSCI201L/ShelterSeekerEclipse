@@ -70,5 +70,35 @@
 	
 	</div>
 	
+	<script>
+	
+	function goToShelterChatRoom() {
+		sessionStorage.setItem('shelterID', <%=(String)request.getAttribute("shelterID")%>);
+		sessionStorage.setItem('shelterName', "<%=(String)request.getAttribute("shelterName")%>");
+		document.location.href = "http://localhost:8080/ShelterSeeker/chatRoomSignIn.jsp";
+		
+	}
+	
+	function giveRatingOne() {giveRating(1);}
+	function giveRatingTwo() {giveRating(2);}
+	function giveRatingThree() {giveRating(3);}
+	function giveRatingFour() {giveRating(4);}
+	function giveRatingFive() {giveRating(5);}
+	
+	function giveRating(rating) {
+		var xhttp = new XMLHttpRequest();
+		xhttp.open("POST", "GiveRating", true);
+		xhttp.onreadystatechange = function () {
+			let responseText = this.responseText;
+			document.getElementById("rating").innerHTML = "Rating: " + responseText.trim();
+		}
+		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		sessionStorage.setItem('email', "borie@usc.edu") // !!!!! Get rid of this and have it set on login !!!!!
+		xhttp.send("rating=" + rating + "&email=" + sessionStorage.getItem('email') +
+			"&shelterID=" + <%=(String)request.getAttribute("shelterID")%>);
+	}
+	
+	</script>
+	
 </body>
 </html>

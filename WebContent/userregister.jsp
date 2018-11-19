@@ -115,17 +115,21 @@
 		<div id="content" style="margin-left:500px; text-align:center; display:inline-block;">
 			<div id="Sign-Up" style="display:inline-block;">
 				<p class = "segoe title blueFont" style="font-size:34px"> Register Now!</p>
-				<form name="signup"  action="bSignUp" method="GET" ><!-- method="POST" action ="Servlet" -->
+				<form enctype='multipart/form-data' name="signup"  action="bSignUp" method="POST" ><!-- method="POST" action ="Servlet" -->
 					<input id="email" type="email" class = "segoe blueFont" name ="email" style="margin:10px" placeholder ="Email" required> <br>
-					<input id="un" type="text" class = "segoe blueFont" style="margin:10px" name ="username" placeholder ="Username" required> <br>
-					<input id="pwd" type="text" class = "segoe blueFont" style="margin:10px" name ="password" placeholder ="Password" required> <br>
-					<input id="zip" type="text"class = "segoe blueFont" style="margin:10px"  name ="zipcode" placeholder ="Zipcode" required > <br>
+					<input type="file"  name = "f" id="f" accept="image/*" required>
+					<input type="text" id="base64" name="base64" hidden="true">
+					<input id="username" type="text" class = "segoe blueFont" style="margin:10px" name ="username" placeholder ="Username" required> <br>
+					<input id="password" type="text" class = "segoe blueFont" style="margin:10px" name ="password" placeholder ="Password" required> <br>
+					<input id="zipcode" type="text"class = "segoe blueFont" style="margin:10px"  name ="zipcode" placeholder ="Zipcode" required > <br>
+					<div onClick="findLocation()" style="border: 1px; cursor:pointer "> CLICK ME TO Find My Location </div>
+					<input id="location" type="text" class = "segoe blueFont" style="margin:10px"  name ="address" placeholder ="Address" required>
 					<input id="zip" type="text"class = "segoe blueFont" style="margin:10px"  name ="phone" placeholder ="Phone Number" required > <br>
 					<p class = "segoe title blueFont" style="font-size:30px; font-style:italic; margin-bottom:10px;">Preferences</p> 
 					<p  class = "style-options segoe blueFont" >Are you looking for shelters that allow children?</p>
 					<input type="checkbox" name="children" checked> Yes<br>
 					<p  class = "style-options segoe blueFont" >Are you looking for shelters that allow pets?</p>
-					<input type="checkbox" name="pets" value="yes" checked> Yes<br>
+					<input type="checkbox" name="pets" checked> Yes<br>
 					<input type="submit" class ="b oh segoe blueFont" value= "Sign-Up">
 				</form>
 		  	</div>	
@@ -133,6 +137,66 @@
 	</div>
 	
 	<div id="bottom" class = "purple block"> 
+		<div style="height:0px; width:0px">
+			<div id ="startLat"></div>
+			<div id = "startLon"></div>
+		</div>
+	</div>
+	
+	<script>
+	function findLocation(){
+		//find location using geoLocation
+		if (navigator.geolocation) {
+			  console.log('Geolocation is supported!');
+			}
+			else {
+			  console.log('Geolocation is not supported for this Browser/OS.');
+			}	
+		var lat;
+		var lon;
+		var geoSuccess = function(position) {
+		    startPos = position;
+		    document.getElementById('startLat').innerHTML = startPos.coords.latitude;
+		    document.getElementById('startLon').innerHTML = startPos.coords.longitude;
+
+		  };
+		 	
+		  	console.log(document.getElementById("f").value);
+		 	console.log("HERE", navigator.geolocation.getCurrentPosition(geoSuccess));
+			lat = document.getElementById('startLat').innerHTML;
+			lon = document.getElementById('startLon').innerHTML; 
+		 	console.log(lat);
+		 	console.log(lon);
+			
+		 	const xhttp = new XMLHttpRequest();
+		 	var URL = "http://api.geonames.org/findNearestAddressJSON?lat=" + document.getElementById('startLat').innerHTML + "&lng=" + document.getElementById('startLon').innerHTML +"&username=dhan";
+		 	//var URL = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + document.getElementById('startLat').innerHTML + ","+ document.getElementById('startLon').innerHTML+",7.3553838&sensor=true"
+		 	var request = createCORSRequest("get", URL);
+		 	if (request){
+		 	    request.onload = function() {
+	//				console.log("RESPONSE" ,this.responseText);
+		 	    };
+		 	    request.onreadystatechange = function() {
+					console.log("RESPONSE" ,this.responseText);
+					var info = JSON.parse(this.responseText);
+					var address = info.address.streetNumber + " " +info.address.street+ ", " +info.address.placename + " " + info.address.adminCode1 + " " +info.address.postalcode;
+					console.log("Address ", address);
+					document.getElementById("location").value = address;
+					document.getElementById("zipcode").value = info.address.postalcode;
+
+				};
+		 	    request.send();
+		 	}
+		 	/*		 	xhttp.open("GET", URL, false);
+				xhttp.onreadystatechange = function() {
+					console.log("RESPONSE" ,this.responseText);
+
+				};
+				xhttp.setRequestHeader("Content-Type","application/x-www-urlencoded");
+				xhttp.send(); */
+		 	//user Geolocation API
+		
+	}
 	
 	</div>
 	
