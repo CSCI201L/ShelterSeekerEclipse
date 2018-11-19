@@ -135,8 +135,6 @@
 		  	</div>	
 		</div>
 	</div>
-	TEST IMAGE
-	<img id = "test" src = "">
 	
 	<div id="bottom" class = "purple block"> 
 		<div style="height:0px; width:0px">
@@ -200,18 +198,9 @@
 		
 	}
 	
-	function createCORSRequest(method, url){
-	    var xhr = new XMLHttpRequest();
-	    if ("withCredentials" in xhr){
-	        xhr.open(method, url, true);
-	    } else if (typeof XDomainRequest != "undefined"){
-	        xhr = new XDomainRequest();
-	        xhr.open(method, url);
-	    } else {
-	        xhr = null;
-	    }
-	    return xhr;
-	}
+	</div>
+	
+	<script>
 	function redirectHome(){
 		location.href="signin.jsp";
 	}
@@ -231,20 +220,6 @@
 		 }
 
 	}
-	
-	function readFile() {
-		if ( this.files && this.files[0]){
-			var FR = new FileReader();
-			FR.addEventListener("load", function(e){
-				document.getElementById("base64").value = e.target.result;
-			//	document.getElementById("test").src = e.target.result;
-			});
-			
-			FR.readAsDataURL(this.files[0]);
-		}
-	}
-	
-	document.getElementById("f").addEventListener("change", readFile);
 	//validate username
 	function validateUsername(){
 		var x=document.getElementById("un").value;

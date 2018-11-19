@@ -9,7 +9,6 @@ import retrieval.UserInfo;
 
 public class DBTester {
 	public static void main (String [] args) {
-		System.out.println("WELCOME");
 		DBHelper db = new DBHelper("dumbshit", "hello");
 		if (db.didConnect()) {
 			System.out.println("SOMEHOW CONNECTED -- ERROR");
@@ -28,7 +27,6 @@ public class DBTester {
 		u1.phoneNumber = "sdfas";
 		u1.kids = 2;
 		u1.pets = 2;
-		u1.address="supbitchoclock";	
 		u1.password = "pass1";
 		u1.isShelter = 0;
 		
@@ -48,7 +46,6 @@ public class DBTester {
 		Shelter sh = new Shelter ();
 		sh.shelterName = "Super Shelter";
 		sh.zipcode =  980089;
-		sh.address= "23031 SE 27th Way Sammamish WA 98075";
 		sh.bio = "Super cool shelter";
 		db.createOrg(u1, sh);
 		DBHelper db2 = new DBHelper("org@usc.edu","pass1");
@@ -103,7 +100,6 @@ public class DBTester {
 			System.out.println(db2.shInfo.zipcode);
 			return;
 		}
-		System.out.println("everything complete!");
 		DBHelper.visitShelter(db2.shInfo.owner);
 
 		

@@ -161,10 +161,10 @@ th, td {
 			String recip = request.getParameter("recipient");
 			String body = request.getParameter("message");
 			String sender = "";
-			System.out.println(recip + "is the recipient " + db.unameExists(recip));
+
 			if (!db.unameExists(recip)) {%>
-				alert("This user does not exist.");
-			<%} else {
+		alert("This user does not exist.");
+	<%} else {
 				Message m = new Message(subject, body, sender, recip);
 				db.sendMessage(m);
 			}%>
