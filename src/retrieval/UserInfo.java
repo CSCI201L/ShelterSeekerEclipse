@@ -8,6 +8,7 @@ public class UserInfo {
 	public String email; //this will be unique identifier
 	public int zipcode;
 	public String phoneNumber;
+	public String address;
 	public int kids;
 	public int pets;
 	public String password;
