@@ -6,6 +6,7 @@
 <html>
 <head>
 <title>Shelter Seekers Open Message</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <style>
 li {
@@ -31,6 +32,7 @@ li a {
 </style>
 </head>
 <body>
+
 	<%
 		//REPLACE THIS WITH HTTPSESSION GLOBAL INSTANCE OF DB
 		DBHelper db = (DBHelper) request.getSession().getAttribute("DBHelper");
@@ -48,23 +50,21 @@ li a {
 		mail.SortByReadAndTime(comp);
 
 		ArrayList<Message> messages = mail.getMessages();
-		out.println(session.getAttribute("messageID"));
-		int id = 1;
-				//(Integer) session.getAttribute("messageID");
+		String id_string = request.getParameter("messageID");
+		
+		int id = Integer.parseInt(id_string);
 		
 		Message m = new Message();
 
 		for (int i = 0; i < messages.size(); i++) {
-			
 			if (messages.get(i).getID() == id) {
 				m = messages.get(i);
 				m.read();
-				db.readMessage(id);
 				break;
 			}
-			
 		}
 		
+		db.readMessage(id);
 	%>
 	<div id="top">
 		<ul>
@@ -97,13 +97,20 @@ li a {
 	<br />
 	<button id="back" onclick="goBack();">Go Back to User Message</button>
 	<script>
-	
 		function goBack() {
 			location.href = "usermessages.jsp";
 		}
 
 		function writeMessage() {
-			location.href = "writemessage.jsp";
+			var servletName = "usermessages.jsp";
+			var form = $('<form action="' + servletName + '" method="GET">'
+					+ '<input type="text" name="recipient" value="'
+					+ <%
+					m.getSender();
+					%>
+		+ '" />' + '</form>');
+			$('body').append(form);
+			form.submit();
 		}
 	</script>
 </body>

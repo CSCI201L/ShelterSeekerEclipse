@@ -308,7 +308,7 @@ public class DBHelper {
 			ps2.setString(3, s.address);
 			ps2.setInt(4, s.kids);
 			ps2.setInt(5, s.pets);
-			ps2.setInt(6, Integer.parseInt(s.phoneNumber));
+			ps2.setString(6, s.phoneNumber);
 			ps2.setString(7, s.bio);
 			ps2.setByte(8, s.nearGrocery);
 			ps2.setByte(9, s.nearPharmacy);
@@ -572,7 +572,7 @@ public class DBHelper {
 				m.subject = rs.getString("mSubject");
 				m.body = rs.getString("mContent");
 				m.read = rs.getByte("mRead");
-				m.timeSent = rs.getInt("timeSent");
+				m.timeSent = rs.getLong("timeSent");
 				res.add(m);
 			}
 		}catch (ClassNotFoundException e) {

@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
 
-import org.apache.commons.io.IOUtils;
 
 import retrieval.DBHelper;
 import retrieval.UserInfo;

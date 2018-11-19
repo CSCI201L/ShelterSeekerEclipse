@@ -26,11 +26,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Search")
 public class Search extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	static final String databaseUserName = "root";
-	static final String databasePassword = "root";
-	static final String databasePort = "3306";
-	static final String databaseName = "safeHands";
-	static final String googleAPIKey = "AIzaSyByHkT9nYExPGBdrF8go_Iep92WAnfloWk";
+	public static final String databaseUserName = "root";
+	public static final String databasePassword = "root";
+	public static final String databasePort = "3306";
+	public static final String databaseName = "safeHands";
+	public static final String googleAPIKey = "AIzaSyByHkT9nYExPGBdrF8go_Iep92WAnfloWk";
        
     public Search() {
         super();

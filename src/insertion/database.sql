@@ -40,7 +40,7 @@ CREATE TABLE shelterInfo (
     address VARCHAR (255) NOT NULL,
     kids INT(3),
     pets INT(3),
-    phoneNumber INT(15) NOT NULL,
+    phoneNumber VARCHAR(255) NOT NULL,
     biography TEXT,
     numRatingGiven INT(11),
     nearGrocery BIT NOT NULL DEFAULT 0,	
@@ -52,7 +52,6 @@ CREATE TABLE shelterInfo (
     numPendingRequests INT (11) NOT NULL DEFAULT 0,
     avgStayDuration DOUBLE (8,2) NOT NULL DEFAULT 0,
     availability INT(11),
-    FOREIGN KEY (id) REFERENCES users(userId),
     FOREIGN KEY (own) REFERENCES users(username)
 );
 
@@ -66,8 +65,16 @@ CREATE TABLE images (
 CREATE TABLE clicks (
 	clickID int PRIMARY KEY auto_increment,
 	userID int not null,
-	shelterID not null,
+	shelterID int not null,
 	clicked date,
 	FOREIGN KEY (userID) REFERENCES users(userId),
 	FOREIGN KEY (shelterID) REFERENCES shelterInfo(id)
+);
+CREATE TABLE ratings (
+	ratingID INT(11) PRIMARY KEY AUTO_INCREMENT,
+    userID INT(11),
+    shelterID INT(11),
+    rating DOUBLE(3,2),
+    FOREIGN KEY (userID) REFERENCES users(userID),
+    FOREIGN KEY (shelterID) REFERENCES users(userID)
 );

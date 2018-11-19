@@ -6,6 +6,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="ISO-8859-1">
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <title>Shelter Seekers User Messages Page</title>
 <style>
 li {
@@ -50,12 +54,9 @@ th, td {
 	width: 600px;
 }
 
-#left, #right {
+#right, #left {
 	float: left;
 	width: 50%;
-}
-
-#right {
 	text-align: left;
 }
 </style>
@@ -75,6 +76,7 @@ th, td {
 
 		for (int i = 0; i < ms.size(); i++) {
 			mail.addMessage(ms.get(i));
+			System.out.println(ms.get(i).getID());
 		}
 
 		CompareMessageByReadAndTime comp = new CompareMessageByReadAndTime();
@@ -99,6 +101,7 @@ th, td {
 				<input id="search" type="text" name="search"
 					placeholder="User Messages"> <input type="submit"
 					value="Search">
+
 			</form>
 			<%
 				out.println("<div>" + mail.getUnread() + " new messages.</div>");
@@ -107,20 +110,19 @@ th, td {
 				<%
 					for (int i = 0; i < messages.size(); i++) {
 						if (messages.get(i).getRead() == 1) {
-							out.println("<tr>" + "<td id ='" + messages.get(i).getID() + "'; onclick='openMessage();'>"
-									+ messages.get(i).readable());
+							out.println("<tr>" + "<td id ='" + messages.get(i).getID() + "'; onClick=\"openMessage('"
+									+ messages.get(i).getID() + "');\">" + messages.get(i).readable());
 						}
 
 						if (messages.get(i).getRead() == 0) {
-							out.println("<tr>" + "<td id ='" + messages.get(i).getID() + "'; onclick='openMessage();'>" + "<b>"
-									+ messages.get(i).readable() + "</b>");
+							out.println("<tr>" + "<td id ='" + messages.get(i).getID() + "'; onClick=\"openMessage('"
+									+ messages.get(i).getID() + "');\">" + "<b>" + messages.get(i).readable() + "</b>");
 						}
 						out.println("</td>" + "</tr>");
 					}
 				%>
 			</table>
 		</div>
-
 		<div id="right">
 			<br> Send a Message to someone!
 			<form id="send_message" onsubmit="return defaultMessage();">
@@ -128,13 +130,12 @@ th, td {
 				To: <input id="recipient" type="text" name="recipient"
 					placeholder="Recipient"><br /> Subject: <input
 					id="subject" type="text" name="subject" placeholder="Subject"
-					required><br />
-				<textarea rows='20' cols='100' id="message" name="message"
+					required><br /> Message:
+				<textarea rows='4' cols='50' id="message" name="message"
 					placeholder="Message" form='send_message'></textarea>
 				<br /> <input type="submit" value="Send">
 			</form>
 		</div>
-
 	</div>
 	<div id="bottom"></div>
 
@@ -155,22 +156,34 @@ th, td {
 				alert("Please input a message body.");
 				return false;
 			}
-		}
 	<%System.out.println(db.didConnect() + "is status");
 			String subject = request.getParameter("subject");
 			String recip = request.getParameter("recipient");
 			String body = request.getParameter("message");
-			String sender = "example";
-			Message m = new Message(subject, body, sender, recip);
-			db.sendMessage(m);%>
-		function openMessage() {
-			location.href = "openmessage.jsp";
+			String sender = "";
+			System.out.println(recip + "is the recipient " + db.unameExists(recip));
+			if (!db.unameExists(recip)) {%>
+				alert("This user does not exist.");
+			<%} else {
+				Message m = new Message(subject, body, sender, recip);
+				db.sendMessage(m);
+			}%>
+		}
+
+		function openMessage(id) {
+			var servletName = "openmessage.jsp";
+			var form = $('<form action="' + servletName + '" method="GET">'
+					+ '<input type="text" name="messageID" value="'
+					+ id
+					+ '" />'
+					+ '</form>');
+			$('body').append(form);
+			form.submit();
 		}
 
 		$(document).ready(function() {
 			$('#message_table td').click(function(event) {
 				sessionStorage.messageID = $(this).attr('id');
-				alert(sessionStorage.messageID);
 			});
 		});
 	</script>
