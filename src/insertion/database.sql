@@ -24,7 +24,7 @@ CREATE TABLE messages (
 	messageID INT(11) PRIMARY KEY AUTO_INCREMENT,
     senderName VARCHAR (255) NOT NULL,
     recipientName VARCHAR (255) NOT NULL,
-    timeSent BIGINT (11) NOT NULL,
+    timeSent BIGINT NOT NULL,
     mSubject VARCHAR (255) NOT NULL,
     mContent TEXT NOT NULL,
 	mRead BIT NOT NULL DEFAULT 0,
