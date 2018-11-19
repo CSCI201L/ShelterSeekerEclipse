@@ -45,6 +45,7 @@ public class oSignUp2 extends HttpServlet {
 		String pharmacy = request.getParameter("pharmacy");
 		String grocery = request.getParameter("grocery");
 		String laundromat = request.getParameter("laundromat");
+		String address = request.getParameter("address");
 		int capacity = Integer.parseInt(request.getParameter("capacity"));
 		int occupants = Integer.parseInt(request.getParameter("occupants"));
 		String bio = request.getParameter("bio");
@@ -57,7 +58,11 @@ public class oSignUp2 extends HttpServlet {
 		u.zipcode = zipcode;
 		u.phoneNumber = phone;
 		Shelter sh = new Shelter();
+		sh.phoneNumber = phone;
+		sh.zipcode = zipcode;
+		
 		sh.bio =  bio;
+		sh.address = address;
 		sh.capacity = capacity;
 		sh.numStays = occupants;
 		if (laundromat.equals("yes")) {
@@ -102,7 +107,7 @@ public class oSignUp2 extends HttpServlet {
 			request.setAttribute("err", "User Already Exists");
 			path = "/orgreg2.jsp";
 		} else {
-			path = "/orgstats.html";
+			path = "/orgstats.jsp";
 		}
 		
 		RequestDispatcher dispatch = getServletContext().getRequestDispatcher(path);

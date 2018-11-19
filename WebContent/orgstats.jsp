@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
+    <%@ page
+	import="retrieval.DBHelper,retrieval.Shelter, retrieval.Message, retrieval.Mail,  javax.servlet.http.HttpServlet, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, retrieval.CompareMessageByReadAndTime,java.util.*"%>
+    
 <!DOCTYPE html>
 <html>
 
@@ -147,7 +150,7 @@
         
             Plotly.plot('interest-map', data, layout, {showLink: false});
         
-        });
+        };
         </script>
 
 

@@ -91,7 +91,7 @@
 	<script>
 	var prevNumSearchResults;
 	function signOut(){
-	    location.href = "signin.jsp";
+	   location.href = "signin.jsp";
 	}
 	
 	function onSearch() {

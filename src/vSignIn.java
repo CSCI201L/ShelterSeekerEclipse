@@ -47,7 +47,7 @@ public class vSignIn extends HttpServlet {
 		if (db.didConnect()) {
 			if(db.user.isShelter ==1) {
 				//TEMPORARY -- REDIRECT TO ORGHOMEPAGE
-				path = "/orgstats.html";
+				path = "/orgstats.jsp";
 			} else {
 				path = "/userhomepage.jsp";
 				 	
