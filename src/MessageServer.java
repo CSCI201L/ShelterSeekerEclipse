@@ -12,6 +12,7 @@ import javax.websocket.server.ServerEndpoint;
 public class MessageServer {
 
 	private static Vector<Session> sessionVector = new Vector<Session>();
+	private static Vector<ServerThread> threads = new Vector<ServerThread>();
 
 	@OnOpen
 	public void open(Session session) {
