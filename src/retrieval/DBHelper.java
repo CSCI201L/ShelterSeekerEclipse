@@ -609,7 +609,7 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
 			
-			String query = "UPDATE messages SET read=1 WHERE id=?";
+			String query = "UPDATE messages SET mRead=1 WHERE messageID=?";
 			ps2 = conn2.prepareStatement(query);
 			ps2.setInt(1, id);
 			ps2.executeUpdate();
@@ -642,7 +642,7 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
 			
-			String query = "SELECT * FROM messages WHERE id=?";
+			String query = "SELECT * FROM messages WHERE messageID=?";
 			ps2 = conn2.prepareStatement(query);
 			ps2.setInt(1, id);
 			rs2 = ps2.executeQuery();
