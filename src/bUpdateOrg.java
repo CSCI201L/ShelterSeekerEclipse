@@ -173,7 +173,7 @@ public class bUpdateOrg extends HttpServlet {
 		if (error) {
 			path = "/orgsettings.jsp";
 		} else {
-			path = "/orgstats.html";
+			path = "/orgstats.jsp";
 		}
 		RequestDispatcher dispatch = getServletContext().getRequestDispatcher(path);
     	

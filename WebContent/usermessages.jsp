@@ -162,11 +162,17 @@ th, td {
 			String body = request.getParameter("message");
 			String sender = "";
 
-			if (!db.unameExists(recip)) {%>
-		alert("This user does not exist.");
-	<%} else {
+			boolean test = db.unameExists(recip);
+
+			if (test == false) {
+				out.println("alert('This user does not exist.');");
+				System.out.println(test + "'s value here");
+			} else if (test == true) {
 				Message m = new Message(subject, body, sender, recip);
 				db.sendMessage(m);
+				System.out.println(test);
+			} else {
+				System.out.println("How did I get here?");
 			}%>
 		}
 

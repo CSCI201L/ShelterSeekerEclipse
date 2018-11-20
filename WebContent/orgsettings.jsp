@@ -51,7 +51,7 @@
 %>
 <body> <!-- onload="defaultContactInfo();"> -->
 <ul>
-		<li><a href="orgstats.html">Search</a></li>
+		<li><a href="orgstats.jsp">Search</a></li>
 		<li><a href="usermessages.jsp">Messages</a></li>
 		<li><a href="orgsettings.jsp">Profile</a></li>
 		</ul>
