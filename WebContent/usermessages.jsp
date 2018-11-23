@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	
-<%@ page import="retrieval.DBHelper, retrieval.Message, retrieval.Mail,  javax.servlet.http.HttpServlet, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, retrieval.CompareMessageByReadAndTime,java.util.*"%>
+<%@ page import="java.util.Base64, retrieval.DBHelper, retrieval.Message, retrieval.Mail,  javax.servlet.http.HttpServlet, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, retrieval.CompareMessageByReadAndTime,java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,26 +75,36 @@
 
 	//REPLACE THIS WITH HTTPSESSION GLOBAL INSTANCE OF DB
 	DBHelper db =(DBHelper) request.getSession().getAttribute("DBHelper");
+<<<<<<< HEAD
 	//System.out.println(db.didConnect() + "is status");
 	
+=======
+	System.out.println(db.didConnect() + "is status");
+	System.out.println("at " +db.user.username);
+>>>>>>> e0c30baefcf8bdfe7c25827891aac616e300062a
 	Mail mail = new Mail();
-	
+	String s = db.getImages(db.user.username);
+	//decoded= decoded.substring(19);
 	ArrayList<Message> ms = db.getMessages();
 	
 	for(int i = 0; i < ms.size(); i++){
 		mail.addMessage(ms.get(i));
 	}
 	
-	CompareMessageByReadAndTime comp = new CompareMessageByReadAndTime();
-	mail.SortByReadAndTime(comp);
+	//CompareMessageByReadAndTime comp = new CompareMessageByReadAndTime();
+	//mail.SortByReadAndTime(comp);
 	
 	ArrayList<Message> messages = mail.getMessages();
 	
 	System.out.println(messages.size() + "total messages");
 	
 %>
+<<<<<<< HEAD
  
 	
+=======
+<<<<<<< HEAD
+>>>>>>> e0c30baefcf8bdfe7c25827891aac616e300062a
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
 	  	<div class="navbar-header">
@@ -171,6 +181,40 @@
 	<footer class="container-fluid text-center">
 	  <p> © 2018 Safe Hands </p>
 	</footer>
+=======
+	<div id="top">
+		<ul>
+		<li><a href="userhomepage.jsp">Search</a></li>
+		<li><a href="usermessages.jsp">Messages</a></li>
+		<li><a href="usersettings.jsp">Profile</a></li>
+		</ul>
+	</div>
+	IMAGE
+	<img style="height:100px; width:100px;"src="<%=s %>">
+	<div id="middle">
+		<table>
+			<%
+				for(int i = 0; i < messages.size(); i++){
+					out.println("<tr>" + "<td>" + messages.get(i).readable());
+					out.println("<button id='write' onclick='writeMessage();'>Reply</button>");
+					out.println("</td>" + "</tr>");
+				}
+			%>
+		</table>
+			
+		<form>
+			<!--  method="post" action="Servlet"-->
+			<input id="search" type="text" name="search"
+				placeholder="User Messages"> <input type="submit"
+				value="Search">
+
+		</form>
+
+		<br>
+		<button id="write" onclick="writeMessage();">Write Message</button>
+	</div>
+	<div id="bottom"></div>
+>>>>>>> dev
 
 
 	<script>

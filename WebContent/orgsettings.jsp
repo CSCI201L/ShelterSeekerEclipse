@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ page import="retrieval.DBHelper, retrieval.Message, retrieval.Mail,  javax.servlet.http.HttpServlet, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, retrieval.CompareMessageByReadAndTime,java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,10 +58,17 @@
 	<title>Shelter Seekers Organization Settings</title>
 </head>
 <%
+<<<<<<< HEAD
 	String emailerror=(String)request.getAttribute("email_err");
 	if(emailerror==null){
 		emailerror="";	
 	}
+=======
+	DBHelper db =(DBHelper) request.getSession().getAttribute("DBHelper");
+	String email= db.user.email;
+	String phonenum=db.shInfo.phoneNumber;
+	int zip=db.shInfo.zipcode;
+>>>>>>> e0c30baefcf8bdfe7c25827891aac616e300062a
 	String currpassworderror=(String)request.getAttribute("currpass_err");
 	if(currpassworderror==null){
 		currpassworderror="";

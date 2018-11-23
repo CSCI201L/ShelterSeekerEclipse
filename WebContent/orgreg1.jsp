@@ -118,6 +118,71 @@
 		 }
 
 	}
+	function findLocation(){
+		//find location using geoLocation
+		if (navigator.geolocation) {
+			  console.log('Geolocation is supported!');
+			}
+			else {
+			  console.log('Geolocation is not supported for this Browser/OS.');
+			}	
+		var lat;
+		var lon;
+		var geoSuccess = function(position) {
+		    startPos = position;
+		    document.getElementById('startLat').innerHTML = startPos.coords.latitude;
+		    document.getElementById('startLon').innerHTML = startPos.coords.longitude;
+
+		  };
+		 	
+		 	console.log("HERE", navigator.geolocation.getCurrentPosition(geoSuccess));
+			lat = document.getElementById('startLat').innerHTML;
+			lon = document.getElementById('startLon').innerHTML; 
+		 	console.log(lat);
+		 	console.log(lon);
+
+		 	const xhttp = new XMLHttpRequest();
+		 	var URL = "http://api.geonames.org/findNearestAddressJSON?lat=" + document.getElementById('startLat').innerHTML + "&lng=" + document.getElementById('startLon').innerHTML +"&username=dhan";
+		 	//var URL = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + document.getElementById('startLat').innerHTML + ","+ document.getElementById('startLon').innerHTML+",7.3553838&sensor=true"
+		 	var request = createCORSRequest("get", URL);
+		 	if (request){
+		 	    request.onload = function() {
+	//				console.log("RESPONSE" ,this.responseText);
+		 	    };
+		 	    request.onreadystatechange = function() {
+					console.log("RESPONSE" ,this.responseText);
+					var info = JSON.parse(this.responseText);
+					var address = info.address.streetNumber + " " +info.address.street+ ", " +info.address.placename + " " + info.address.adminCode1 + " " +info.address.postalcode;
+					console.log("Address ", address);
+					document.getElementById("address").value = address;
+					document.getElementById("zipcode").value = info.address.postalcode;
+
+				};
+		 	    request.send();
+		 	}
+		 	/*		 	xhttp.open("GET", URL, false);
+				xhttp.onreadystatechange = function() {
+					console.log("RESPONSE" ,this.responseText);
+
+				};
+				xhttp.setRequestHeader("Content-Type","application/x-www-urlencoded");
+				xhttp.send(); */
+		 	//user Geolocation API
+		
+	}
+	
+	function createCORSRequest(method, url){
+	    var xhr = new XMLHttpRequest();
+	    if ("withCredentials" in xhr){
+	        xhr.open(method, url, true);
+	    } else if (typeof XDomainRequest != "undefined"){
+	        xhr = new XDomainRequest();
+	        xhr.open(method, url);
+	    } else {
+	        xhr = null;
+	    }
+	    return xhr;
+	}
 	//validate username
 	function validateUsername(){
 		var x=document.getElementById("un").value;

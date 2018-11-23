@@ -15,7 +15,7 @@ import retrieval.DBHelper;
 /**
  * Servlet implementation class bUpdateUser
  */
-@WebServlet("/t")
+@WebServlet("/bUpdateUser")
 public class bUpdateUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -132,14 +132,12 @@ public class bUpdateUser extends HttpServlet {
 		
 		//update the user instance in the class
 		//update email 
-		db.user.email=email;
+		if(changeemail)
+			db.user.email=email;
 		//if change password, update password
 		if(changepassword) {
+			System.out.println("new password is: "+new_password);
 			db.user.password = new_password;
-		}
-		//if not change password
-		else {
-			db.user.password = curr_password;
 		}
 		//if change zip, update zip
 		if(changezip) {
