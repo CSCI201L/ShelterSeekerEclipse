@@ -58,17 +58,14 @@
 	<title>Shelter Seekers Organization Settings</title>
 </head>
 <%
-<<<<<<< HEAD
 	String emailerror=(String)request.getAttribute("email_err");
 	if(emailerror==null){
 		emailerror="";	
 	}
-=======
 	DBHelper db =(DBHelper) request.getSession().getAttribute("DBHelper");
 	String email= db.user.email;
 	String phonenum=db.shInfo.phoneNumber;
 	int zip=db.shInfo.zipcode;
->>>>>>> e0c30baefcf8bdfe7c25827891aac616e300062a
 	String currpassworderror=(String)request.getAttribute("currpass_err");
 	if(currpassworderror==null){
 		currpassworderror="";
