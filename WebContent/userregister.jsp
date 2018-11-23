@@ -103,8 +103,6 @@
 		</form>
 		</div>
 	</div>
-	TEST IMAGE
-	<img id = "test" src = "">
 	
 	<footer class="container-fluid text-center">
 	  <p> © 2018 Safe Hands </p>

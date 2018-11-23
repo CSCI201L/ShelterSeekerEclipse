@@ -72,8 +72,8 @@
 		    </div>
  		</div>
 	</nav>
-	<div class="container-fluid text-center"> 
-		<div class="col-sm-12" style="margin-top: 15%;">
+	<div class="container-fluid "> 
+		<div class="col col-sm-6 " style="margin-left: 25%;margin-top: 15%; border: 2px double white;">
 			<h2>Insert Subject Line Here</h2>
 			<h3>From: Insert username here</h3>
 			<p>Body of Message </p>

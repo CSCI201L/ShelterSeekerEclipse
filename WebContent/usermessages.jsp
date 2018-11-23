@@ -138,14 +138,13 @@
 						
 					}
 					out.println("<tbody>");
+					
 					for(int i = 0; i < messages.size(); i++){
 						out.println("<tr>" + "<td>" + messages.get(i).readable());
-						out.println("<form action='' id='send'>");
-						out.println("Subject: " + "<input type='text'>");
-						out.println("<textarea rows='4' cols='50' name='body' form='send'>");
+						out.println("<button id='write' onclick='writeMessage();'>Reply</button>");
 						out.println("</td>" + "</tr>");
 					}
-					out.println("</tbody>");
+	
 				%>
 				</table>
 			</div>
@@ -171,41 +170,6 @@
 	<footer class="container-fluid text-center">
 	  <p> © 2018 Safe Hands </p>
 	</footer>
-=======
-	<div id="top">
-		<ul>
-		<li><a href="userhomepage.jsp">Search</a></li>
-		<li><a href="usermessages.jsp">Messages</a></li>
-		<li><a href="usersettings.jsp">Profile</a></li>
-		</ul>
-	</div>
-	IMAGE
-	<img style="height:100px; width:100px;"src="<%=s %>">
-	<div id="middle">
-		<table>
-			<%
-				for(int i = 0; i < messages.size(); i++){
-					out.println("<tr>" + "<td>" + messages.get(i).readable());
-					out.println("<button id='write' onclick='writeMessage();'>Reply</button>");
-					out.println("</td>" + "</tr>");
-				}
-			%>
-		</table>
-			
-		<form>
-			<!--  method="post" action="Servlet"-->
-			<input id="search" type="text" name="search"
-				placeholder="User Messages"> <input type="submit"
-				value="Search">
-
-		</form>
-
-		<br>
-		<button id="write" onclick="writeMessage();">Write Message</button>
-	</div>
-	<div id="bottom"></div>
->>>>>>> dev
-
 
 	<script>
 		function defaultMessage(){
