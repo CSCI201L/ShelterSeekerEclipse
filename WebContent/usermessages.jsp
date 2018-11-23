@@ -70,11 +70,12 @@
 		 }
 		</style>
 </head>
-<body>
-	<% 
+<body> 
+<% 
+
 	//REPLACE THIS WITH HTTPSESSION GLOBAL INSTANCE OF DB
 	DBHelper db =(DBHelper) request.getSession().getAttribute("DBHelper");
-	System.out.println(db.didConnect() + "is status");
+	//System.out.println(db.didConnect() + "is status");
 	
 	Mail mail = new Mail();
 	
@@ -90,7 +91,10 @@
 	ArrayList<Message> messages = mail.getMessages();
 	
 	System.out.println(messages.size() + "total messages");
+	
 %>
+ 
+	
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
 	  	<div class="navbar-header">
@@ -121,7 +125,7 @@
 	
 				</form>
 				<!-- Message table should pop up below? -->
-				<table class="table">
+				<table class="table table-hover">
 				<%
 					if(messages.size() > 0){
 						out.println("<thread>");

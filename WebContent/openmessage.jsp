@@ -72,10 +72,13 @@
 		    </div>
  		</div>
 	</nav>
-	<div class="container-fluid"> 
-		<h2>From senders's username</h2>
-		<h2>Subject line</h2>
-		Body of Message <br>
+	<div class="container-fluid text-center"> 
+		<div class="col-sm-12" style="margin-top: 15%;">
+			<h2>Insert Subject Line Here</h2>
+			<h3>From: Insert username here</h3>
+			<p>Body of Message </p>
+			<br>
+		</div>
 	</div>
 	<footer class="container-fluid text-center">
 	  <p> © 2018 Safe Hands </p>
