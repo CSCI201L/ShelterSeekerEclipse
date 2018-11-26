@@ -32,11 +32,7 @@ public class bUpdateOrg extends HttpServlet {
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-<<<<<<< HEAD
     	String email=request.getParameter("curr_email");
-=======
-//    	String email=request.getParameter("curr_email");
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 		String curr_password = request.getParameter("current_password");
 		String new_password = request.getParameter("new_password");
 		String zipcode = request.getParameter("new_zipcode");
@@ -150,22 +146,16 @@ public class bUpdateOrg extends HttpServlet {
 		
 		//NEW STUFF
 		DBHelper db = (DBHelper) request.getSession().getAttribute("DBHelper");
-<<<<<<< HEAD
 ;
-=======
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 		//update the user instance in the class
 		//if change password, update password
 		if(changepassword) {
 			db.user.password = new_password;
 		}
-<<<<<<< HEAD
 		//if not change password
 		else {
 			db.user.password = curr_password;
 		}
-=======
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 		//if change zip, update zip
 		if(changezip) {
 			db.shInfo.zipcode=zip;
@@ -188,13 +178,7 @@ public class bUpdateOrg extends HttpServlet {
 		if (error) {
 			path = "/orgsettings.jsp";
 		} else {
-<<<<<<< HEAD
 			path = "/shelterhomepage.jsp";
-=======
-			//CHANGED TO ORG STATS.html
-			//MAKE A POP UP NOTIFICATION OR SOMETHING
-			path = "/orgstats.html";
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 		}
 		RequestDispatcher dispatch = getServletContext().getRequestDispatcher(path);
     	

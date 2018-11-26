@@ -8,10 +8,7 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-<<<<<<< HEAD
 import java.net.URLEncoder;
-=======
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -27,22 +24,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-<<<<<<< HEAD
 import retrieval.DBHelper;
 
-=======
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 @WebServlet("/Search")
 public class Search extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	static final String databaseUserName = "root";
 	static final String databasePassword = "root";
 	static final String databasePort = "3306";
-<<<<<<< HEAD
 	static final String databaseName = "safeHands";
-=======
-	static final String databaseName = "shelterseeker";
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 	static final String googleAPIKey = "AIzaSyByHkT9nYExPGBdrF8go_Iep92WAnfloWk";
        
     public Search() {
@@ -55,7 +45,6 @@ public class Search extends HttpServlet {
 		ResultSet rs = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-<<<<<<< HEAD
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/safeHands?user=root&password=root&useSSL=false");
 			String pharmacyNearby = request.getParameter("pharmacyNearby");
 			String groceryNearby = request.getParameter("groceryNearby");
@@ -87,42 +76,11 @@ public class Search extends HttpServlet {
 				System.out.println("Error finding user in search");
 			}
 			System.out.println(searcherAddress);
-=======
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/shelterseeker?user=root&password=root&useSSL=false");
-			/*jdbc:mysql://localhost:" + databasePort + "/" + 
-				databaseName + "?user=" + databaseUserName + "&password= " + databasePassword + 
-				"&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-				*/
-			String pharmacyNearby = request.getParameter("pharmacyNearby");
-			String groceryNearby = request.getParameter("groceryNearby");
-			String laundromatNearby = request.getParameter("laundromatNearby");
-
-			System.out.println("This user called search: " + request.getParameter("email"));
-			//CHANGE
-			ps = conn.prepareStatement("SELECT userID from users where email=?");
-			ps.setString(1, request.getParameter("email"));
-			rs = ps.executeQuery();
-			rs.next();
-			int searcherID = rs.getInt("userID");
-			System.out.println(searcherID);
-			
-			ps = conn.prepareStatement("SELECT * from userInfo where id=?");
-			ps.setInt(1, searcherID);
-			rs = ps.executeQuery();
-			rs.next();
-			int searcherZipCode = rs.getInt("zipcode");
-			int searcherNumKids = rs.getInt("kids");
-			int searcherNumPets = rs.getInt("pets");
-			System.out.println("Searcher's ZipCode: " + searcherZipCode);
-			System.out.println("Searcher's numKids: " + searcherNumKids);
-			System.out.println("Searcher's numPets: " + searcherNumPets);
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 			
 			String searchStatement = "SELECT s.* FROM users u, shelterInfo s where u.userID = s.id ";
 			if(pharmacyNearby.equals("true")) searchStatement += " and nearPharmacy=1 ";
 			if(groceryNearby.equals("true")) searchStatement += " and nearGrocery=1 ";
 			if(laundromatNearby.equals("true")) searchStatement += " and nearLaundromat=1 ";
-<<<<<<< HEAD
 			if(currentlyAvailable.equals("true")) searchStatement += " and availability>0 ";
 			if(doSearchByName) searchStatement += getAdditionalSearchStatement(searchByName);
 			searchStatement += " and s.kids>=? ";
@@ -132,14 +90,6 @@ public class Search extends HttpServlet {
 			ps.setInt(1, numKids);
 			ps.setInt(2, numPets);
 			ps.setDouble(3, Double.parseDouble(minRating));
-=======
-			searchStatement += " and s.kids>=? ";
-			searchStatement += " and s.pets >=? ";
-			searchStatement += " and availability>0 ";
-			ps = conn.prepareStatement(searchStatement);
-			ps.setInt(1, searcherNumKids);
-			ps.setInt(2, searcherNumPets);
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 			
 			System.out.println("Executing this query: " + searchStatement);
 			rs = ps.executeQuery();
@@ -155,7 +105,6 @@ public class Search extends HttpServlet {
 				currentShelter.phoneNumber = rs.getString("phoneNumber");
 				currentShelter.currentRating = rs.getDouble("currentRating");
 				currentShelter.zipcode = rs.getInt("zipCode");
-<<<<<<< HEAD
 				currentShelter.shelterName = rs.getString("own");
 				currentShelter.image = DBHelper.getImages(currentShelter.shelterName);
 				shelters.add(currentShelter);
@@ -207,84 +156,11 @@ public class Search extends HttpServlet {
 			    	}
 			    	return result;
 				    // <0 = less than, >0 = greater than, 0 = equal
-=======
-				shelters.add(currentShelter);
-			}
-			
-			Collections.sort(shelters, new Comparator<Shelter>() {	
-				public int compare(Shelter lhs, Shelter rhs) {
-					URL url;
-					try {
-						url = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial"
-								+ "&origins=" + Integer.toString(searcherZipCode) + "&destinations=" + 
-								Integer.toString(lhs.zipcode) + "&key=" + googleAPIKey);
-						HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-						connection.setRequestMethod("GET");
-					    connection.connect();
-					    BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-					    String line = br.readLine();
-					    double distanceLHS = 0;
-					    boolean distanceOnNextLine = false;
-					    while (line != null) {
-					    	if (distanceOnNextLine) {
-					    		String distance = "";
-					    		for(int i = 0; i < line.length(); i++) {
-					    			if ((line.charAt(i) <= '9' && line.charAt(i) >= '0') || line.charAt(i) == '.') {
-					    				distance += line.charAt(i);
-					    			}
-					    		}
-					    		distanceLHS = Double.parseDouble(distance);
-					    		distanceOnNextLine = false;
-					    	}
-					    	if (line.contains("distance")) {
-					    		distanceOnNextLine = true;
-					    	}
-					    	line = br.readLine();
-					    }
-				    	url = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial"
-								+ "&origins=" + Integer.toString(searcherZipCode) + "&destinations=" + 
-								Integer.toString(rhs.zipcode) + "&key=" + googleAPIKey);
-						connection = (HttpURLConnection)url.openConnection();
-						connection.setRequestMethod("GET");
-					    connection.connect();
-					    br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-					    line = br.readLine();
-					    double distanceRHS = 0;
-					    distanceOnNextLine = false;
-					    while (line != null) {
-					    	if (distanceOnNextLine) {
-					    		String distance = "";
-					    		for(int i = 0; i < line.length(); i++) {
-					    			if ((line.charAt(i) <= '9' && line.charAt(i) >= '0') || line.charAt(i) == '.') {
-					    				distance += line.charAt(i);
-					    			}
-					    		}
-					    		distanceRHS = Double.parseDouble(distance);
-					    		distanceOnNextLine = false;
-					    	}
-					    	if (line.contains("distance")) {
-					    		distanceOnNextLine = true;
-					    	}
-					    	line = br.readLine();
-					    }
-				    	int result = (int)distanceLHS - (int)distanceRHS;
-				    	if (result == 0) { // Same ZipCode, sort by rating
-				    		if (lhs.currentRating > rhs.currentRating) result = -1;
-				    		else result = 1;
-				    	}
-				    	return result;
-					    // <0 = less than, >0 = greater than, 0 = equal
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-						return 0;
-					}
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 				}	
 			});
 			
 	    	response.setContentType("text");
 			PrintWriter out = response.getWriter();
-<<<<<<< HEAD
 			for(Shelter s : shelters) {
 				out.println(s.id);
 				out.println(s.shelterName);
@@ -297,28 +173,6 @@ public class Search extends HttpServlet {
 				System.out.println(s.bio);
 				System.out.println(s.searchDistance);
 			}
-=======
-			
-			for(Shelter s : shelters) {
-				out.println(s.id);
-				out.println(s.bio);
-				out.println(s.zipcode);
-			}
-			
-//			
-//			URL url = new URL("https://www.zipcodeapi.com/rest/"
-//					+ "dYZyo4NBkBmvPIE8EzqA3NABipAJG4wFOLkvJdTFufVARAcVmSE2HCVf8NRp4imi/distance.json/90089/94301/mile");
-//			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-//			connection.setRequestMethod("GET");
-//		    connection.connect();
-//		    InputStream is = connection.getInputStream();
-//		    BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		   
-			
-//	    	response.setContentType("text");
-//			PrintWriter out = response.getWriter();
-	    	
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 	    	
 		} catch (SQLException sqe) {
 			System.out.println("sqe in search: " + sqe.getMessage());
@@ -327,7 +181,6 @@ public class Search extends HttpServlet {
 		} catch (Exception e) {
 			System.out.println("e in search: " + e.getMessage());
 		}
-<<<<<<< HEAD
 	}
 	
 	private String getAdditionalSearchStatement(String s) {
@@ -356,10 +209,3 @@ public class Search extends HttpServlet {
 		return additionalStatement;
 	}
 }
-=======
-		
-		
-	}
-
-}
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0

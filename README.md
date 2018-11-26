@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Shelter Seeker
 Team Members: Kartik Mahajan (kmahajan@usc.edu), Tyler Luk (tylerluk@usc.edu), Eric Ye (eye@usc.edu), Pavle Medvidov (medvidov@usc.edu), Stacy Tran (stacytra@usc.edu), Will Borie (borie@usc.edu)
 
@@ -39,17 +38,3 @@ Step 6: Deploy the app!
 Go to WebContent->signin.jsp
 Run this using Tomcat.
 If all other tests were followed, this should run without error.
-=======
-# ShelterSeekerEclipse
-
-## Importing into Eclipse
-1. Make sure there are no repositories in your workspace called `ShelterSeeker`
-2. Open the `Import` dialog under `File ` 
-3. Click on `Projects from Git` to open the Git wizard
-4. Click on `Clone URI` 
-5. In the URI field, paste `https://github.com/CSCI201L/ShelterSeekerEclipse`. Click `next`
-6. Choose the branch you want. Probably `master`. Click `next`.
-7. Choose where you want Eclipse to deal with Git. Click `next`
-8. Choose `Import existing Eclipse project`. Make sure the top-level box is checked. Click `next`
-9. Click finish.
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0

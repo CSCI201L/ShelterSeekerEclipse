@@ -5,10 +5,7 @@ public class Shelter {
 	public int id;
 	public String shelterName;
 	public int zipcode;
-<<<<<<< HEAD
 	public String address;
-=======
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 	public String owner;
 	public int capacity = 0;
 	public String phoneNumber = "";
@@ -17,10 +14,7 @@ public class Shelter {
 	public int numRatingGiven = 0;
 	public Byte nearGrocery = 0;
 	public int numPendingRequests = 0;
-<<<<<<< HEAD
 	public int availability;
-=======
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 	// Amenities
 	public int kids = 0;
 	public int pets = 0;

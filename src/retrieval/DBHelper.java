@@ -1,6 +1,5 @@
 package retrieval;
 
-<<<<<<< HEAD
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,25 +8,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Blob;
-=======
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-<<<<<<< HEAD
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
 //import sun.misc.IOUtils;
-=======
-import java.time.LocalDateTime;
-import java.util.ArrayList;
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 //DBHelper u = new DBHELPER(....)
 //u.updateUserInfo(UserInfo new);
 
@@ -41,11 +33,7 @@ public class DBHelper {
 	public PreparedStatement ps = null;
 	public Shelter shInfo = null;
 	public static final String CLASS_NAME = "com.mysql.jdbc.Driver";
-<<<<<<< HEAD
 	public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/safeHands?user=root&password=root&useSSL=false";
-=======
-	public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/shelterseeker?user=root&password=root&useSSL=false";
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 	public DBHelper(String email, String password)  {
 		this.email = email;
 		this.user = new UserInfo();
@@ -77,10 +65,7 @@ public class DBHelper {
 					shInfo.owner=user.username;
 				} else {
 					System.out.println("NOT A SHELTER!");
-<<<<<<< HEAD
 					//user.address = rs.getString("address");
-=======
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 				}
 				//now userObject will be fully updated
 				//if it is a shelter, then shInfo will also be populated!
@@ -127,10 +112,7 @@ public class DBHelper {
 				user.zipcode = rs1.getInt("zipcode");
 				user.kids = rs1.getInt("kids");
 				user.pets = rs1.getInt("pets");
-<<<<<<< HEAD
 				user.address = rs1.getString("address");
-=======
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 				user.phoneNumber = rs1.getString("phoneNumber");
 			}
 		}catch (ClassNotFoundException e) {
@@ -170,10 +152,7 @@ public class DBHelper {
 			while (rs1.next()) {
 				System.out.println("FOUND VALUES!");
 				s.owner = rs1.getString("own");
-<<<<<<< HEAD
 				s.address = rs1.getString("address");
-=======
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 				s.zipcode = rs1.getInt("zipcode");
 				s.kids = rs1.getInt("kids");
 				s.pets = rs1.getInt("pets");
@@ -273,7 +252,6 @@ public class DBHelper {
 					Class.forName(CLASS_NAME);
 					conn3 = DriverManager.getConnection(CONNECTION_URL); 
 					
-<<<<<<< HEAD
 					String query = "INSERT INTO userInfo(username,zipcode,address,kids,pets,phoneNumber) VALUES (?,?,?,?,?,?)";
 					ps3 = conn3.prepareStatement(query);		
 					ps3.setString(1, u.username);
@@ -282,15 +260,6 @@ public class DBHelper {
 					ps3.setInt(4, u.kids);
 					ps3.setInt(5, u.pets);
 					ps3.setString(6, u.phoneNumber);
-=======
-					String query = "INSERT INTO userInfo(username,zipcode,kids,pets,phoneNumber) VALUES (?,?,?,?,?)";
-					ps3 = conn3.prepareStatement(query);		
-					ps3.setString(1, u.username);
-					ps3.setInt(2, u.zipcode);
-					ps3.setInt(3, u.kids);
-					ps3.setInt(4, u.pets);
-					ps3.setString(5, u.phoneNumber);
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 					
 					 ps3.executeUpdate();
 
@@ -331,7 +300,6 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
 			
-<<<<<<< HEAD
 			String query = "INSERT INTO shelterInfo(own,zipcode,address,kids,pets,phoneNumber," + 
 					"biography,nearGrocery,nearPharmacy,nearLaundromat,availability) VALUES " + 
 					"(?,?,?,?,?,?,?,?,?,?,?)";
@@ -350,23 +318,6 @@ public class DBHelper {
 			ps2.setByte(9, s.nearPharmacy);
 			ps2.setByte(10, s.nearLaundromat);
 			ps2.setInt(11, s.availability);
-=======
-			String query = "INSERT INTO shelterInfo(own,zipcode,kids,pets,phoneNumber,biography,nearGrocery,nearPharmacy,nearLaundromat) VALUES (?,?,?,?,?,?,?,?,?)";
-			ps2 = conn2.prepareStatement(query);		
-			ps2.setString(1, userId);
-			ps2.setInt(2, s.zipcode);
-			ps2.setInt(3, s.kids);
-			ps2.setInt(4, s.pets);
-			System.out.println("afafaf "+u.phoneNumber);
-			if(s.phoneNumber.equals("")) {
-				s.phoneNumber="0";
-			}
-			ps2.setString(5, s.phoneNumber);
-			ps2.setString(6, s.bio);
-			ps2.setByte(7, s.nearGrocery);
-			ps2.setByte(8, s.nearPharmacy);
-			ps2.setByte(9, s.nearLaundromat);
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 			ps2.executeUpdate();
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -395,11 +346,7 @@ public class DBHelper {
 	 * @param u
 	 * @param s
 	 */
-<<<<<<< HEAD
 	public void trackAdd (int u, int s) {
-=======
-	public void trackAdd (UserInfo u, Shelter s) {
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 		//should sign up organization user with isShelter = true by adding to userinfo table
 		//should add entry to Shelter table. Both Should contain the same values
 
@@ -410,24 +357,10 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
 			
-<<<<<<< HEAD
 			String query = "INSERT INTO clicks(userID,shelterID,clicked) VALUES (?,?,UTC_DATE())";
 			ps2 = conn2.prepareStatement(query);		
 			ps2.setInt(1, u);
 			ps2.setInt(2, s);
-=======
-			String query = "INSERT INTO Adds(shelterID, time zipcode,kids,pets,phoneNumber,biography,nearGrocery,nearPharmacy,nearLaundromat) VALUES (?,UTC_DATE(),?,?,?,?,?,?,?,?)";
-			ps2 = conn2.prepareStatement(query);		
-			ps2.setInt(1, s.id);
-			ps2.setInt(2, s.zipcode);
-			ps2.setInt(3, s.kids);
-			ps2.setInt(4, s.pets);
-			ps2.setString(5, s.phoneNumber);
-			ps2.setString(6, s.bio);
-			ps2.setByte(7, s.nearGrocery);
-			ps2.setByte(8, s.nearPharmacy);
-			ps2.setByte(9, s.nearLaundromat);
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 			ps2.executeUpdate();
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -451,7 +384,6 @@ public class DBHelper {
 		}
 	}
 	
-<<<<<<< HEAD
 	public ResultSet retrieveClicks(int sid, PrintWriter pw) {
 		//should sign up organization user with isShelter = true by adding to userinfo table
 		//should add entry to Shelter table. Both Should contain the same values
@@ -541,9 +473,6 @@ public class DBHelper {
 			}
 		}
 	}
-=======
-	
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 	
 	//TO BE USED ON SEARCH SHELTER PAGE --
 	public ArrayList<Shelter> getShelters(){
@@ -595,12 +524,8 @@ public class DBHelper {
 				Class.forName(CLASS_NAME);
 				conn = DriverManager.getConnection(CONNECTION_URL); 
 				
-<<<<<<< HEAD
 				String query = "INSERT INTO messages(senderName,recipientName,timeSent,mSubject," + 
 					"mContent,mRead,isAvailabilityRequest) VALUES (?,?,?,?,?,?,?)";
-=======
-				String query = "INSERT INTO messages(senderName,recipientName,timeSent,mSubject,mContent,mRead) VALUES (?,?,?,?,?,?)";
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 				Byte b = 0;
 				ps = conn.prepareStatement(query);
 				ps.setString(1, user.username);
@@ -609,10 +534,7 @@ public class DBHelper {
 				ps.setString(4, m.subject);
 				ps.setString(5, m.body);
 				ps.setByte(6, b);
-<<<<<<< HEAD
 				ps.setString(7, m.isAvailabilityRequest);
-=======
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 				ps.executeUpdate();
 				
 			}catch (ClassNotFoundException e) {
@@ -657,12 +579,8 @@ public class DBHelper {
 				m.subject = rs.getString("mSubject");
 				m.body = rs.getString("mContent");
 				m.read = rs.getByte("mRead");
-<<<<<<< HEAD
 				m.timeSent = rs.getLong("timeSent");
 				m.isAvailabilityRequest = rs.getString("isAvailabilityRequest");
-=======
-				m.timeSent = rs.getInt("timeSent");
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 				res.add(m);
 			}
 		}catch (ClassNotFoundException e) {
@@ -699,11 +617,7 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
 			
-<<<<<<< HEAD
 			String query = "UPDATE messages SET mRead=1 WHERE messageID=?";
-=======
-			String query = "UPDATE messages SET read=1 WHERE id=?";
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 			ps2 = conn2.prepareStatement(query);
 			ps2.setInt(1, id);
 			ps2.executeUpdate();
@@ -736,11 +650,7 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
 			
-<<<<<<< HEAD
 			String query = "SELECT * FROM messages WHERE messageID=?";
-=======
-			String query = "SELECT * FROM messages WHERE id=?";
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 			ps2 = conn2.prepareStatement(query);
 			ps2.setInt(1, id);
 			rs2 = ps2.executeQuery();
@@ -751,11 +661,7 @@ public class DBHelper {
 				m.subject = rs2.getString("mSubject");
 				m.body = rs2.getString("mContent");
 				m.read = rs2.getByte("mRead");
-<<<<<<< HEAD
 				m.timeSent = rs2.getLong("timeSent");
-=======
-				m.timeSent = rs2.getInt("timeSent");
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 			}
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -819,7 +725,6 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
 			
-<<<<<<< HEAD
 			String query = "UPDATE userInfo SET zipcode=?, address=?, kids=?, pets=?, phoneNumber=? WHERE username=?";
 			ps2 = conn2.prepareStatement(query);		
 			ps2.setInt(1, user.zipcode);
@@ -828,15 +733,6 @@ public class DBHelper {
 			ps2.setInt(4, user.pets);
 			ps2.setString(5, user.phoneNumber);
 			ps2.setString(6, user.username);
-=======
-			String query = "UPDATE userInfo SET zipcode=?, kids=?, pets=?, phoneNumber=? WHERE username=?";
-			ps2 = conn2.prepareStatement(query);		
-			ps2.setInt(1, user.zipcode);
-			ps2.setInt(2, user.kids);
-			ps2.setInt(3, user.pets);
-			ps2.setString(4, user.phoneNumber);
-			ps2.setString(5, user.username);
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 			ps2.executeUpdate();
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -872,16 +768,11 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn1 = DriverManager.getConnection(CONNECTION_URL); 
 			
-<<<<<<< HEAD
 			String query = "UPDATE shelterInfo SET zipcode=?, address =?, kids=?, pets=?, phoneNumber=?, biography=?,"
-=======
-			String query = "UPDATE shelterInfo SET zipcode=?, kids=?, pets=?, phoneNumber=?, biography=?,"
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 					+ " numRatingGiven=?, nearPharmacy=?, nearLaundromat=?, currentRating=?,"
 					+ " pageVisits=?, numStays=?, numPendingRequests=?, avgStayDuration=? WHERE own=?";
 			ps1 = conn1.prepareStatement(query);		
 			ps1.setInt(1, s.zipcode);
-<<<<<<< HEAD
 			ps1.setString(2, s.address);
 			ps1.setInt(3, s.kids);
 			ps1.setInt(4, s.pets);
@@ -896,24 +787,6 @@ public class DBHelper {
 			ps1.setInt(13, s.numPendingRequests);			
 			ps1.setDouble(14, s.avgStayDuration);	
 			ps1.setString(15, s.owner);
-=======
-			ps1.setInt(2, s.kids);
-			ps1.setInt(3, s.pets);
-			if(s.phoneNumber.equals("")) {
-				s.phoneNumber="0";
-			}
-			ps1.setString(4, s.phoneNumber);
-			ps1.setString(5, s.bio);
-			ps1.setInt(6, s.numRatingGiven);
-			ps1.setInt(7, s.nearGrocery);
-			ps1.setInt(8, s.nearLaundromat);
-			ps1.setDouble(9, s.currentRating);
-			ps1.setInt(10, s.pageVisits);
-			ps1.setInt(11, s.numStays);	
-			ps1.setInt(12, s.numPendingRequests);			
-			ps1.setDouble(13, s.avgStayDuration);	
-			ps1.setString(14, s.owner);
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 			ps1.executeUpdate();
 
 			
@@ -979,11 +852,7 @@ public class DBHelper {
 				}
 			}
 		}
-<<<<<<< HEAD
 	public static boolean userExists(String username) {
-=======
-	public static boolean userExists(String email) {
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 		Connection conn2 = null;
 		PreparedStatement ps2 = null;
 		ResultSet rs2 = null;
@@ -991,15 +860,9 @@ public class DBHelper {
 			Class.forName(CLASS_NAME);
 			conn2 = DriverManager.getConnection(CONNECTION_URL); 
 			
-<<<<<<< HEAD
 			String query = "SELECT * FROM users WHERE username=?";
 			ps2 = conn2.prepareStatement(query);		
 			ps2.setString(1, username);
-=======
-			String query = "SELECT * FROM users WHERE email=?";
-			ps2 = conn2.prepareStatement(query);		
-			ps2.setString(1, email);
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 			rs2 = ps2.executeQuery();
 			while(rs2.next()) {
 				try {
@@ -1041,7 +904,6 @@ public class DBHelper {
 		//checks userInfo and sees if email exists in the table
 		return false;
 	}
-<<<<<<< HEAD
 	public static String getImages (String username) {
 		byte [] b = null;
 		Connection conn2 = null;
@@ -1143,8 +1005,6 @@ public class DBHelper {
 			e1.printStackTrace();
 		}
 	}
-=======
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 	public boolean userExists(int id) {
 		Connection conn2 = null;
 		PreparedStatement ps2 = null;
@@ -1250,7 +1110,6 @@ public class DBHelper {
 		return false;
 	}
 	
-<<<<<<< HEAD
 	/**
 	 * Get the current rating as a json array
 	 */
@@ -1298,8 +1157,6 @@ public class DBHelper {
 			}
 		}
 	}
-=======
->>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 	
 	
 	
