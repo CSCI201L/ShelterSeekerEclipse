@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<<<<<<< HEAD
 <%@ page    
     import="retrieval.DBHelper, retrieval.Message, retrieval.Mail,  javax.servlet.http.HttpServlet, 
     javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, 
     retrieval.CompareMessageByReadAndTime,java.util.*"%>
+=======
+>>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +20,7 @@
 	<%String nearPharmacy = (String)request.getAttribute("nearPharmacy"); %>
 	<%String nearGrocery = (String)request.getAttribute("nearGrocery"); %>
 	<%String nearLaundromat = (String)request.getAttribute("nearLaundromat"); %>
+<<<<<<< HEAD
 	<%String shelterID = (String)request.getAttribute("shelterID"); %>
 	<%String shelterName = (String)request.getAttribute("shelterName"); %>
 	<%
@@ -25,6 +29,8 @@
 		String email = db.user.email;
 		String user = db.user.username;
 	%>
+=======
+>>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 	
 	<title>Shelter Seekers Organization Public Profile Page</title>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -36,12 +42,15 @@
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
 	<style>
+<<<<<<< HEAD
 		#message {
 			color: black;
 		}
 		#subject {
 			color: black;
 		}
+=======
+>>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 		 .navbar {
 		 	background-color: #c5c1fe;
 		 	border-color:#c5c1fe;
@@ -55,12 +64,15 @@
 		.navbar-default .navbar-nav>li>a {
 		    color: white;
 		}
+<<<<<<< HEAD
 		#requestSpotSection {
 			visibility: hidden;
 		}
 		#confirmRequestSent {
 			visibility: hidden;
 		}
+=======
+>>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 		.navbar-default .navbar-nav>.active>a{
 			color: grey; 
 			background-color: white; 
@@ -86,6 +98,7 @@
 		  bottom: 0;
 		  width: 100%;
 		  height: 5%; 
+<<<<<<< HEAD
 		}
 		.mainSection {
 			margin-bottom: 80px;
@@ -93,6 +106,11 @@
 		
 		</style>
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
+=======
+	   
+		}
+		</style>
+>>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -106,13 +124,18 @@
 	   	 	<li><a style="font-size: 20px">Safe Hands</a></li>
 	      <li><a href="userhomepage.jsp">Search</a></li>
 	      <li><a href="usermessages.jsp">Messages</a></li>
+<<<<<<< HEAD
 	      <li><a href="usersettings.jsp">Settings</a></li>
+=======
+	      <li><a href="userprofile.jsp">Profile</a></li>
+>>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 	    </ul>
 	     <ul class="nav navbar-nav navbar-right">
         	<li><a class="navbar-brand" href="signin.jsp">Sign Out</a></li>
       	</ul>
 	  </div>
 	</nav>
+<<<<<<< HEAD
 	<div class="mainSection">
 		<div class="container-fluid">
 			<img id="pic" src="http://www-scf.usc.edu/~csci201/images/jeffrey_miller.jpg" width="100" height="100">
@@ -169,10 +192,33 @@
 			<p id="confirmRequestSent">Your request has been sent!</p>
 			
 		</div>
+=======
+	<div class="container-fluid"> 
+		<img id="pic" src="http://www-scf.usc.edu/~csci201/images/jeffrey_miller.jpg" width="100" height="100">
+		<div id="info">
+		<h3>Shelter Information</h3><br>
+		Availability: <%= availability %> <br>
+		Zip Code: <%= zipCode %> <br>
+		Phone Number: <%= phoneNumber %> <br>
+		Biography: <%= bio %> <br>
+		Rating: <%= currentRating %> <br>
+		 
+		</div>
+		<div id="preferences">
+		<h3>Org Information</h3>
+		Pets? <%= pets %> <br>
+		Children? <%= kids %> <br>
+		Near a pharmacy? <%= nearPharmacy %> <br>
+		Near a grocery store? <%= nearGrocery %> <br>
+		Near a laundromat? <%= nearLaundromat %>  <br>
+		</div>
+		
+>>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 	</div>
 	<footer class="container-fluid text-center">
 	  <p> © 2018 Safe Hands </p>
 	</footer>
+<<<<<<< HEAD
 	<script>
 	
 	function goToShelterChatRoom() {
@@ -224,6 +270,9 @@
 	}
 	
 	</script>
+=======
+	
+>>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 	
 </body>
 </html>

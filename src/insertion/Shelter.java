@@ -14,8 +14,11 @@ public class Shelter {
 	public Byte nearGrocery = 0;
 	public int numPendingRequests = 0;
 	public int availability = 0;
+<<<<<<< HEAD
 	public double searchDistance = 0;
 	public String image = "";
+=======
+>>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 	
 	// Amenities
 	public int kids = 0;

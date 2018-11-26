@@ -10,7 +10,10 @@ public class Message {
 	public String sender;
 	public Byte read = 0;
 	public long timeSent = 0;
+<<<<<<< HEAD
 	public String isAvailabilityRequest;
+=======
+>>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 
 	// Default constructor
 	public Message() {
@@ -18,16 +21,23 @@ public class Message {
 		this.body = "";
 		this.recipient = "";
 		this.sender = "";
+<<<<<<< HEAD
 		this.id = 0;
+=======
+>>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 	}
 
 	//Constructor that actually sets values
 	public Message(String subject, String body, String sender, String recipient) {
 		this.subject = subject;
 		this.body = body;
+<<<<<<< HEAD
 		this.sender = sender;
 		this.recipient = recipient;
 		this.id = 0;
+=======
+		this.recipient = recipient;
+>>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 		LocalDateTime now = LocalDateTime.now();
@@ -35,6 +45,7 @@ public class Message {
 		timeSent = Long.parseLong(dtf.format(now));
 	}
 
+<<<<<<< HEAD
 	//Getters
 	public String getSubject() {
 		return subject;
@@ -89,10 +100,19 @@ public class Message {
 	//Parse into readable format for testing
 	public String readable() {
 		return "Message from " + getSender() + ": <br />" + getSubject() + ": <br />" + getBodyReadable() + "<br /> Sent at " + getTime();
+=======
+	//Parse into readable format for testing
+	public String readable() {
+		return subject + ": \n" + body + "\nSent on: " + timeSent + "\nSent to: " + recipient + "\nRead:" + read;
+>>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
 	}
 
 	//Set whether a message is read
 	public void read() {
 		this.read = 1;
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> a6bdd510de972b2b55f0883dc25958926d28e9f0
